@@ -1,0 +1,1369 @@
+TRANSFER INTERLIS1;
+
+!!*********************************************************************************************************************
+!!
+!! Version:  1.0 
+!! Sprache:  Deutsch
+!! Dateiname: ZG_Wasserversorgungsatlas_1_0.ili  
+!! Datum:    14.12.2009
+!! Status:   Entwurf 
+!!
+!! History:
+!!      14.12.2009 / Version 1.0 / InfoLite AG / ub
+!!
+!!*********************************************************************************************************************
+
+
+
+
+MODEL ZG_Wasserversorgungsatlas_1_0
+
+  DOMAIN
+
+    CHLKoord= COORD2
+       480000.00 60000.00
+       850000.00 320000.00;
+
+    CHSurface= SURFACE WITH (ARCS, STRAIGHTS) VERTEX CHLKoord;
+
+    CHPolyline= POLYLINE WITH (ARCS, STRAIGHTS) VERTEX CHLKoord;
+
+    OrientierungsTyp = GRADS 0.000 399.999;
+
+    BooleanTyp = (nein,	    !! <nein, d1> 
+                   ja);     !! <ja, d2> 
+
+    CHSprache = (de,	 !! <deutsch, d1>
+                 fr,	 !! <französisch, d2>
+                 it,	 !! <italiensich, d3>
+                 rm,	 !! <romanisch, d4>
+                 en);	 !! <englisch, d5>
+
+    Herkunftsart = (Aufnahme,			 !! <Aufnahme, d1>
+                    UebernahmeKoordinaten,	 !! <Übernahme Koordinaten, d2>
+                    Planabgriff,		 !! <Planabgriff, d3>
+                    konstruktiv,		 !! <konstruktiv, d4>
+                    geschaetzt,			 !! <geschätzt, d5>
+                    unbekannt,			 !! <unbekannt, d6>
+                    andere);			 !! <andere, d7>
+
+
+    Rechtsstatus = (rechtskraeftig,	 !! <rechtskräftig, d1>
+                    provisorisch);	 !! <provisorisch, d2>
+ 
+    DetailplanArt = (Plan_digital,	 !! <Plan digital, d1>
+                     Plan_analog,	 !! <Plan analog, d2>
+                     Uebersichtsplan,	 !! <Übersichtsplan, d3>
+                     Landeskarte,	 !! <Landeskarte, d4>
+                     Skizze,		 !! <Skizze, d5>
+                     andere);		 !! <andere, d6>
+
+
+    DetailplanMstab = (M_1_200,	 	!! <1:200, d1>
+                       M_1_500,	 	!! <1:500l, d2>
+                       M_1_1000,	!! <1:1'000, d3>
+                       M_1_2000,	!! <1:2'000, d4>
+                       M_1_5000,	!! <1:5'000, d5>
+                       M_1_10000,	!! <1:10'000, d6>
+                       M_1_25000,	!! <1:25'000, d7>
+                       andere,	 	!! <andere, d8>
+                       unbekannt);	!! <unbekannt, d9>
+
+    ErfGenauigkeit = (AV_gerechnet,	 !! <AV gerechnet, d1>
+                      Detailplan,	 !! <Detailplan, d2>
+                      andere,	 	 !! <andere, d3>
+                      unbekannt);	 !! <unbekannt, d4>
+
+
+    SizeTyp = (kleinst,		!! <kleinst, d1>
+               klein,	 	!! <klein, d2>
+               mittel,		!! <mittel, d3>
+               gross,	 	!! <gross, d4>
+               unterdrueckt);	!! <unterdrückt, d5>
+
+    Kanton = (ZG,	!! <ZG, d1>	
+              ZH,	!! <ZH, d2>
+              AG,	!! <AG, d3>
+              LU,	!! <LU, d4>
+              SZ);	!! <SZ, d5>
+
+    PlanTyp = (M_1_1000,	!! <1:1'000, d1>
+               M_1_2000,	!! <1:2000, d2>
+               M_1_5000,	!! <1:5'000, d3>
+               M_1_10000,	!! <1:10'000, d4>
+               M_1_25000);	!! <1:25'000, d5>
+
+    EigentumArt = (privat,	!! <privat, d1>
+                   oeffentlich,	!! <öffentlich, d2>
+                   unbekannt);	!! <unbekannt, d3>
+
+
+
+
+TOPIC WVAObjekte =
+
+  DOMAIN
+
+    Farbe = (blau,	!! <blau, d1>
+             gruen,	!! <grün, d2>
+             rot,	!! <rot, d3>
+             braun,	!! <braun, d4>
+	     keine);	!! <keine, d5>
+
+    ResSymbTyp = (Vol_5_29,		!! <Vol: 5-29, d1>
+                  Vol_30_1000,		!! <Vol: 30-1000, d2>
+                  Vol_1001_5000,	!! <Vol: 1'001-5'000, d3>
+                  Vol_5001_9999,	!! <Vol: 5'001-9'999, d4>
+                  Vol_10000);		!! <Vol: 10'000-, d5>
+
+    EntnahmebrunnenTyp = (einfacheGWFassung,		!! <einfache GWFassung, d1>
+                          HorizontalfilterBrunnen,	!! <Horizontalfilter-Brunnen, d2>
+                          VertikalfilterBrunnen,	!! <Vertikalfilter-Brunnen, d3>
+                          Sodbrunnen,			!! <Sodbrunnen, d4>
+			  GW_Notbrunnen,		!! <GW Notbrunnen, d5>
+                          Rohr,				!! <Rohr, d6>
+                          unbekannt,			!! <unbekannt, d7>
+                          andere);			!! <andere, d8>
+
+    PWTyp = (Stufenpumpwerk,				!! <Stufenpumpwerk, d1>
+             QuellwasserbehaelterMitStufenpumpwerk,	!! <Quellwasserbehälter mit Stufenpumpwerk, d2>
+             Druckerhoehungspumpwerk);			!! <Druckerhoehungspumpwerk, d3>
+
+    ErfVorlBemerk = (GPS_0_01m,					!! <GPS: 0.01m, d1>
+                     GPS_0_10m,					!! <GPS: 0.10m, d2>
+                     GPS_1_00m,					!! <GPS: 1.00m, d3>
+                     GPS_10_00m,				!! <GPS: 10.00m, d4>
+                     Grundbuchplan_Papier,			!! <Grundbuchplan Papier, d5>
+                     keine_Einpassmoeglichkeit,			!! <keine Einpassmöglichkeit, d6>
+                     nach_muendlicher_Angabe,			!! <nach mündlicher_Angabe, d7>
+                     Schematisch,				!! <Schematisch, d8>
+                     schlechte_Einpassmoeglichkeit,		!! <schlechte_Einpassmöglichkeit, d9>
+                     Vorlage_mit_massiver_Generalisierung,	!! <Vorlage mit massiver Generalisierung, d10>
+                     Vorlage_unzuverlaessig);			!! <Vorlage unzuverlässig, d11>
+
+    ErtragAngaben = (gemessen,			!! <gemessen, d1>
+                     geschaetzt,		!! <geschätzt, d2>
+                     umgerechnet,		!! <umgerechnet, d3>
+                     unbekannt);		!! <unbekannt, d4>
+
+    OberflaeGewFassungTyp = (Seewasserfassung,		!! <Seewasserfassung, d1>
+                             Fliessgewaesserfassung,	!! <Fliessgewässerfassung, d2>
+                             Bachwasserfassung,		!! <Bachwasserfassung, d3>
+                             andere);			!! <andere, d4>
+
+    QWFSchachtTyp = (Brunnenstube,          !! <Brunnenstube, d1>
+                     Sammelschacht,         !! <Sammelschacht, d2>
+                     Reservoir,             !! <Reservoir, d3>
+                     Quellwasser_Pumpwerk,  !! <Quellwasser Pumpwerk, d4>
+                     Laufender_Brunnen,     !! <Laufender Brunnen, d5>
+                     Hyraulischer_Widder,   !! <Hydraulischer Widder, d6>
+                     kein_Schacht);         !! <kein Schacht, d7>
+
+    QuellenTyp = (gefasst,      	!! <gefasst, d1>
+                  ungefasst);      	!! <ungefasst, d2>
+
+    QWFassungsArt = (Schacht,		!! <Schacht, d1>
+                    Sickerleitung,	!! <Sickerleitung, d2>
+                    Stollen,		!! <Stollen, d3>
+                    Felsspalt,		!! <Felsspalt, d4>
+                    unbekannt,		!! <unbekannt, d5>
+                    andere);		!! <andere, d6>
+
+    WasserQualitaet = (ohne_Aufbereitung_als_Trinkwasser_nutzbar,	!! <ohne Aufbereitung als Trinkwasser_nutzbar, d1>
+                      kein_Trinkwasser,					!! <kein Trinkwasser, d2>
+                      Aufbereitung_vorhanden,				!! <Aufbereitung vorhanden, d3>
+                      unbekannt);					!! <unbekannt, d4>
+
+    BetriebsArt = (ausser_Betrieb,	!! <ausser Betrieb, d1>
+                   im_Bau,		!! <im Bau, d2>
+                   in_Betrieb,		!! <in Betrieb, d3>
+                   projektiert,		!! <projektiert, d4>
+                   stillgelegt,		!! <stillgelegt, d5>
+                   unbekannt);		!! <unbekannt, d6>
+
+    DruckRedTyp = (Druckbrecherschacht,	!! <Druckbrecherschacht, d1>
+                   Druckreduzierventil,	!! <Druckreduzierventil, d2>
+                   unbekannt);		!! <unbekannt, d3>
+
+    Nutzungsart = (Brauchwasser,	!! <Brauchwasser, d1>
+                   Laufender_Brunnen,	!! <Laufender Brunnen, d2>
+                   ungenutzt,		!! <ungenutzt, d3>
+                   Trinkwasser,		!! <Trinkwasser, d4>
+                   unbekannt,		!! <unbekannt, d5>
+                   Viehtraenke,		!! <Viehtränke, d6>
+                   Waschwasser_Milch,	!! <Waschwasser Milch, d7>
+                   Turbine);		!! <Turbine, d8>
+
+    Notversorgung = (Normalversorgung,			!! <Normalversorgung, d1>
+                     nur_Notversorgung,			!! <nur Notversorgung, d2>
+                     Not_und_Normalversorgung,		!! <Not und Normalversorgung, d3>
+                     unbekannt);			!! <unbekannt, d4>
+
+    ErfVorlHerkunft = (Amt_fuer_Umweltschutz,	!! <Amt für Umweltschutz, d1>
+                       Kant_Vermessungsamt,	!! <kant. Vermessungsamt, d2>
+                       privater_Betreiber,	!! <privater Betreiber, d3>
+                       Schutzzonen_Bearbeiter,	!! <Schutzzonen Bearbeiter, d4>
+                       Wasserversorgung,	!! <Wasserversorgung, d5>
+                       Eigentuemer,		!! <Eigentümer, d6>
+                       unbekannt,		!! <unbekannt, d7>
+                       andere);			!! <andere, d8>
+
+    Darstellung = (keine,		!! <keine, d1>
+                   M_1_5000,		!! <1:5'000, d2>
+                   M_1_25000,		!! <1:25'000, d3>
+                   M_1_50000,		!! <1:50'000, d4>
+                   M_1_100000,		!! <1:100'000, d5>
+                   M_1_200000);		!! <1:200'000, d6>
+
+    LeitungsArt = (Notverbindung_temporaer,	!! <Notverbindung temporär, d1>
+                   Quellwasserableitung,	!! <Quellwasserableitung, d2>
+                   Versorgungsleitung,		!! <Versorgungsleitung, d3>
+		   Rueckgabeleitung);		!! <Rückgabeleitung, d4>
+
+    ObjektArt = (Hydrant);	!! <Hydrant, d1>
+
+    VerbundArt = (fester_Verbund,			!! <fester Verbund, d1>
+                  anzustrebender_fester_Verbund,	!! <anzustrebender fester Verbund, d2>
+                  Notverbund);				!! <Notverbund, d3>
+
+    KaliberTyp = (Kaliber_1,	!! <Kaliber 1, d1>
+                  Kaliber_2,	!! <Kaliber 2, d2>
+                  Kaliber_3,	!! <Kaliber 3, d3>
+                  Kaliber_4,	!! <Kaliber 4, d4>
+                  Kaliber_5,	!! <Kaliber 5, d5>
+                  Kaliber_6);	!! <Kaliber 6, d6>
+
+    AufbWkrTyp = (AufbWrk,			!! <Aufbereitungswerk, d1>
+                  AufbWrk_RohwaPW,		!! <Aufbereitungswerk Rohwasserpumpwerk, d2>
+                  AufbWrk_ReinwaPW,		!! <Aufbereitungswerk Reinwasserpumpwerk, d3>
+                  AufbWrk_ReinRowwaPW);		!! <Aufbereitungswerk Rein/Rohwasserpumpwerk, d4>
+ 
+ 
+    TABLE Wasserversorgung =
+      WVName: TEXT*254; 
+      Nummer: [0..999]; 
+      EigentumArt: EigentumArt;
+    IDENT
+      Nummer;
+    END Wasserversorgung;
+
+
+    TABLE Adresse =
+      Name: TEXT*60; 
+      Vorname: OPTIONAL TEXT*40; 
+      Adresse: OPTIONAL TEXT*100;  
+      PLZ: OPTIONAL [0..9999];  
+      Ort: OPTIONAL TEXT*100;  
+      TelefonP: OPTIONAL TEXT*15;  
+      TelefonG: OPTIONAL TEXT*15; 
+      Email: OPTIONAL TEXT*100;
+    NO IDENT
+    END Adresse; 
+ 
+    TABLE MutatPerson =
+      MutatPerson: TEXT*100;
+    NO IDENT
+    END MutatPerson;
+
+    TABLE Grundlage =
+      DetailplanArt: OPTIONAL DetailplanArt;
+      DetailplanDatum: OPTIONAL DATE;
+      DetailplanMstab: OPTIONAL DetailplanMstab;
+      DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+      DetailplanBz: OPTIONAL TEXT*100;
+      ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+      GeometrieHerkunft: OPTIONAL Herkunftsart;
+      ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+      KontaktDatum: OPTIONAL DATE;
+      KontaktPerson: OPTIONAL -> Adresse;
+    NO IDENT
+    END Grundlage;   
+
+    TABLE Sammelschacht =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe: Farbe;
+      Leitungsart: LeitungsArt;
+      Name: OPTIONAL TEXT*50;
+      Betriebsart: OPTIONAL BetriebsArt;      
+      Nutzungsart: OPTIONAL Nutzungsart;
+      TechData: OPTIONAL TEXT*50;  
+      Notversorgung: OPTIONAL Notversorgung; 
+      Kanton: OPTIONAL Kanton; 
+      GdeNrBFS: OPTIONAL [0..9999]; 
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung; 
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Sammelschacht;
+
+    TABLE SaSchaWasservsg =
+      Sammelschacht: -> Sammelschacht;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END SaSchaWasservsg;
+
+    TABLE SaSchaDatei =
+      Sammelschacht: -> Sammelschacht;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END SaSchaDatei;   
+
+    TABLE SaSchaNameText =
+      Pos: CHLKoord;
+      Sammelschacht: -> Sammelschacht;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END SaSchaNameText;
+
+    TABLE SaSchaTechDataText =
+      Pos: CHLKoord;
+      Sammelschacht: -> Sammelschacht;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END SaSchaTechDataText;
+
+    TABLE  Pumpwerk =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe: Farbe;
+      Typ: PWTyp;
+      Name:  OPTIONAL TEXT*50;
+      Betriebsart:  OPTIONAL BetriebsArt;
+      Nutzungsart:  OPTIONAL Nutzungsart;
+      TotFoerdermenge: OPTIONAL [0..99999];
+      Techdata1: OPTIONAL TEXT*50;
+      Techdata2: OPTIONAL TEXT*50;
+      Techdata3: OPTIONAL TEXT*50;
+      Techdata4: OPTIONAL TEXT*50;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Pumpwerk;
+
+    TABLE PWFoeMenge =
+      Pumpwerk: -> Pumpwerk;
+      Foerdermenge: [0..99999];
+    NO IDENT
+    END PWFoeMenge;
+
+    TABLE PWWasservsg =
+      Pumpwerk: -> Pumpwerk;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END PWWasservsg;
+
+    TABLE PWDatei =
+      Pumpwerk: -> Pumpwerk;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END PWDatei;   
+
+    TABLE PWNameText =
+      Pos: CHLKoord;
+      Pumpwerk: -> Pumpwerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END PWNameText;
+
+    TABLE PWTechData1Text =
+      Pos: CHLKoord;
+      Pumpwerk: -> Pumpwerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END PWTechData1Text;
+
+    TABLE PWTechData2Text =
+      Pos: CHLKoord;
+      Pumpwerk: -> Pumpwerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END PWTechData2Text;
+
+    TABLE PWTechData3Text =
+      Pos: CHLKoord;
+      Pumpwerk: -> Pumpwerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END PWTechData3Text;
+
+    TABLE PWTechData4Text =
+      Pos: CHLKoord;
+      Pumpwerk: -> Pumpwerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END PWTechData4Text;
+
+    TABLE Reservoir =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      SymbolTyp: ResSymbTyp;
+      Name: OPTIONAL TEXT*50; 
+      WspHoehe: OPTIONAL [0.0..9999.9];
+      Brauchreserve: OPTIONAL TEXT*25;  
+      Loeschreserve: OPTIONAL TEXT*25 ; 
+      Gesamtinhalt: OPTIONAL [0..99999];  
+      Techdata: OPTIONAL TEXT*50;
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Stufenpumpwerk: OPTIONAL -> Pumpwerk;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Reservoir;
+
+    TABLE ResWasservsg =
+      Reservoir: -> Reservoir;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END ResWasservsg;
+
+    TABLE ResDatei =
+      Reservoir: -> Reservoir;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END ResDatei;   
+
+    TABLE ResNameText =
+      Pos: CHLKoord;
+      Reservoir: -> Reservoir;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ResNameText;
+
+    TABLE ResTechDataText =
+      Pos: CHLKoord;
+      Reservoir: -> Reservoir;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ResTechDataText;
+
+    TABLE LaufBrunnen =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe: Farbe;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END LaufBrunnen;
+
+    TABLE LaufBruWasservsg =
+      LaufBrunnen: -> LaufBrunnen;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END LaufBruWasservsg;
+
+    TABLE LaufBruDatei =
+      LaufBrunnen: -> LaufBrunnen;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END LaufBruDatei;   
+
+    TABLE HydWidder =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Name: OPTIONAL TEXT*50;
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END HydWidder;
+
+    TABLE HydWidderWasservsg =
+      HydWidder: -> HydWidder;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END HydWidderWasservsg;
+
+    TABLE HydWidderDatei =
+      HydWidder: -> HydWidder;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END HydWidderDatei;  
+ 
+
+   
+    TABLE Quellschacht =  !! Original Hydrogeologische Objekte
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      GUID: TEXT*38;  !! GUID des Hydrogeologischen Objekts
+      Farbe: Farbe;
+      Typ: QWFSchachtTyp;
+      EtragBrst: OPTIONAL TEXT*50;
+      ErtragGrp: OPTIONAL TEXT*50;
+      Sammelschacht: OPTIONAL -> Sammelschacht; 
+      Reservoir: OPTIONAL -> Reservoir;
+      HydWidder: OPTIONAL -> HydWidder;
+      Pumpwerk: OPTIONAL -> Pumpwerk;
+      LaufBrunnen: OPTIONAL -> LaufBrunnen;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Quellschacht;
+
+    TABLE QueSchaErtragBrstText =
+      Pos: CHLKoord;
+      Quellschacht: -> Quellschacht;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END QueSchaErtragBrstText;
+
+    TABLE QueSchaErtragGrpText =
+      Pos: CHLKoord;
+      Quellschacht: -> Quellschacht;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END QueSchaErtragGrpText;
+
+    TABLE WVAFassungsleitung = 
+      SymbolGeo: CHPolyline; !! stark generalisierte Geometrie für Details Datensatz 
+                             !! Hydrogeologische Objekte konsultieren
+      GUID: TEXT*38;
+      Farbe: Farbe;
+      LeitText: OPTIONAL TEXT*50;
+      Genauigkeit: OPTIONAL (stark_generalisiert);
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson; 
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END WVAFassungsleitung;
+ 
+    TABLE WVAFsgLeitText =
+      Pos: CHLKoord;
+      WVAFassungsleitung: -> WVAFassungsleitung;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END WVAFsgLeitText;
+
+    TABLE Entnahmebrunnen = !! Original Hydrogeologische Objekte
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      GUID: TEXT*38; !! GUID des Hydrogeologischen Objekts
+      Farbe: Farbe;
+      Typ: EntnahmebrunnenTyp;
+      Name: OPTIONAL TEXT*50;
+      Techdata1: OPTIONAL TEXT*50;
+      Techdata2: OPTIONAL TEXT*50;
+      Techdata3: OPTIONAL TEXT*50;
+      Techdata4: OPTIONAL TEXT*50;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Entnahmebrunnen;
+
+    TABLE EntbruNameText =
+      Pos: CHLKoord;
+      Entnahmebrunnen: -> Entnahmebrunnen;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END EntbruNameText;
+
+    TABLE EntbruTechData1Text =
+      Pos: CHLKoord;
+      Entnahmebrunnen: -> Entnahmebrunnen;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END EntbruTechData1Text;
+
+    TABLE EntbruTechData2Text =
+      Pos: CHLKoord;
+      Entnahmebrunnen: -> Entnahmebrunnen;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END EntbruTechData2Text;
+
+    TABLE EntbruTechData3Text =
+      Pos: CHLKoord;
+      Entnahmebrunnen: -> Entnahmebrunnen;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END EntbruTechData3Text;
+
+    TABLE EntbruTechData4Text =
+      Pos: CHLKoord;
+      Entnahmebrunnen: -> Entnahmebrunnen;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END EntbruTechData4Text;
+
+    TABLE RWZisterne =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Name: OPTIONAL TEXT*50;  
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END RWZisterne;
+
+    TABLE RWZistWasservsg =
+      RWZisterne: -> RWZisterne;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END RWZistWasservsg;
+
+    TABLE RWZistDatei =
+      RWZisterne: -> RWZisterne;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END RWZistDatei;   
+
+    TABLE RWZistNameText =
+      Pos: CHLKoord;
+      RWZisterne: -> RWZisterne;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END RWZistNameText;
+
+    TABLE LeitungsnetzWV =
+      Geometrie: CHPolyline;
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Typ: LeitungsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Dimension: OPTIONAL [0.0..9999.9];
+      LeitText: OPTIONAL TEXT*50;  
+      Betriebsart: OPTIONAL BetriebsArt;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Grundlage: OPTIONAL -> Grundlage ;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END LeitungsnetzWV;
+
+    TABLE VerLeitWasservsg =
+      LeitungsnetzWV: -> LeitungsnetzWV;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END VerLeitWasservsg;
+
+    TABLE VerLeitText =
+      Pos: CHLKoord;
+      LeitungsnetzWV: -> LeitungsnetzWV;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END VerLeitText;
+
+    TABLE Kaliberwechsel = 
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      SymbolTyp: KaliberTyp;
+      Leitungsart: LeitungsArt;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Grundlage: OPTIONAL -> Grundlage ;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Kaliberwechsel;
+
+    TABLE KalweWasservsg =
+      Kaliberwechsel: -> Kaliberwechsel;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END KalweWasservsg;
+
+    TABLE Druckreduktion =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Typ:  DruckRedTyp;
+      Leitungsart:  LeitungsArt;
+      Name: OPTIONAL TEXT*50 ;
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Druckeingang: OPTIONAL [0.00..99.99];  
+      Druckausgang: OPTIONAL [0.00..99.99]; 
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Druckreduktion;
+
+    TABLE DruckreWasservsg =
+      Druckreduktion: -> Druckreduktion;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END DruckreWasservsg;
+
+    TABLE DruckreDatei =
+      Druckreduktion: -> Druckreduktion;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END DruckreDatei;   
+
+    TABLE Schieberschacht =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Leitungsart: LeitungsArt;
+      Name: OPTIONAL TEXT*50;  
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Schieberschacht;   
+
+    TABLE SchiSchaWasservsg =
+      Schieberschacht: -> Schieberschacht;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END SchiSchaWasservsg;
+
+    TABLE SchiSchaDatei =
+      Schieberschacht: -> Schieberschacht;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END SchiSchaDatei;   
+
+    TABLE OberflGewFassung = !! Original Hydrogeologische Objekte
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      GUID: TEXT*38;  !! GUID des Hydrogeologischen Objekts
+      Farbe: Farbe;
+      Typ:  OberflaeGewFassungTyp;
+      Tiefe: OPTIONAL [-999..999];
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END OberflGewFassung;   
+
+    TABLE ObflGewFsgTiefeText =
+      Pos: CHLKoord;
+      OberflGewFsg: -> OberflGewFassung;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ObflGewFsgTiefeText;
+
+    TABLE Aufbereitungswerk =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Typ: AufbWkrTyp;
+      Name: OPTIONAL TEXT*50; 
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      FilterLeist: OPTIONAL TEXT*50;
+      Reservoir: OPTIONAL -> Reservoir;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Aufbereitungswerk;
+
+    TABLE AufbWkrWasservsg =
+      Aufbereitungswerk: -> Aufbereitungswerk;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END AufbWkrWasservsg;
+
+    TABLE AufbWkrDatei =
+      Aufbereitungswerk: -> Aufbereitungswerk;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END AufbWkrDatei;   
+
+    TABLE AufbWkrNameText =
+      Pos: CHLKoord;
+      Aufbereitungswerk: -> Aufbereitungswerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END AufbWkrNameText;
+
+    TABLE AufbWkrFilterLeistText =
+      Pos: CHLKoord;
+      Aufbereitungswerk: -> Aufbereitungswerk;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END AufbWkrFilterLeistText;
+
+    TABLE OberflGewRohwaPW = !! Original Hydrogeologische Objekte
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      GUID: TEXT*38; !! GUID des Hydrogeologischen Objekts
+      Farbe: Farbe;
+      Aufbereitungswerk: OPTIONAL -> Aufbereitungswerk;
+      Name: OPTIONAL TEXT*50;
+      TechData: OPTIONAL TEXT*50;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END OberflGewRohwaPW;
+
+    TABLE OGRohwaPWNameText =
+      Pos: CHLKoord;
+      OberflGewRohwaPW: -> OberflGewRohwaPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END OGRohwaPWNameText;
+
+    TABLE OGRohwaPWTechDataText =
+      Pos: CHLKoord;
+      OberflGewRohwaPW: -> OberflGewRohwaPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END OGRohwaPWTechDataText;
+
+    TABLE OberflGewFsgLeitung = !! Original Hydrogeologische Objekte
+      SymbolGeo:  CHPolyline;   !! Generalisierte Verlauf der Leitung
+      GUID: TEXT*38;  !! GUID des Hydrogeologischen Objekts
+      Farbe: Farbe;
+      LeitText: OPTIONAL TEXT*50; 
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END OberflGewFsgLeitung;
+
+    TABLE OGFsgLeitungText =
+      Pos: CHLKoord;
+      OberflGewFsgLeitung: -> OberflGewFsgLeitung;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END OGFsgLeitungText;
+
+    TABLE ReinwasserPW =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Name: OPTIONAL TEXT*50;
+      Betriebsart: OPTIONAL BetriebsArt;
+      Nutzungsart: OPTIONAL Nutzungsart;
+      TotFoerdermenge: OPTIONAL [0..99999];
+      TechData1: OPTIONAL TEXT*50;
+      TechData2: OPTIONAL TEXT*50;
+      TechData3: OPTIONAL TEXT*50;
+      TechData4: OPTIONAL TEXT*50;
+      Aufbereitungswerk: OPTIONAL -> Aufbereitungswerk;
+      Notversorgung: OPTIONAL Notversorgung;
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END ReinwasserPW;
+
+    TABLE ReinwaPWFoeMenge =
+      ReinwasserPW: -> ReinwasserPW;
+      Foerdermenge: [0..99999];
+    NO IDENT
+    END ReinwaPWFoeMenge;
+
+    TABLE ReinwaPWWasservsg =
+      ReinwasserPW: -> ReinwasserPW;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END ReinwaPWWasservsg;
+
+    TABLE ReinwaPWDatei =
+      ReinwasserPW: -> ReinwasserPW;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END ReinwaPWDatei;   
+
+    TABLE ReinwaPWNameText =
+      Pos: CHLKoord;
+      ReinwasserPW: -> ReinwasserPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ReinwaPWNameText;
+
+    TABLE ReinwaPWTechData1Text =
+      Pos: CHLKoord;
+      ReinwasserPW: -> ReinwasserPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ReinwaPWTechData1Text;
+
+    TABLE ReinwaPWTechData2Text =
+      Pos: CHLKoord;
+      ReinwasserPW: -> ReinwasserPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ReinwaPWTechData2Text;
+
+    TABLE ReinwaPWTechData3Text =
+      Pos: CHLKoord;
+      ReinwasserPW: -> ReinwasserPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ReinwaPWTechData3Text;
+
+    TABLE ReinwaPWTechData4Text =
+      Pos: CHLKoord;
+      ReinwasserPW: -> ReinwasserPW;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END ReinwaPWTechData4Text;
+ 
+    TABLE TWTurbine =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Farbe:  Farbe;
+      Name: OPTIONAL TEXT*50;  
+      Betriebsart: OPTIONAL BetriebsArt;
+      Baujahr: OPTIONAL [0..9999]; 
+      Turbine: OPTIONAL TEXT*50;
+      Durchfluss: OPTIONAL [0..999999];
+      Bruttofallhoehe: OPTIONAL [0..9999];
+      Nettofallhoehe: OPTIONAL [0..9999];
+      Turbinenleistung: OPTIONAL [0.0..9999.9];
+      Jahresproduktion: OPTIONAL [0..999999];
+      Kanton: OPTIONAL Kanton;
+      GdeNrBFS: OPTIONAL [0..9999];
+      Lokalitaet: OPTIONAL TEXT*100;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END TWTurbine;
+
+    TABLE TWTurbineWasservsg =
+      TWTurbine: -> TWTurbine;
+      Wasserversorgung: -> Wasserversorgung;
+    NO IDENT
+    END TWTurbineWasservsg;
+
+    TABLE TWTurbineDatei =
+      TWTurbine: -> TWTurbine;
+      Name: TEXT*254;
+      Dateiname: TEXT*254;
+    NO IDENT
+    END TWTurbineDatei;   
+
+    TABLE TWTurbnineNameText =
+      Pos: CHLKoord;
+      TWTurbine: -> TWTurbine;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END TWTurbnineNameText;
+
+
+    !! Hilfsklassen für die Symbolisierung der Karte
+    TABLE AnschriftNummer =
+      Pos: CHLKoord;   
+      Nummer: TEXT*12; 
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+    NO IDENT
+    END AnschriftNummer;   
+
+    TABLE Hilfslinie =
+      SymbolGeo: CHPolyline;
+      Farbe: Farbe;
+    NO IDENT
+    END Hilfslinie;   
+
+
+    !! Objekte der Notversorgung
+
+    TABLE Hydrant =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Nummer: TEXT*10;		
+      Wasserversorgung: -> Wasserversorgung;
+      Notversorgung: OPTIONAL Notversorgung;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Hydrant;   
+
+    TABLE Versorgungsperimeter =
+      Geometrie: OPTIONAL CHSurface;		
+      GUID: TEXT*38;
+      Wasserversorgung: -> Wasserversorgung;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Versorgungsperimeter;   
+
+    TABLE VerPerNameText =
+      Pos: CHLKoord;
+      Versorgungsperimeter: -> Versorgungsperimeter;
+      Farbe: Farbe;
+      Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+      HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+      VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+      Size: OPTIONAL SizeTyp;
+    NO IDENT
+    END VerPerNameText;
+
+ 
+    TABLE Uebergabestelle =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Name: TEXT*50	;
+      UebergabeOrt: TEXT*50;
+      VerbundNr: [0..99];
+      VerbundArt: VerbundArt;			
+      LieferungVon: OPTIONAL -> Versorgungsperimeter;		
+      AusloesungVon: OPTIONAL TEXT*255;	
+      PumpeVon: OPTIONAL BooleanTyp;
+      VerbindungsleitungVon: OPTIONAL [0..9999];
+      LieferungNach: OPTIONAL -> Versorgungsperimeter;	
+      AusloesungNach: OPTIONAL TEXT*255;		
+      PumpeNach: OPTIONAL BooleanTyp;	
+      VerbindungsleitungNach: OPTIONAL [0..9999];
+      Bemerkung: OPTIONAL TEXT*255;		
+      Objekt: OPTIONAL TEXT*38;
+      ObjektArt: OPTIONAL ObjektArt;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Uebergabestelle;   
+
+
+    TABLE Abgabestelle =
+      SymbolGeo: CHLKoord;
+      SymbolRot: OrientierungsTyp;
+      RealY: [480000.00..850000.00];
+      RealX: [ 60000.00..320000.00];
+      GUID: TEXT*38;
+      Hydrant: OPTIONAL	-> Hydrant;	
+      StrassePlatz: OPTIONAL TEXT*100;
+      NaehereBezeichnung: OPTIONAL TEXT*100;
+      Schlauchlaenge: OPTIONAL [0 .. 9999];
+      Wasserversorgung: OPTIONAL -> Wasserversorgung;
+      Grundlage: OPTIONAL -> Grundlage;	
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END Abgabestelle;   
+
+    TABLE NotLeitung =
+      Geometrie: CHPolyline;	
+      GUID: TEXT*38;
+      Name: OPTIONAL TEXT*50	;
+      UebergabeOrt: OPTIONAL TEXT*50;
+      VerbundNr: OPTIONAL [0..99];		
+      LieferungVon: OPTIONAL -> Versorgungsperimeter;		
+      AusloesungVon: OPTIONAL TEXT*255;	
+      PumpeVon: OPTIONAL BooleanTyp;
+      VerbindungsleitungVon: OPTIONAL [0..9999];
+      LieferungNach: OPTIONAL -> Versorgungsperimeter;	
+      AusloesungNach: OPTIONAL TEXT*255;		
+      PumpeNach: OPTIONAL BooleanTyp;	
+      VerbindungsleitungNach: OPTIONAL [0..9999];
+      Bemerkung: OPTIONAL TEXT*255;		
+      Objekt: OPTIONAL TEXT*38;
+      ObjektArt: OPTIONAL ObjektArt;
+      Grundlage: OPTIONAL -> Grundlage;
+      MaxDarst: OPTIONAL Darstellung;
+      MutatPerson: OPTIONAL -> MutatPerson;
+      MutatDatum: OPTIONAL DATE;
+      MutatBemerk: OPTIONAL TEXT*240;
+    IDENT
+      GUID;
+    END NotLeitung;   
+
+  END WVAObjekte.
+
+END ZG_Wasserversorgungsatlas_1_0.
+
+
+FORMAT
+  FREE;
+
+CODE
+  BLANK = DEFAULT, UNDEFINED = DEFAULT, CONTINUE = DEFAULT;
+  TID = ANY;
+END.
+
+

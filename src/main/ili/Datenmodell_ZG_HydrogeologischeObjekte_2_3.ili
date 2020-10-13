@@ -1,0 +1,1599 @@
+TRANSFER INTERLIS1;
+
+!!*********************************************************************************************************************
+!!
+!!	Version:   2.3 
+!! 	Sprache:   Deutsch
+!! 	Dateiname: ZG_HydrogeologischeObjekte_2_3.ili 
+!!	Datum:     07.03.2013
+!! 	Status:    Definitiv
+!!
+!!	History:
+!!			14.05.2018 / Version 2.3 / GIS-Fachstelle Kanton Zug / kole
+!!			Anpassung Koordinatenbereich an LV95 Bezugsrahmen
+!!
+!!			23.05.2014 / Version 2.3 Erweiterungen / GIS-Fachstelle Kanton Zug / kole
+!!			Ergänzug Pos-Tabellen zu folgenden Tables
+!!			- Anreicherungsanlage:			AnrNrAfu
+!!			- Bauten im Grundwasser:		BgwNrAfu
+!!			- Abwassereinleitung:				AweNrAfu
+!!			- Sauberwassereinleitung:		SweNrAfu
+!!			- Versickerungsanlage:			VerNrAfu
+!!
+!!	    07.03.2013 / Version 2.3 / Emch+Berger WSB AG / Vo
+!!			Tabelle neu: QwfMenge_Karte25Pos
+!!
+!!	    28.04.2011 / Version 2.2 / InfoLite AG / ub
+!!			Tabelle neu: BautenGW
+!!			Tabelle neu: BautenGWDatei
+!!			Tabelle neu: AbWaEinleit
+!!			Tabelle neu: AbWaEinleitDatei
+!!			Tabelle neu: SaubWaEinleit
+!!			Tabelle neu: SaubWaEinleitDatei
+!!			Tabelle Versickerungsanlage
+!!				Attribut neu: Art 
+!!			Aufzählung VersickerungTyp geändert
+!!			Aufzählung VersickerungArt neu
+!!			Aufzählung BauenGWTyp neu
+!!			Aufzählung AbWaEinleitTyp neu
+!!			Aufzählung SaubWaEinleitTyp neu
+!!
+!!	    12.08.2010 / Version 2.1 / InfoLite AG / ub
+!!			Tabelle gelöscht: ObFasBewiReg
+!!			Tabelle umbenannt: ObFasKonzReg -> ObFasBewiReg
+!!				Attribut umbenannt: RegisterNummer -> BewiNummer 
+!!			Tabelle umbenannt: EntbruKonzReg -> EntbruBewiReg
+!!				Attribut umbenannt: RegisterNummer -> BewiNummer 
+!!			Tabelle neu: RuebruBewiReg
+!!				     VersiBewiReg
+!!			Tabelle: Rueckgabebrunnen 
+!!				Attribute gelöscht: Bewilligungsuatum, Rueckgabemenge
+!!			Tabelle: Versickerungsanlage 
+!!				Attribute gelöscht: Bewilligungsdatum Versickerungsmenge
+!!
+!!
+!!	    23.12.2008 / Version 2.0 / Anderhub Kartographie AG / ub
+!!			Tabelle gelöscht: SamelWasservsg
+!!			Weitere Änderungen vgl. Dokument ZG_Objektkatalog_HydrogeologischeObjekte_2_0.doc 
+!!			
+!!    	    10.05.2007 / Version 1.4 / Anderhub Kartographie AG / ub
+!!
+!!        Enumeration: 	VerwendungszweckTyp 
+!!				durch Tabelle:
+!!					Verwendungszweck
+!!					EntbruVerZweck
+!!					ObFasVerZweck
+!!					QuelleVerZweck
+!!				ersetzt
+!!
+!!			Tabelle neu:
+!!				ObFasKonzReg
+!!				ObFasBewiReg
+!!				EntbruKonzReg
+!!
+!!			Attribute 
+!!				Bewilligungsdatum
+!!				KonzEntnahmemenge
+!!				Pumpmenge
+!!				aus Tabelle:	Entnahmebrunnen
+!!				in Tabelle:	EntbruKonzReg
+!!				verschoben
+!!
+!!			Attribute 
+!!				Bewilligungsdatum
+!!				Entnahmemenge
+!!				aus Tabelle:
+!!					OberflaechenGewFassung
+!!				in Tabelle:
+!!					ObFasKonzReg
+!!					ObFasBewiReg (nur Bewilligungsdatum)
+!!				verschoben
+!!
+!!			Tabelle: OberflaechenGewFassung
+!!			Attributt neu:	PrivaterNutzer
+!!
+!!			Tabelle: Entnahmebrunnen
+!!			Attributt neu:	PrivaterNutzer
+!!
+!!			Tabelle: Quelle
+!!			Attributt neu:	PrivaterNutzer
+!!
+!!    	08.01.2007 / Version 1.3 / GIS-Fachstelle des Kantons Zug
+!!                 1: m Verknüpfungen für Wasserversorgung auf n:m Verknüpfung geändert
+!!                 => Tabellen neu: AnranlWasservsg
+!!                                  EntbruWasservsg
+!!                                  FassgebWasservsg
+!!                                  ObFasWasservsg
+!!                                  QuelleWasservsg
+!!                                  RuebruWasservsg
+!!                                  SameiWasservsg
+!!                                  VewrsiWasservsg
+!!
+!!
+!!    	28.11.2006 / Version 1.2 / GIS-Fachstelle des Kantons Zug
+!!                 Tabelle Wasserversorgung neu
+!!                 Tabelle Anreicherungsanlage, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Tabelle Entnahmebrunnen, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Tabelle EntnBrunnenObjNrAfuPos in GwfNrAfu_Intranet2Pos unbennant
+!!                 Tabelle GwfNrAfu_Intranet5Pos neu
+!!                 Tabelle Fassungseinzugsgebiet, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Tabelle OberflaechenGewFassung, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Tabelle ObGewFsgObjNrAfuPos in OwfNrAfu_Intranet2Pos unbennant
+!!                 Tabelle OwfNrAfu_Intranet5Pos neu
+!!                 Tabelle Quelle, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Tabelle Quelle, Attribut QuellenTyp neu, Attribut Fassungsart optional
+!!                 Tabelle QuelleObjNrAfuPoson QwfNrAfu_Intranet2Pos unbennant
+!!                 Tabelle QwfNrAfu_Intranet5Pos neu
+!!                 Tabelle Rueckgabebrunnen, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Tabelle Sammeleinrichtung, Attribut WVName Verknüpfung zu Tabelle Wasserversorgung neu
+!!                 Auswahltabelle QWFassungsArt neu
+!!                 
+!!      11.09.2006 / Version 1.1 / Anderhub Kartographie AG / ub
+!!                 Ergänzen der Tabellen durch Feld AuskunftsStelle
+!!
+!!			16.05.2006 / Version 1.0 / Anderhub Kartographie AG / ub 	 
+!!                 Der Version liegt das Datenmodell 'PlanerischerGewaesserschutz' Version: unbekannt, Datum: unbekannt des 
+!!                 Bundesamtes für Umweltschutz Abteilung Gewässerschutz zugrunde. Datei: CH_Gewaesserschutz_Interlis1_V1.ili
+!!                 erhalten am 26.01.2006 von Jakob Günthardt / GIS-Fachstelle des Kantons Zug. 
+!!                 Die vorgenommenen Erweiterungen sind mit 'Version 1.0 Zug' gekennzeichnet.
+!!
+!!*********************************************************************************************************************
+
+
+
+
+MODEL ZG_HydrogeologischeObjekte_2_3
+
+  DOMAIN
+
+    CHLKoord= COORD2
+	      2480000.00 1060000.00
+	      2850000.00 1320000.00;
+
+    CHSurface= SURFACE WITH (ARCS, STRAIGHTS) VERTEX CHLKoord;
+
+    CHPolyline= POLYLINE WITH (ARCS, STRAIGHTS) VERTEX CHLKoord;
+
+!! Version 1.0 Zug: Nachfolgende Definition neu
+    OrientierungsTyp = GRADS 0.000 399.999;
+
+!! Version 1.0 Zug: Einheit von [m3sec] in [l/min] geändert
+    Menge = [0..100000]; !! [l/min]
+
+!! Version 2.0 Zug: Nachfolgende Aufzählung neu
+		BOOLEAN_Typ = ( nein, 	!! <nein, d1>
+				ja );	!! <ja, d2>
+
+    CHSprache = (de,		!! <deutsch, de>
+                 fr,		!! <französisch, fr>
+                 it,		!! <italienisch, it>
+                 rm,		!! <rätoromanisch, rm>
+                 en);		!! <englisch, en>
+
+!! Version 1.0 Zug: geschaetzt, unbekannt zusätzlich
+    Herkunftsart = (Aufnahme,			!! <Aufnahme, d1>
+                    UebernahmeKoordinaten,	!! <Übernahme Koordinaten, d2>
+     	            Planabgriff,		!! <Planabgriff, d3>
+                    konstruktiv,		!! <konstruktiv, d4>
+		    geschaetzt,			!! <geschätzt, d5>
+		    unbekannt,			!! <unbekannt, d6>
+                    andere);			!! <andere, d7>
+
+    Rechtsstatus = (rechtskraeftig,		!! <andere, d1>
+                    provisorisch);		!! <provisorisch, d2>
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+    DetailplanArt = (Plan_digital,	!! <Plan digital, d1>
+		     Plan_analog,	!! <Plan analog, d2>
+		     Uebersichtsplan,	!! <Übersichtsplan, d3>
+		     Landeskarte,	!! <Landeskarte, d4>
+		     Skizze,		!! <Skizze, d5>
+		     andere);		!! <andere, d6>	
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+    DetailplanMstab = (M_1_200, 		!! <1:200, d1>
+                       M_1_500,			!! <1:500, d2>
+                       M_1_1000,		!! <1:1000, d3>
+                       M_1_2000,		!! <1:2000, d4>
+                       M_1_5000,		!! <1:5000, d5>
+                       M_1_10000,		!! <1:10000, d6>
+                       M_1_25000,		!! <1:25000, d7>
+                       andere,			!! <andere, d8>
+                       unbekannt);	!! <unbekannt, d9>
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+    ErfGenauigkeit = (AV_gerechnet,		!! <AV gerechnet, d1>	
+                      Detailplan,		!! <Detailplan, d2>
+                      andere,			!! <andere, d3>
+                      unbekannt);		!! <unbekannt, d4>
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+     Size_Typ = (klein,			!! <klein, d1>
+                 mittel,		!! <mittel, d2>
+                 gross,			!! <Detailplan, d3>
+                 unterdrueckt);		!! <gross, d4>
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+    Kanton = (ZG,		!! <Zug, ZG>
+              ZH,		!! <Zürich, ZH>
+              AG,		!! <Aarau, AG>
+              LU,		!! <Luzern, LU>
+              SZ);		!! <Schwyz, SZ>
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+    PlanTyp = (M_1_1000,	!! <1:1000, d1>
+               M_1_2000, 	!! <1:2000, d2>              
+               M_1_5000,	!! <1:5000, d3>
+               M_1_10000,	!! <1:10000, d4>
+               M_1_25000);	!! <1:25000, d5>
+
+!! Version 1.0 Zug: Nachfolgende Aufzählung neu
+    EigentumArt = (privat,		!! <privat, d1>
+                   oeffentlich,		!! <öffentlich, d2>
+                   unbekannt);		!! <unbekannt, d3>
+
+
+TOPIC HydrogeologischeObjekte =
+
+  DOMAIN
+
+    AnreicherungsanlageTyp = (Anreicherungsanlage,	!! <Anreicherungsanlage, d1>
+                              andere);			!! <andere, d2>
+
+!! Version 2.0 Zug: Aufszählung neu
+		BetriebArt = (in_Betrieb, 		!! <in Betrieb, d1>
+			      ausser_Betrieb, 		!! <ausser Betrieb, d2>
+			      stillgelegt, 		!! <stillgelegt, d3>
+			      ungenutzt,		!! <ungenutzt, d4>
+			      zerstoert,	        !! <zerstört, d5>
+			      unbekannt,		!! <unbekannt, d6>
+			      im_Verwurf);		!! <im Verwurf, d7>
+
+!! Version 1.0 Zug: Rohr, Waermepumpe zusätzlich
+!! Version 2.0 Zug: Rohr, Waermepumpe gelöscht
+    EntnahmebrunnenTyp = (einfacheGWFassung, 			!! <einfache GW Fassung, d1>
+                          HorizontalfilterBrunnen,		!! <Horizontalfilter Brunnen, d2>
+                          VertikalfilterBrunnen,		!! <Vertikalfilter Brunnen, d3>
+                          Sodbrunnen,				!! <Sodbrunnen, d4>
+                          Rohr,					!! <Rohr, d5>
+                          andere,				!! <andere, d6>
+                          unbekannt);				!! <unbekannt, d7>
+
+!! Version 2.0 Zug: Aufszählung neu
+		ErfVorlBemerk = (GPS_0_01m, 				!! <GPS 0.01 m, d1>
+				 GPS_0_10m, 		 		!! <GPS 0.10 m, d2>
+				 GPS_1_00m, 				!! <GPS 1.00 m, d3>
+				 Grundbuchplan_Papier,			!! <Grundbuchplan Papier, d4>
+				 keine_Einpassmoeglichkeit,		!! <keine Einpassmöglichkeit, d5>
+				 nach_muendlicher_Angabe,		!! <nach mündlicher Angabe, d6>
+				 schematisch,				!! <schematisch, d7>
+				 schlechte_Einpassmoeglichkeit,		!! <schlechte Einpassmöglichkeit, d8>
+				 Vorlage_mit_massiver_Generalisierung,	!! <Vorlage mit massiver Generalisierung, d9>
+				 Vorlage_unzuverlaessig);		!! <Vorlage unzuverlässig, d10>
+
+!! Version 2.0 Zug: Aufszählung neu
+		ErtragAngaben = (gemessen,		!! <gemessen, d1>
+				 geschaetzt,		!! <geschätzt, d2>
+				 umgerechnet,		!! <umgerechnet, d3>
+				 unbekannt);		!! <unbekannt, d4>
+
+!! Version 2.0 Zug: Bachwasserfassung gelöscht
+    OberflaeGewFassungTyp = (Seewasserfassung,		!! <Seewasserfassung, d1>
+                             Fliessgewaesserfassung,	!! <Fliessgewässerfassung, d2>
+                             andere);			!! <andere, d3>
+
+!! Version 2.0 Zug: Aufszählung neu
+		QWFSchachtTyp = (Brunnenstube,		!! <Brunnenstube, d1>
+				 Sammelschacht, 	!! <Sammelschacht, d2>
+				 Reservoir,		!! <Reservoir, d3>
+				 Quellwasser_Pumpwerk,	!! <Quellwasser Pumpwerk, d4>
+				 Laufender_Brunnen,	!! <Laufender Brunnen, d5>
+				 Hyraulischer_Widder,	!! <Hydraulischer Widder, d6> 
+				 kein_Schacht);		!! <kein Schacht, d7> 
+
+
+!! Version 1.0 Zug: gefasst zusätzlich
+    QuellenTyp = (gefasst,	!! <gefasst, d1>
+                  ungefasst);	!! <ungefasst, d2>
+
+!! Version 1.2 Zug: Aufszählung neu
+    QWFassungsArt = (Schacht,		!! <Schacht, d1>
+                     Sickerleitung,	!! <Sickerleitung, d2>
+                     Stollen,		!! <Stollen, d3>
+                     Felsspalt,		!! <Felsspalt, d4>
+                     unbekannt,		!! <unbekannt, d5>
+                     andere);		!! <andere, d6>
+
+!! Version 1.0 Zug: punktuell, gebohrt, unbekannt zusätzlich
+!! Version 2.0 Zug: Horizontal_Filterstrecke zusätzlich
+!! punktuell in Punktfassung, gebohrt in Bohrung, Fassungsleitung in Fassungsleitung_Allgemein,
+!! Fassungsleitung_dicht in Fassungsleitung_Vollrohr geändert
+    SammeleinrichtungTyp = (Sickerleitung,		!! <Sickerleitung, d1>
+                            Sammelstollen,		!! <Sammelstollen, d2>
+                            Fassungsleitung_Allgemein,	!! <Fassungsleitung allgemein, d3>
+                            Fassungsleitung_Vollrohr,	!! <Fassungsleitung Vollrohr, d4>
+                            Punktfassung,		!! <Punktfassung, d5>
+                            Bohrung,			!! <Bohrung, d6>
+                            andere,			!! <andere, d7>
+                            unbekannt,			!! <unbekannt, d8>
+                            Horizontal_Filterstrecke);	!! <Horizontal Filterstrecke, d9>
+
+!! Version 2.0 Zug: Aufszählung neu
+		WasserQualitaet = (ohne_Aufbereitung_als_Trinkwasser_nutzbar,	!! <ohne Aufbereitung als Trinkwasser nutzbar, d1>
+				   kein_Trinkwasser,	 			!! <kein Trinkwasser, d2>
+				   Aufbereitung_vorhanden,	 		!! <Aufbereitung vorhanden, d3>
+				   unbekannt);					!! <unbekannt, d4>
+
+!! Version 2.0 Zug: Aufszählung neu
+		FsgLtgRichtung = (bekannt, 				!! <bekannt, d1>
+				  Einlauf_bekannt, 			!! <Einlauf bekannt, d2>
+				  ungefaehr_bekannt, 			!! <ungefähr bekannt, d3>
+				  schematisch, 				!! <schematisch, d4>
+				  unbekannt); 				!! <unbekannt, d5>
+
+!! Version 2.0 Zug: Aufszählung neu
+		FsgLtgLaenge = (bekannt, 			!! <bekannt, d1>
+				ungefaehr_bekannt,	 	!! <ungefähr bekannt, d2>
+				schematisch, 			!! <schematisch, d3>
+				unbekannt); 			!! <unbekannt, d4>
+
+!! Version 2.0 Zug: Aufszählung neu
+		Notversorgung = (nicht_geeignet, 		!! <nicht geeignet, d1>
+				 nur_Notversorgung, 		!! <nur Notversorgung, d2>
+				 Not_und_Normalversorgung, 	!! <Not und Normalversorgung, d3>
+				 unbekannt); 			!! <unbekannt, d4>
+
+!! Version 2.2 Zug: Aufszählung ersetzt
+		VersickerungTyp = (Versickerungsbecken,		!!<Versickerungsbecken, d1>
+                               	   Versickerungsgraben,		!!<Versickerungsgraben, d2>
+                                   Rigolenversickerung,		!!<Rigolenversickerung, d3>
+                                   Kieskoerper,			!!<Kieskörper, d4>
+                                   Sickerschacht,		!!<Sickerschacht, d5>
+                                   Sickerstrang_Galerie,	!!<Sickerstrang/Galerie, d6>
+                                   Sonstige,			!!<Sonstige, d7>
+				   unbekannt			!!<unbekannt, d8>
+				  );
+
+!! Version 2.2 Zug: Aufszählung neu
+		VersickerungArt = (Typ_F,		!!<Typ F (flächige Versickerung), d1>
+				   Typ_H,		!!<Typ H (Versickerung mit Bodenpassage), d2>
+				   Typ_K,		!!<Typ K (Versickerung ohne Bodenpassage), d3>
+		      		   unbekannt		!!<unbekannt, d4>
+			          );
+
+!! Version 2.2 Zug: Aufszählung neu
+	BauenGWTyp = (Bauten,	  		!!<Bauten, d1>
+		      Bohrung,  		!!<Bohrung, d2>
+		      Spundwand_Schlitzwand,	!!<Spundwand/Schlitzwand, d3>
+		      Leitung,  		!!<Leitung, d4>
+		      Pfahlung,  		!!<Pfählung, d5>
+		      Sonstige,  		!!<Sonstige, d6>
+		      unbekannt			!!<unbekannt, d7>
+		     );
+
+!! Version 2.2 Zug: Aufszählung neu
+		AbWaEinleitTyp = (SABA,				!!<SABA (Strassenabwasserbehandlungsanlage), d1>
+                              	  Industrie,			!!<Industrie, d2>
+                              	  ARA,				!!<ARA (Abwasserreinigungsanlage), d3>
+                              	  KLARA,			!!<KLARA (Kleinkläranlage), d4>
+                              	  Mischwasserentlastung,	!!<Mischwasserentlastung, d5>
+                              	  Sonstige,			!!<Sonstige, d6>
+				  unbekannt			!!<unbekannt, d7>
+                              	 );
+
+!! Version 2.2 Zug: Aufszählung neu
+		SaubWaEinleitTyp = (Meteorwasser,			!!<Meteorwasser, d1>
+				    Strassenabwasser,			!!<Strassenabwasser, d2>
+				    landwirtschaftliche_Drainagen,	!!<landwirtschaftliche Drainagen, d3>
+				    Sonstige,				!!<Sonstige, d4>
+				    unbekannt				!!<unbekannt, d5>
+                              	   );
+
+
+!! Version 2.0 Zug: Aufszählung neu
+
+	ErfVorlHerkunft = (Amt_fuer_Umweltschutz,	!! <Amt für Umweltschutz, d1>
+			   Kant_Vermessungsamt,		!! <Kant Vermessungsamt, d2>
+			   privater_Betreiber,		!! <privater Betreiber, d3>
+			   Schutzzonen_Bearbeiter,	!! <Schutzzonen Bearbeiter, d4>
+			   Wasserversorgung,		!! <Wasserversorgung, d5>
+			   Eigentuemer,			!! <Eigentümer, d6>
+			   unbekannt,			!! <unbekannt, d7>
+			   andere);			!! <andere, d8>
+
+			
+!! Version 1.0 Zug: Textlänge von 767 auf 254 gekürztSameiWasservsgSameiWasservsg
+    Langtext = TEXT*254;
+
+  !! Version 1.0 Zug: Kommentar TEXT*10 entfernt      
+     CHDatum = DATE;
+
+
+!! Version 1.2 Zug: Nachfolgende Tabelle neu
+   TABLE Wasserversorgung =
+     WVName: Langtext;
+   NO IDENT
+   END Wasserversorgung;
+
+!! Version 1.4 Zug: Nachfolgende Tabelle neu
+   TABLE Verwendungszweck =
+     Zweck: Langtext;
+   NO IDENT
+   END Verwendungszweck;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE Pumpenanlage =
+     AnzahlPumpen: OPTIONAL [0..99];
+     Pumpmenge: OPTIONAL [0..99999];
+     PumpenBetrieb: OPTIONAL Langtext;
+   NO IDENT
+   END Pumpenanlage;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE Pumpe =
+     Pumpenanlage: -> Pumpenanlage;
+     PumpeNummer: OPTIONAL [0..99];
+     Foerdermenge: OPTIONAL [0..99999];				!! [l/min]
+     MotorLeistung: OPTIONAL [0.0..999.9];			!! [kW]
+   NO IDENT
+   END Pumpe;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE Adresse =
+     Name: TEXT*60;
+     Vorname: OPTIONAL TEXT*40;
+     Adresse: OPTIONAL TEXT*100;
+     PLZ: OPTIONAL [0..99999];
+     Ort: OPTIONAL TEXT*100;
+     TelefonP: OPTIONAL TEXT*15;
+     TelefonG: OPTIONAL TEXT*15;
+     Email: OPTIONAL TEXT*100;
+   NO IDENT
+   END Adresse;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE MutatPerson =
+     MutatPerson: TEXT*100;
+   NO IDENT
+   END MutatPerson;
+
+!! Version 1.0 Zug: 
+!! Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand, Anreicherungsmenge
+!! Version 2.0 Zug: 
+!! Zusätzliche Attribute: BetriebArt, Lokalitaet, MutatPerson, MutatBemerk, DetailplanDatum
+!! DetailplanHerkunft, DetailplanNr, ErfVorlBemerk
+!! Gelöscht: Herkunft
+   TABLE Anreicherungsanlage =
+     Lage: CHLKoord;
+     Typ: AnreicherungsanlageTyp;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     Bewilligungsdatum: OPTIONAL CHDatum;
+     BetriebArt: OPTIONAL BetriebArt;
+     Anreicherungsmenge: OPTIONAL Menge;  !! [l/min], Version 1.0 Zug: Einheit von 'CubicMeterPerSecond [m3sec]' in [l/min] geändert
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END Anreicherungsanlage;
+
+!! Version 1.3 Zug: Tabelle neu:
+   TABLE AnranlWasservsg =
+     Anreicherungsanlage: -> Anreicherungsanlage;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END AnranlWasservsg;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE AnranlDatei =
+     Anreicherungsanlage: -> Anreicherungsanlage;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END AnranlDatei;
+   
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Anreicherungsanlage mit ObjNrAfu im Massstab 1:2000
+   TABLE AnrNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     Anreicherungsanlage: -> Anreicherungsanlage;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  AnrNrAfu_Intranet2Pos;
+
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Anreicherungsanlage mit ObjNrAfu im Massstab 1:5000
+   TABLE AnrNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     Anreicherungsanlage: -> Anreicherungsanlage;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  AnrNrAfu_Intranet5Pos;
+
+!! Version 1.0 Zug: 
+!! Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, EigentumArt, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand, KonzEntnahmemenge, Pumpmenge
+!! Version 2.0 Zug: 
+!! Zusätzliche Attribute: BetriebArt, Notversorgung, FilterrohrDimension, TiefeTerrAbstich
+!! WspHoeheTiefst, Pumpenanlage, K_Wert, WqualiBemerkung, SchzNr, SchzPflicht, SchzGutachten
+!! SchzGutAutor, SchzGutDatum, Lokalitaet, HoeheTerrAbstich, MutatPerson, MutatBemerk
+!! DetailplanDatum, DetailplanHerkunft, DetailplanNr, ErfVorlBemerk, QkatPlanNr
+!! FassgEigentuemer, GrundEigentuemer, GrundstNr, KontaktDatum, KontaktPerson
+!! Gelöscht: Herkunft
+   TABLE Entnahmebrunnen =
+     Lage: CHLKoord;
+     Typ: EntnahmebrunnenTyp;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     EigentumArt: OPTIONAL EigentumArt;
+     PrivaterNutzer: OPTIONAL Langtext;
+     BetriebArt: OPTIONAL BetriebArt;
+     Notversorgung: OPTIONAL Notversorgung;
+     FilterrohrDimension: OPTIONAL [0..9999];	!! in [mm]
+     TiefeTerrAbstich: OPTIONAL [0.00..999.99]; !! in [m]
+     WspHoeheTiefst: OPTIONAL  [0.00..9999.99]; !! Höhe m ü.M. 
+     Pumpenanlage: OPTIONAL -> Pumpenanlage;
+     K_Wert: OPTIONAL [0.000..99.999]; !! [10^-3 m/s]
+     WqualiBemerkung: OPTIONAL WasserQualitaet;
+     SchzNr: OPTIONAL [0..99999];	
+     SchzPflicht: OPTIONAL BOOLEAN_Typ;
+     SchzGutachten: OPTIONAL BOOLEAN_Typ;
+     SchzGutAutor: OPTIONAL TEXT*100; 
+     SchzGutDatum: OPTIONAL CHDatum;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     HoeheTerrAbstich: OPTIONAL [0.00..9999.99];
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL  [0..999];
+     FassgEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse; 
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END Entnahmebrunnen;
+
+!! Version 1.3 Zug: Tabelle neu:
+   TABLE EntbruWasservsg =
+     Entnahmebrunnen: -> Entnahmebrunnen;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END EntbruWasservsg;
+
+!! Version 1.4 Zug: Tabelle neu:
+   TABLE EntbruVerZweck =
+     Entnahmebrunnen: -> Entnahmebrunnen;
+     Verwendungszweck: -> Verwendungszweck;
+   NO IDENT
+   END EntbruVerZweck;
+
+!! Version 1.4 Zug: Nachfolgende Tabelle neu
+    TABLE EntbruBewiReg =
+     Entnahmebrunnen: -> Entnahmebrunnen;
+     BewiNummer: [0..99999];
+     Entnahmemenge: OPTIONAL Menge;  !! [l/min]
+     Pumpmenge: OPTIONAL Menge; !! [l/min]
+     Datum: OPTIONAL CHDatum;
+    NO IDENT
+    END EntbruBewiReg;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+    TABLE EntbruZsBeZu =
+     EntbruGUID: TEXT*38;  !! UUID
+     ZsBeZuGUID: TEXT*38;  !! UUID
+    NO IDENT
+    END EntbruZsBeZu;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE EntbruGWSZone =
+     EntbruGUID: TEXT*38;  !! UUID
+     GWSZoneGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END EntbruGWSZone;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE EntbruGSBAoTw =
+     EntbruGUID: TEXT*38;  !! UUID
+     GSBAoTwGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END EntbruGSBAoTw;
+
+!! Version 1.0 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der Entnahmebrunnen mit ObjNrAfu im Massstab 1:2000
+   TABLE GwfNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     Entnahmebrunnen: -> Entnahmebrunnen;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  GwfNrAfu_Intranet2Pos;
+
+!! Version 1.2 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der Entnahmebrunnen mit ObjNrAfu im Massstab 1:5000
+   TABLE GwfNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     Entnahmebrunnen: -> Entnahmebrunnen;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  GwfNrAfu_Intranet5Pos;
+
+!! Version 2.0 Zug: Tabelle neu:
+   TABLE EntbruDatei =
+     Entnahmebrunnen: -> Entnahmebrunnen;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END EntbruDatei;
+
+!! Version 1.0 Zug: Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand
+!! Gelöschtes Attribut: Lage
+   TABLE Fassungseinzugsgebiet =
+     Geometrie: CHSurface;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     Bewilligungsdatum: OPTIONAL CHDatum;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END Fassungseinzugsgebiet;
+
+!! Version 1.3 Zug: Tabelle neu
+   TABLE FassgebWasservsg =
+     Fassungseinzugsgebiet: -> Fassungseinzugsgebiet;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END FassgebWasservsg;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE OberflGewRohwaPW =
+     Lage: CHLKoord;
+     Typ: (RohwasserPW);							!! <Rohwasserpumpwerk, d1>
+     Name: OPTIONAL TEXT*50;
+     EigentumArt: OPTIONAL EigentumArt;
+     BetriebArt: OPTIONAL BetriebArt;
+     Pumpenanlage: OPTIONAL -> Pumpenanlage;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL  [0..999];
+     AnlageEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse; 
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END OberflGewRohwaPW;
+
+!! Version 1.0 Zug: Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, EigentumArt, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand, Entnahmemenge
+!! Version 2.0 Zug: 
+!! Zusätzliche Attribute: BetriebArt, Notversorgung, Tiefe, SchzNr, SchzPflicht, SchzGutachten,
+!! SchzGutAutor, SchzGutDatum, OberflGewRohwPW, OberflGewRohwPW, Lokalitaet,
+!! MutatPerson, MutatBemerk, DetailplanDatum, DetailplanHerkunft, DetailplanNr, ErfVorlBemerk
+!! Gelöscht: Entnahmeart
+   TABLE OberflaechenGewFassung =
+     Lage: CHLKoord;
+     Typ: OberflaeGewFassungTyp;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     EigentumArt: OPTIONAL EigentumArt;
+     PrivaterNutzer: OPTIONAL Langtext;
+     BetriebArt: OPTIONAL BetriebArt;
+     Notversorgung: OPTIONAL Notversorgung;
+     Tiefe: OPTIONAL  [0..999];	!! [m]
+     SchzNr: OPTIONAL [0..9999];	
+     SchzPflicht: OPTIONAL BOOLEAN_Typ;
+     SchzGutachten: OPTIONAL BOOLEAN_Typ;
+     SchzGutAutor: OPTIONAL TEXT*100;
+     SchzGutDatum: OPTIONAL CHDatum;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100; 
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL  [0..999];
+     FassgEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse; 
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GewAbschnittCode: OPTIONAL [1000..9999];
+     GewAbschnittKm: OPTIONAL [0..1000];
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END OberflaechenGewFassung;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE OberflGewFsgLeitung =
+     Geometrie: CHPolyline;
+     Typ: (Fassungsleitung);					!! <Fassungsleitung, d1>
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     OberflGewRohwPW: OPTIONAL -> OberflGewRohwaPW;
+     OberflaechenGewFassung: OPTIONAL -> OberflaechenGewFassung;
+     LtgDimension: OPTIONAL [0.0..9999.9];
+     Bemerkungen: OPTIONAL Langtext;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END OberflGewFsgLeitung;
+
+!! Version 1.4 Zug: Tabelle neu:
+   TABLE ObFasVerZweck =
+     OberflaechenGewFassung: -> OberflaechenGewFassung;
+     Verwendungszweck: -> Verwendungszweck;
+   NO IDENT
+   END ObFasVerZweck;
+
+!! Version 1.3 Zug: Tabelle neu:
+   TABLE ObFasWasservsg =
+     OberflaechenGewFassung: -> OberflaechenGewFassung;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END ObFasWasservsg;
+
+!! Version 1.4 Zug: Nachfolgende Tabelle neu
+   TABLE ObFasBewiReg =
+      OberflaechenGewFassung: -> OberflaechenGewFassung;
+      BewiNummer: [0..99999];
+      Datum: OPTIONAL CHDatum;
+      Entnahmemenge: OPTIONAL Menge;  !! [l/min]
+   NO IDENT
+   END ObFasBewiReg;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE ObFasZsBeZu =
+     ObGewFasGUID: TEXT*38;  !! UUID
+     ZsBeZuGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END ObFasZsBeZu;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE ObFasGSBAoTw =
+     ObGewFasGUID: TEXT*38;  !! UUID
+     GSBAoTwGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END ObFasGSBAoTw;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE ObFasGWSZone =
+     ObGewFasGUID: TEXT*38;  !! UUID
+     GWSZoneGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END ObFasGWSZone;
+
+!! Version 1.0 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der OberflaechenGewFassung mit ObjNrAfu im Massstab 1:2000
+   TABLE OwfNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     OberflaechenGewFassung: -> OberflaechenGewFassung;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END OwfNrAfu_Intranet2Pos;
+
+
+!! Version 1.2 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der OberflaechenGewFassung mit ObjNrAfu im Massstab 1:5000
+   TABLE OwfNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     OberflaechenGewFassung: -> OberflaechenGewFassung;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END OwfNrAfu_Intranet5Pos;
+
+
+!! Version 1.0 Zug: Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, EigentumArt, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand
+!! Version 2.0 Zug:
+!! Tabelle unbenannt:
+!! Quelle in Quellschacht 
+!! Zusätzliche Attribute: BetriebArt, Notversorgung, ErtragMinAng, ErtragMaxAng, ErtragMittlAng
+!! WqualiBemerkung, SchzNr, SchzPflicht, SchzGutachten, SchzGutAutor, SchzGutDatum, Lokalitaet
+!! HoeheTerrain, MutatPerson, MutatBemerk, DetailplanDatum, DetailplanHerkunft, DetailplanNr
+!! ErfVorlBemerk, QkatPlanNr, FassgEigentuemer, GrundEigentuemer, GrundstNr, KontaktDatum
+!! KontaktPerson
+!! Gelöscht: Bewilligungsdatum, QuellenTyp
+   TABLE Quellschacht =
+     Lage: CHLKoord;
+     Typ: QWFSchachtTyp;
+     Fassungsart: OPTIONAL QWFassungsArt;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     EigentumArt: OPTIONAL EigentumArt;
+     PrivaterNutzer: OPTIONAL TEXT*240;
+     BetriebArt: OPTIONAL BetriebArt;
+     Notversorgung: OPTIONAL Notversorgung;
+     SchuettmengeMin: OPTIONAL Menge;  !! [l/min], Version 1.0 Zug: Einheit von 'CubicMeterPerSecond [m3sec]' in [l/min] geändert
+     ErtragMinAng: OPTIONAL ErtragAngaben;  
+     SchuettmengeMax: OPTIONAL Menge;  !! [l/min], Version 1.0 Zug: Einheit von 'CubicMeterPerSecond [m3sec]' in [l/min] geändert
+     ErtragMaxAng: OPTIONAL ErtragAngaben;  
+     SchuettmengeMittl: OPTIONAL Menge;  !! [l/min], Version 1.0 Zug: Einheit von 'CubicMeterPerSecond [m3sec]' in [l/min] geändert
+     ErtragMittlAng: OPTIONAL ErtragAngaben;
+     WqualiBemerkung: OPTIONAL WasserQualitaet;
+     SchzNr: OPTIONAL [0..99999];	
+     SchzPflicht: OPTIONAL BOOLEAN_Typ;
+     SchzGutachten: OPTIONAL BOOLEAN_Typ;
+     SchzGutAutor: OPTIONAL TEXT*100;
+     SchzGutDatum: OPTIONAL CHDatum;	 
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;  !! Version 1.0: Zusätzliches Attribut
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     HoeheTerrain: OPTIONAL [0000.00..9999.99];	 !! Höhe m ü.M. 
+     HoeheAuslauf: OPTIONAL [0000.00..9999.99];	 !! Höhe m ü.M. 
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL [0..999];
+     FassgEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*100;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END Quellschacht;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE QwFsgEndpunkt =
+     Lage: CHLKoord;
+     Typ: QuellenTyp;
+     Quellschacht: OPTIONAL -> Quellschacht;
+     Fassungsart: OPTIONAL QWFassungsArt;
+     Name: OPTIONAL TEXT*50;
+     ObjektNummer: OPTIONAL [0..99];
+     EigentumArt: OPTIONAL EigentumArt;
+     PrivaterNutzer: OPTIONAL Langtext;
+     BetriebArt: OPTIONAL BetriebArt;
+     Notversorgung: OPTIONAL Notversorgung;
+     SchuettmengeMin: OPTIONAL Menge; 
+     ErtragMinAng: OPTIONAL ErtragAngaben;  
+     SchuettmengeMax: OPTIONAL Menge; 
+     ErtragMaxAng: OPTIONAL ErtragAngaben;  
+     SchuettmengeMittl: OPTIONAL Menge; 
+     ErtragMittlAng: OPTIONAL ErtragAngaben;
+     WqualiBemerkung: OPTIONAL WasserQualitaet;
+     SchzNr: OPTIONAL [0..99999];	
+     SchzPflicht: OPTIONAL BOOLEAN_Typ;
+     SchzGutachten: OPTIONAL BOOLEAN_Typ;
+     SchzGutAutor: OPTIONAL TEXT*100;
+     SchzGutDatum: OPTIONAL CHDatum;	 
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100; 
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     HoeheTerrain: OPTIONAL [0000.00..9999.99];		!! Höhe m ü.M. 
+     HoeheAuslauf: OPTIONAL [0000.00..9999.99];	 !! Höhe m ü.M. 
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL [0..999];
+     FassgEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*100;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END QwFsgEndpunkt;
+
+!! Version 1.3 Zug: Tabelle neu:
+!! Version 2.0 Zug: Feld unbenannt:
+!! Quelle in Quellschacht
+   TABLE QuellSchWasservsg =
+     Quellschacht: -> Quellschacht;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END QuellSchWasservsg;
+
+!! Version 1.4 Zug: Tabelle neu:
+!! Version 2.0 Zug: Feld unbenannt:
+!! Quelle in Quellschacht
+   TABLE QuellSchVerZweck =
+     Quellschacht: -> Quellschacht;
+     Verwendungszweck: -> Verwendungszweck;
+   NO IDENT
+   END QuellSchVerZweck;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE QuellSchZsBeZu =
+     QuellSchGUID: TEXT*38;  !! UUID
+     ZsBeZuGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END QuellSchZsBeZu;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE QuellSchGWSZone =
+     QuellSchGUID: TEXT*38;  !! UUID
+     GWSZoneGUID: TEXT*38;  !! UUID
+   NO IDENT
+    END QuellSchGWSZone;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE QuellSchGSBAoTw =
+      QuellSchGUID: TEXT*38;  !! UUID
+     GSBAoTwGUID: TEXT*38;  !! UUID
+   NO IDENT
+   END QuellSchGSBAoTw;
+
+!! Version 1.0 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der Quelle mit ObjNrAfu im Massstab 1:2000
+!! Version 2.0 Zug: Feld unbenannt:
+!! Quelle in Quellschacht
+   TABLE QwfNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     Quellschacht: -> Quellschacht;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  QwfNrAfu_Intranet2Pos;
+
+
+!! Version 1.2 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der Quelle mit ObjNrAfu im Massstab 1:5000
+!! Version 2.0 Zug: Feld unbenannt:
+!! Quelle in Quellschacht
+   TABLE QwfNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     Quellschacht: -> Quellschacht;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  QwfNrAfu_Intranet5Pos;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE QuellSchDatei =
+     Quellschacht: -> Quellschacht;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END QuellSchDatei;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE QwFsgEndpktDatei =
+     QwFsgEndpunkt: -> QwFsgEndpunkt;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END QwFsgEndpktDatei;
+
+
+!! Version 1.0 Zug: 
+!! Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand, Rueckgabemenge
+!! Version 2.0 Zug: 
+!! Zusätzliche Attribute: Entnahmebrunnen, EigentumArt, BetriebArt, Lokalitaet
+!! MutatPerson, MutatBemerk, DetailplanDatum, DetailplanHerkunft, DetailplanNr
+!! ErfVorlBemerk
+!! Gelöscht: Herkunft
+   TABLE Rueckgabebrunnen =
+     Lage: CHLKoord;
+     Typ: VersickerungTyp;  							!! Version 2.0 Zug:  In VersicherungTyp umgewandelt
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     EigentumArt: OPTIONAL EigentumArt;
+     BetriebArt: OPTIONAL BetriebArt;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;  !! Version 1.0: Zusätzliches Attribut
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL [0..999];
+     AnlageEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END Rueckgabebrunnen;
+
+!! Version 2.1 Zug: Tabelle neu
+   TABLE RuebruBewiReg =
+      Rueckgabebrunnen: -> Rueckgabebrunnen;
+      BewiNummer: [0..99999];
+      Datum: OPTIONAL CHDatum;
+      Versickerungsmenge: OPTIONAL Menge;  !! [l/min]
+   NO IDENT
+   END RuebruBewiReg;
+
+!! Version 2.0 Zug: Tabelle neu:
+   TABLE RueckgabeLeitung =
+     Geometrie: CHPolyline;
+     Typ: (Rueckgabe_Leitung); !! <Rückgabeleitung, d1> 
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Entnahmebrunnen: OPTIONAL -> Entnahmebrunnen;
+     Rueckgabebrunnen: OPTIONAL -> Rueckgabebrunnen;
+     LtgDimension: OPTIONAL [0.0..9999.9];
+     Bemerkungen: OPTIONAL Langtext;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END RueckgabeLeitung;
+
+!! Version 1.3 Zug: Tabelle neu:
+   TABLE RuebruWasservsg =
+     Rueckgabebrunnen: -> Rueckgabebrunnen;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END RuebruWasservsg;
+
+!! Version 2.0 Zug: Tabelle neu:
+   TABLE RuebruuDatei =
+     Rueckgabebrunnen: -> Rueckgabebrunnen;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END RuebruuDatei;
+
+!! Version 1.0 Zug: Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand
+!! Gelöschtes Attribut: Lage
+!! Version 2.0 Zug: Tabelle umbenannt
+!! Sammeleinrichtung in SammeleinrichtungQwf
+!! Zusätzliche Attribute: Quellschacht, FsgStrangNr, FsgLeitungRichtung, FsgLeitungLaenge
+!! BetriebArt, SchuettmengeMin, ErtragMinAng, SchuettmengeMax, ErtragMaxAng, SchuettmengeMittl
+!! ErtragMittlAng, MutatPerson, MutatBemerk, DetailplanDatum, DetailplanHerkunft
+!! DetailplanNr, ErfVorlBemerk
+!! Gelöscht: ObjNrAfu, AuskunftsStelle, Bewilligungsdatum, Kanton, GdeNrBFS
+   TABLE SammeleinrichtungQwf =
+     Geometrie: CHPolyline;
+     Typ: SammeleinrichtungTyp;
+     Quellschacht: OPTIONAL -> Quellschacht;
+     FsgHorizont: OPTIONAL TEXT*10;
+     FsgStrangNr: OPTIONAL TEXT*10;
+     FsgHorizontKote: OPTIONAL [0000.00..9999.99];
+     LtgDimension: OPTIONAL [0.0..9999.9];
+     FsgLeitungRichtung: OPTIONAL FsgLtgRichtung;
+     FsgLeitungLaenge: OPTIONAL FsgLtgLaenge;
+     BetriebArt: OPTIONAL BetriebArt;
+     SchuettmengeMin: OPTIONAL [0..99999];
+     ErtragMinAng: OPTIONAL ErtragAngaben;
+     SchuettmengeMax: OPTIONAL [0..99999];
+     ErtragMaxAng: OPTIONAL ErtragAngaben;
+     SchuettmengeMittl: OPTIONAL [0..99999];
+     ErtragMittlAng: OPTIONAL ErtragAngaben;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft:  OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END SammeleinrichtungQwf;
+
+!! Version 2.0 Zug: Tabelle neu
+   TABLE SammeleinrichtungGwf =
+     Geometrie: CHPolyline;
+     Typ: SammeleinrichtungTyp;
+     Entnahmebrunnen: OPTIONAL -> Entnahmebrunnen;
+     FsgHorizont: TEXT*10;
+     FsgStrangNr: TEXT*10;
+     FsgHorizontKote: OPTIONAL [0000.00..9999.99];
+     LtgDimension: OPTIONAL [0.0..9999.9];
+     FsgLeitungRichtung: OPTIONAL FsgLtgRichtung;
+     FsgLeitungLaenge: OPTIONAL FsgLtgLaenge;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END SammeleinrichtungGwf;
+
+!! Version 1.0 Zug: Zusätzliche Attribute:
+!! GUID, Kanton, ObjNrAfu, GdeNrBFS, DetailplanArt, DetailplanMstab, ErfGenauigkeit
+!! Attribute OPTIONAL: Bewilligungsdatum, Nachfuehrungsstand, Versickerungsmenge,
+!! Qualitaet
+!! Version 2.0 Zug: 
+!! Zusätzliche Attribute: BetriebArt, Lokalitaet, MutatPerson, MutatBemerk, DetailplanDatum
+!! DetailplanHerkunft, DetailplanNr, ErfVorlBemerk
+!! Gelöscht: Herkunft
+   TABLE Versickerungsanlage =
+     Lage: CHLKoord;
+     Typ: VersickerungTyp;  							!! Version 2.0 Zug:  In VersicherungTyp umgewandelt
+     Art: OPTIONAL VersickerungArt;						!! Version 2.2 Zug:  Attribut neu
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     BetriebArt: OPTIONAL BetriebArt;
+     Qualitaet: OPTIONAL (belastet,		!! <belastet, d1> 
+                          unbelastet);	 	!! <unbelastet, d2> 
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;  !! Version 1.0: Zusätzliches Attribut
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL [0..999];
+     AnlageEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END Versickerungsanlage;
+
+!! Version 2.1 Zug: Tabelle neu:
+    TABLE VersiBewiReg =
+      Versickerungsanlage: -> Versickerungsanlage;
+      BewiNummer: [0..99999];
+      Datum: OPTIONAL CHDatum;
+      Versickerungsmenge: OPTIONAL Menge;  !! [l/min]
+    NO IDENT
+    END VersiBewiReg;
+
+!! Version 1.3 Zug: Tabelle neu:
+   TABLE VersiWasservsg =
+     Versickerungsanlage: -> Versickerungsanlage;
+     Wasserversorgung: -> Wasserversorgung;
+   NO IDENT
+   END VersiWasservsg;
+
+!! Version 2.0 Zug: Nachfolgende Tabelle neu
+   TABLE VersiDatei =
+     Versickerungsanlage: -> Versickerungsanlage;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END VersiDatei;
+   
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Versickerungsanlage mit ObjNrAfu im Massstab 1:2000
+   TABLE VerNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     Versickerungsanlage: -> Versickerungsanlage;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  VerNrAfu_Intranet2Pos;
+
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Versickerungsanlage mit ObjNrAfu im Massstab 1:5000
+   TABLE VerNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     Versickerungsanlage: -> Versickerungsanlage;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  VerNrAfu_Intranet5Pos;   
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   !! Bauten im Grundwasser 
+   TABLE BautenGW =
+     Lage: CHLKoord;
+     Typ: BauenGWTyp;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     AnlageEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END BautenGW;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE BautenGWFlaeche =
+     BautenGW: -> BautenGW;
+     Geometrie: CHSurface; 
+   NO IDENT
+   END BautenGWFlaeche;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE BautenGWBewiReg =
+      BautenGW: -> BautenGW;
+      BewiNummer: [0..99999];
+      Datum: OPTIONAL CHDatum;
+   NO IDENT
+   END BautenGWBewiReg;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE BautenGWDatei =
+     BautenGW: -> BautenGW;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END BautenGWDatei;
+   
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Bauten im Grundwasser mit ObjNrAfu im Massstab 1:2000
+   TABLE BgwNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     BautenGW: -> BautenGW;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  BgwNrAfu_Intranet2Pos;
+
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Bauten im Grundwasser mit ObjNrAfu im Massstab 1:5000
+   TABLE BgwNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     BautenGW: -> BautenGW;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  BgwNrAfu_Intranet5Pos;   
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   !! Abwassereinleitung
+   TABLE AbWaEinleit =
+     Lage: CHLKoord;
+     Typ: AbWaEinleitTyp;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     BetriebArt: OPTIONAL BetriebArt;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100; 
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL [0..999];
+     AnlageEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END AbWaEinleit;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE AbWaEinleitBewiReg =
+     AbWaEinleit: -> AbWaEinleit;
+     BewiNummer: [0..99999];
+     Datum: OPTIONAL CHDatum;
+   NO IDENT
+   END AbWaEinleitBewiReg;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE AbWaEinleitDatei =
+     AbWaEinleit: -> AbWaEinleit;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END AbWaEinleitDatei;
+   
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Abwassereinleitung mit ObjNrAfu im Massstab 1:2000
+   TABLE AweNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     AbWaEinleit: -> AbWaEinleit;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  AweNrAfu_Intranet2Pos;
+
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Abwassereinleitung mit ObjNrAfu im Massstab 1:5000
+   TABLE AweNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     AbWaEinleit: -> AbWaEinleit;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  AweNrAfu_Intranet5Pos;   
+
+   !! Sauberwassereinleitung
+   TABLE SaubWaEinleit =
+     Lage: CHLKoord;
+     Typ: SaubWaEinleitTyp;
+     Name: OPTIONAL TEXT*50;
+     ObjNrAfu: OPTIONAL TEXT*15;
+     BetriebArt: OPTIONAL BetriebArt;
+     Nachfuehrungsstand: OPTIONAL CHDatum;
+     Bemerkungen: OPTIONAL Langtext;
+     AuskunftsStelle: OPTIONAL TEXT*100;
+     Kanton: OPTIONAL Kanton;
+     GdeNrBFS: OPTIONAL [0..9999];
+     Lokalitaet: OPTIONAL TEXT*100;
+     MutatPerson: OPTIONAL -> MutatPerson;
+     MutatBemerk: OPTIONAL Langtext;
+     DetailplanArt: OPTIONAL DetailplanArt;
+     DetailplanDatum: OPTIONAL CHDatum;
+     DetailplanMstab: OPTIONAL DetailplanMstab;
+     DetailplanHerkunft: OPTIONAL ErfVorlHerkunft;
+     DetailplanNr: OPTIONAL TEXT*100;
+     ErfGenauigkeit: OPTIONAL ErfGenauigkeit;
+     GeometrieHerkunft: Herkunftsart;
+     ErfVorlBemerk: OPTIONAL ErfVorlBemerk;
+     QkatPlanNr: OPTIONAL [0..999];
+     AnlageEigentuemer: OPTIONAL -> Adresse;
+     GrundEigentuemer: OPTIONAL -> Adresse;
+     GrundstNr: OPTIONAL TEXT*10;
+     KontaktDatum: OPTIONAL CHDatum;
+     KontaktPerson: OPTIONAL -> Adresse;
+     GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   NO IDENT
+   END SaubWaEinleit;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE SaubWaEinleitBewiReg =
+     SaubWaEinleit: -> SaubWaEinleit;
+     BewiNummer: [0..99999];
+     Datum: OPTIONAL CHDatum;
+   NO IDENT
+   END SaubWaEinleitBewiReg;
+
+!! Version 2.2 Zug: Nachfolgende Tabelle neu
+   TABLE SaubWaEinleitDatei =
+     SaubWaEinleit: -> SaubWaEinleit;
+     Name: OPTIONAL Langtext;
+     Datum:  OPTIONAL CHDatum;
+     Dateiname: Langtext;
+   NO IDENT
+   END SaubWaEinleitDatei;
+   
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Sauberwassereinleitung mit ObjNrAfu im Massstab 1:2000
+   TABLE SweNrAfu_Intranet2Pos =
+     Pos: CHLKoord;
+     SaubWaEinleit: -> SaubWaEinleit;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  SweNrAfu_Intranet2Pos;
+
+!! Version 2.3 Zug: Neue Pos-Tabellen
+!! Beschriftung der Sauberwassereinleitung mit ObjNrAfu im Massstab 1:5000
+   TABLE SweNrAfu_Intranet5Pos =
+     Pos: CHLKoord;
+     SaubWaEinleit: -> SaubWaEinleit;
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Center //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  SweNrAfu_Intranet5Pos;
+
+!! Version 2.3 Zug: Nachfolgende Tabelle neu
+!! Beschriftung der Schüttmengen der Quellschächte im Massstab 1:25000
+   TABLE QwfMenge_Karte25Pos =
+     Pos: CHLKoord;
+     Quellschacht: -> Quellschacht;
+     PlatzhalterBeschriftung: OPTIONAL TEXT*1;  !! wird verwendet um "-" anzuschreiben, wenn Schüttmenge Max oder Min leer ist
+     Ori: OPTIONAL OrientierungsTyp // undefiniert = 100.0 //;
+     HAli: OPTIONAL HALIGNMENT // undefiniert = Left //;
+     VAli: OPTIONAL VALIGNMENT // undefiniert = Half //;
+     Size: OPTIONAL Size_Typ;
+     Plantyp: OPTIONAL PlanTyp;
+   NO IDENT
+   END  QwfMenge_Karte25Pos;
+
+  END HydrogeologischeObjekte.
+
+END ZG_HydrogeologischeObjekte_2_3.
+
+
+FORMAT
+  FREE;
+
+CODE
+  BLANK = DEFAULT, UNDEFINED = DEFAULT, CONTINUE = DEFAULT;
+  TID = ANY;
+END.
+

@@ -1,0 +1,194 @@
+/* ###################################################################################
+
+   KANTONALE ERWEITERUNG ZG -- Geodatenmodell nach Bundesrecht -- 
+
+   Planerischer Gewaesserschutz (ID 130,131,132)
+   
+   Zuständige Stelle (Datenherr): Amt für Umwelt
+   
+   furtherInformation=http://www.zg.ch/behoerden/baudirektion/amt-fuer-umwelt
+   technicalContact=info.agg@zg.ch
+   
+   ################################################################################### */
+
+/* ###################################################################################
+
+   History:
+
+
+   DD.MM.YYYY 
+     - 
+   19.06.2018 GIS-Fachstelle Kanton Zug (kanu)
+     - Version 1.1 basierend auf MGDM PlanerischerGewaesserschutz_LV95_V1_1 und
+       bisherigem kantonalem INTERLIS-1-Modell ZG_PlanerischerGewaesserschutz (V1.5)   
+
+   ################################################################################### */
+   
+INTERLIS 2.3;
+
+MODEL ZG_PlanerischerGewaesserschutz_V1_1 (de)
+AT "http://models.geo.zg.ch"
+VERSION "2018_06_19"  =
+
+  IMPORTS PlanerischerGewaesserschutz_LV95_V1_1, LocalisationCH_V1;
+  
+    DOMAIN  !!  kantonale Auswahllisten
+
+    Herkunftsart = (Aufnahme,											!! <Aufname, d1>
+                    UebernahmeKoordinaten,        !! <Übernahme Koordinaten, d2>          
+										Planabgriff,									!! <Planabgriff, d3>
+                    konstruktiv,									!! <konstruktiv, d4>
+                    unbekannt,										!! <unbekannt, d5>
+                    andere);											!! <andere, d6>
+ 
+    DetailplanArt = (Plan_digital,												!! <Plan digital, d1>
+		     Plan_analog,																			!! <Plan analog, d2>
+		     Uebersichtsplan,																	!! <Übersichtsplan, d3>
+		     Landeskarte,																			!! <Landeskarte, d4>
+		     Skizze,																					!! <Skizze, d5>
+		     andere,																					!! <andere, d6>
+		     unbekannt);	    
+    
+    DetailplanMstab = (M_1_200,			!! <1:200, d1>					
+		       M_1_500,									!! <1:500, d2>												
+		       M_1_1000,								!! <1:1000, d3>		
+		       M_1_2000,								!! <1:2000, d4>		
+		       M_1_5000,								!! <1:5000, d5>		
+		       M_1_10000,								!! <1:10000, d6>		
+		       M_1_25000,								!! <1:25000, d7>		
+		       andere,									!! <andere, d8>			
+		       unbekannt);							!! <unbekannt, d9>		    
+		       
+    ErfGenauigkeit = (AV_gerechnet,					!! <AV gerechnet, d1>			
+		      Detailplan,												!! <Detailplan, d2>			
+		      andere,														!! <andere, d3>
+		      unbekannt);												!! <unbekannt, d4>
+		       
+    Rechtsverbindlichkeit = (grundeigentuemerverbindlich,			!!  <grundeigentümerverbindlich, d1>
+                             behoerdenverbindlich);						!!  <behördenverbindlich, d2>
+                             
+   	FassungsTyp = (Entnahmebrunnen,						!! <Entnahmebrunnen, d1>
+		               Quellwasserfassung,					!! <Quellwasserfassung, d2>
+		               Oberflaechenwasserfassung);			!! <Oberflächenwasserfassung, d1>
+
+  TOPIC GWSZonen EXTENDS PlanerischerGewaesserschutz_LV95_V1_1.GWSZonen =
+    OID AS INTERLIS.UUIDOID;  !! Erweiterung des MGDM-TOPIC um OID-Deklaration
+      
+    CLASS Status (EXTENDED) =
+      Beschlussverweis: TEXT;
+    END Status;
+    
+    CLASS GWSAreal (EXTENDED) =
+      ObjName: TEXT*100;
+      ObjNummer: MANDATORY 1..99999;
+      DetailplanArt: DetailplanArt;
+      DetailplanMstab: DetailplanMstab;
+      ErfGenauigkeit: ErfGenauigkeit;
+      Rechtsverbindlichkeit: Rechtsverbindlichkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      Erlassdatum: INTERLIS.XMLDate;
+      Mutationsdatum: INTERLIS.XMLDate;
+      Lexlink: 1..99999; !! Erweiterung für OEREBlex
+      GUID: MANDATORY TEXT*38;
+    END GWSAreal;
+
+    CLASS GWSZone (EXTENDED) =
+      ObjName: TEXT*100;
+      ObjNummer: MANDATORY 1..99999;
+      HydrObjArt: MANDATORY FassungsTyp;
+      DetailplanArt: DetailplanArt;
+      DetailplanMstab: DetailplanMstab;
+      ErfGenauigkeit: ErfGenauigkeit;
+      Rechtsverbindlichkeit: Rechtsverbindlichkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      Erlassdatum: INTERLIS.XMLDate;
+      Mutationsdatum: INTERLIS.XMLDate;
+      Lexlink: 1..99999;  !! Erweiterung für OEREBlex
+      GUID: MANDATORY TEXT*38;
+    END GWSZone;
+     
+    CLASS Wasserversorgung =
+       WVName: TEXT*254;
+    END Wasserversorgung;
+
+    ASSOCIATION GWSArealWasserversorgung =
+      GWSAreal -- {0..*} GWSAreal;
+      Wasserversorgung -- {0..*} Wasserversorgung;
+    END GWSArealWasserversorgung;   
+
+    ASSOCIATION GWSZoneWasserversorgung =
+      GWSZone -- {0..*} GWSZone;
+      Wasserversorgung -- {0..*} Wasserversorgung;
+    END GWSZoneWasserversorgung;   
+
+  END GWSZonen;
+  
+  TOPIC GSBereiche EXTENDS PlanerischerGewaesserschutz_LV95_V1_1.GSBereiche =
+    BASKET OID AS INTERLIS.UUIDOID;  !! Erweiterung des MGDM-TOPIC um OID-Deklaration
+    OID AS INTERLIS.UUIDOID;  !! Erweiterung des MGDM-TOPIC um OID-Deklaration
+   
+    DOMAIN
+      ZG_GSBereichTyp EXTENDS PlanerischerGewaesserschutz_LV95_V1_1.GSBereiche.GSBereichTyp = (Ao (Ao, AoT, AoB));  !! feinere Unterteilung von Ao fuer Kanton ZG
+   
+    CLASS Status =
+      Rechtsstatus: PlanerischerGewaesserschutz_LV95_V1_1.RechtsstatusArt;
+      Rechtskraftdatum: INTERLIS.XMLDate;
+      Bemerkungen: LocalisationCH_V1.LocalisedMText;
+      KantonalerStatus: LocalisationCH_V1.LocalisedText;
+      Beschlussverweis: TEXT;
+     
+    END Status;
+   
+    CLASS GSBereich (EXTENDED) =
+      Typ (EXTENDED): MANDATORY ZG_GSBereichTyp;   
+      ObjName: TEXT*100;
+      ObjNummer: MANDATORY 1..99999;
+      DetailplanArt: DetailplanArt;
+      DetailplanMstab: DetailplanMstab;
+      ErfGenauigkeit: ErfGenauigkeit;
+      Rechtsverbindlichkeit: Rechtsverbindlichkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      Erlassdatum: INTERLIS.XMLDate;
+      Mutationsdatum: INTERLIS.XMLDate;
+      Lexlink: 1..99999; !! Erweiterung für OEREBlex
+      GUID: MANDATORY TEXT*38;
+    END GSBereich;
+
+    CLASS Wasserversorgung =
+      WVName: TEXT*254;
+    END Wasserversorgung;
+
+    ASSOCIATION GSBereichWasserversorgung =
+      GSBereich -- {0..*} GSBereich;
+      Wasserversorgung -- {0..*} Wasserversorgung;
+    END GSBereichWasserversorgung;   
+
+    CLASS Einzugsgebiet_GSB_Ao_Trinkwasser =
+      ObjName: TEXT*100;
+      Geometrie: PlanerischerGewaesserschutz_LV95_V1_1.CHSurface;
+    END Einzugsgebiet_GSB_Ao_Trinkwasser;
+
+    ASSOCIATION GSBereichEinzugsgebiet =
+      GSBereich -- {0..*} GSBereich;
+      Einzugsgebiet -- {0..*} Einzugsgebiet_GSB_Ao_Trinkwasser;
+    END GSBereichEinzugsgebiet;
+    
+    /* Status neu auch fuer GSBereich */
+    ASSOCIATION StatusGSBereich =
+      Status -- {1} Status;
+      GSBereich -- {0..*} GSBereich;
+    END StatusGSBereich;   
+
+  END GSBereiche;
+   
+  /* Erweiterung des MGDM-TOPIC um OID-Deklaration */
+  TOPIC TransferMetadaten EXTENDS PlanerischerGewaesserschutz_LV95_V1_1.TransferMetadaten =
+    OID AS INTERLIS.UUIDOID;
+   	 
+    CLASS Amt (EXTENDED) = END Amt;
+    CLASS Darstellungsdienst (EXTENDED) = END Darstellungsdienst;
+    CLASS Datenbestand (EXTENDED) = END Datenbestand;
+   	 
+  END TransferMetadaten;
+
+END ZG_PlanerischerGewaesserschutz_V1_1.
