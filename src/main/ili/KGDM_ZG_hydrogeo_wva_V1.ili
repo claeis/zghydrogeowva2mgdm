@@ -1,0 +1,1301 @@
+/* ###################################################################################
+  
+   KANTONALE ERWEITERUNG ZG -- Geodatenmodell nach Bundesrecht -- 
+
+   Inventar Trinkwasserversorgung in Notlagen (ID 66.1)
+   Grundwasseraustritte, -fassungen, -anreicherungsanlagen (ID 141.1, 139.2)
+   
+   Zuständige Stelle (Datenherr): Amt für Umwelt
+   
+   furtherInformation=http://www.zg.ch/behoerden/baudirektion/amt-fuer-umwelt
+   technicalContact=mailto:info.agg@zg.ch
+   
+   ################################################################################### */
+
+/* ###################################################################################
+
+   History:
+
+   DD.MM.YYYY 
+     - 
+   29.11.2019 ITV Consult (ang)
+     - Version 1 basierend auf MGDM TWVinNotlagen_V1.ili und den
+       bisherigen kantonalen INTERLIS-1-Modellen ZG_Wasserversorgungsatlas_1_0 (V1.0)
+     und ZG_HydrogeologischeObjekte_2_3 (V2.3)  
+
+   ################################################################################### */
+ 
+INTERLIS 2.3;
+
+MODEL ZG_hydrogeo_wva_V1 (de)
+AT "http://models.geo.zg.ch"
+VERSION "2020-10-30"  =
+
+  IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
+
+  UNIT
+    Grads = 200.0 / PI [INTERLIS.rad];
+    LiterPerMinute [lmin] = (Units.L / Units.min);      !! analog MGDM
+    CubicmeterPerDay [m3day] = (Units.m3 / Units.d);    !! analog MGDM
+
+  DOMAIN  !!  kantonale Auswahllisten
+
+    Herkunftsart = (Aufnahme,                     !! <Aufname, d1>
+                    UebernahmeKoordinaten,        !! <Übernahme Koordinaten, d2>          
+                    Planabgriff,                  !! <Planabgriff, d3>
+                    konstruktiv,                  !! <konstruktiv, d4>
+                    unbekannt,                    !! <unbekannt, d5>
+                    andere);                      !! <andere, d6>
+ 
+    DetailplanArt = (Plan_digital,                !! <Plan digital, d1>
+                     Plan_analog,                 !! <Plan analog, d2>
+                     Uebersichtsplan,             !! <Übersichtsplan, d3>
+                     Landeskarte,                 !! <Landeskarte, d4>
+                     Skizze,                      !! <Skizze, d5>
+                     andere,                      !! <andere, d6>
+                     unbekannt);      
+    
+    DetailplanMstab = (M_1_200,     !! <1:200, d1>          
+                       M_1_500,     !! <1:500, d2>                        
+                       M_1_1000,    !! <1:1000, d3>    
+                       M_1_2000,    !! <1:2000, d4>    
+                       M_1_5000,    !! <1:5000, d5>    
+                       M_1_10000,   !! <1:10000, d6>    
+                       M_1_25000,   !! <1:25000, d7>    
+                       andere,      !! <andere, d8>      
+                       unbekannt);  !! <unbekannt, d9>        
+           
+    ErfGenauigkeit = (AV_gerechnet,          !! <AV gerechnet, d1>      
+                      Detailplan,            !! <Detailplan, d2>      
+                      andere,                !! <andere, d3>
+                      unbekannt);            !! <unbekannt, d4>
+           
+    Rechtsstatus = (rechtskraeftig,          !! <rechtskräftig, d1>
+                    provisorisch);           !! <provisorisch, d2>
+                             
+    EntnahmebrunnenTyp = (einfacheGWFassung,        !! <einfache GW Fassung, d1>
+                          HorizontalfilterBrunnen,  !! <Horizontalfilter Brunnen, d2>
+                          VertikalfilterBrunnen,    !! <Vertikalfilter Brunnen, d3>
+                          Sodbrunnen,               !! <Sodbrunnen, d4>
+                          Rohr,                     !! <Rohr, d5>
+                          andere,                   !! <andere, d6>
+                          unbekannt);               !! <unbekannt, d7>
+
+    FassungsTyp = (Entnahmebrunnen,               !! <Entnahmebrunnen, d1>
+                   Quellwasserfassung,            !! <Quellwasserfassung, d2>
+                   Oberflaechenwasserfassung);    !! <Oberflächenwasserfassung, d1>
+
+    QWFSchachtTyp = (Brunnenstube,          !! <Brunnenstube, d1>
+                     Sammelschacht,         !! <Sammelschacht, d2>
+                     Reservoir,             !! <Reservoir, d3>
+                     Quellwasser_Pumpwerk,  !! <Quellwasser Pumpwerk, d4>
+                     Laufender_Brunnen,     !! <Laufender Brunnen, d5>
+                     Hyraulischer_Widder,   !! <Hydraulischer Widder, d6>
+                     kein_Schacht);         !! <kein Schacht, d7>
+
+    BautenGWTyp = (Bauten,                 !!<Bauten, d1>
+                   Bohrung,                !!<Bohrung, d2>
+                   Spundwand_Schlitzwand,  !!<Spundwand/Schlitzwand, d3>
+                   Leitung,                !!<Leitung, d4>
+                   Pfahlung,               !!<Pfählung, d5>
+                   Sonstige,               !!<Sonstige, d6>
+                   unbekannt);             !!<unbekannt, d7>
+
+    AbWaEinleitTyp = (SABA,                   !!<SABA (Strassenabwasserbehandlungsanlage), d1>
+                      Industrie,              !!<Industrie, d2>
+                      ARA,                    !!<ARA (Abwasserreinigungsanlage), d3>
+                      KLARA,                  !!<KLARA (Kleinkläranlage), d4>
+                      Mischwasserentlastung,  !!<Mischwasserentlastung, d5>
+                      Sonstige,               !!<Sonstige, d6>
+                      unbekannt);             !!<unbekannt, d7>
+
+    SaubWaEinleitTyp = (Meteorwasser,                   !!<Meteorwasser, d1>
+                        Strassenabwasser,               !!<Strassenabwasser, d2>
+                        landwirtschaftliche_Drainagen,  !!<landwirtschaftliche Drainagen, d3>
+                        Sonstige,                       !!<Sonstige, d4> 
+                        unbekannt);                     !!<unbekannt, d5>
+
+    LeitungsArt = (Notverbindung_temporaer,   !! <Notverbindung temporär, d1>
+                   Quellwasserableitung,      !! <Quellwasserableitung, d2>
+                   Versorgungsleitung,        !! <Versorgungsleitung, d3>
+                   Rueckgabeleitung);         !! <Rückgabeleitung, d4>
+
+    BetriebsArt = (ausser_Betrieb,  !! <ausser Betrieb, d1>
+                   im_Bau,          !! <im Bau, d2>
+                   in_Betrieb,      !! <in Betrieb, d3>
+                   projektiert,     !! <projektiert, d4>
+                   stillgelegt,     !! <stillgelegt, d5>
+                   unbekannt);      !! <unbekannt, d6>
+
+    Darstellung = (keine,       !! <keine, d1>
+                   M_1_5000,    !! <1:5'000, d2>
+                   M_1_25000,   !! <1:25'000, d3>
+                   M_1_50000,   !! <1:50'000, d4>
+                   M_1_100000,  !! <1:100'000, d5>
+                   M_1_200000); !! <1:200'000, d6>
+
+    Nutzungsart = (Brauchwasser,       !! <Brauchwasser, d1>
+                   Laufender_Brunnen,  !! <Laufender Brunnen, d2>
+                   ungenutzt,          !! <ungenutzt, d3>
+                   Trinkwasser,         !! <Trinkwasser, d4>
+                   unbekannt,           !! <unbekannt, d5>
+                   Viehtraenke,         !! <Viehtränke, d6>
+                   Waschwasser_Milch,   !! <Waschwasser Milch, d7>
+                   Turbine);            !! <Turbine, d8>
+
+    Notversorgung = (Normalversorgung,         !! <Normalversorgung, d1>
+                     nur_Notversorgung,        !! <nur Notversorgung, d2>
+                     Not_und_Normalversorgung, !! <Not und Normalversorgung, d3>
+                     unbekannt);               !! <unbekannt, d4>
+
+    DruckRedTyp = (Druckbrecherschacht,  !! <Druckbrecherschacht, d1>
+                   Druckreduzierventil,  !! <Druckreduzierventil, d2>
+                   unbekannt);           !! <unbekannt, d3>
+
+    VersickerungTyp = (Rueckgabebrunnen,
+                       Versickerungsbecken,    !!<Versickerungsbecken, d1>
+                       Versickerungsgraben,    !!<Versickerungsgraben, d2>
+                       Rigolenversickerung,    !!<Rigolenversickerung, d3>
+                       Kieskoerper,            !!<Kieskörper, d4>
+                       Sickerschacht,          !!<Sickerschacht, d5>
+                       Sickerstrang_Galerie,   !!<Sickerstrang/Galerie, d6>
+                       Sonstige,               !!<Sonstige, d7>
+                       unbekannt);             !!<unbekannt, d8>
+
+    VersickerungArt = (Typ_F,         !!<Typ F (flächige Versickerung), d1>
+                       Typ_H,         !!<Typ H (Versickerung mit Bodenpassage), d2>
+                       Typ_K,         !!<Typ K (Versickerung ohne Bodenpassage), d3>
+                       unbekannt);    !!<unbekannt, d4>
+
+    FsgLtgRichtung = (bekannt,                !! <bekannt, d1>
+                      Einlauf_bekannt,       !! <Einlauf bekannt, d2>
+                      ungefaehr_bekannt,     !! <ungefähr bekannt, d3>
+                      schematisch,           !! <schematisch, d4>
+                      unbekannt);            !! <unbekannt, d5>
+
+    FsgLtgLaenge = (bekannt,               !! <bekannt, d1>
+                    ungefaehr_bekannt,     !! <ungefähr bekannt, d2>
+                    schematisch,           !! <schematisch, d3>
+                    unbekannt);            !! <unbekannt, d4>
+
+    EigentumArt = (privat,       !! <privat, d1>
+                   oeffentlich,  !! <öffentlich, d2>
+                   unbekannt);   !! <unbekannt, d3>
+
+    ErtragAngaben = (gemessen,
+                     geschaetzt,
+                     umgerechnet,
+                     unbekannt);
+
+    Kanton = (ZG,   !! <ZG, d1>  
+              ZH,   !! <ZH, d2>
+              AG,   !! <AG, d3>
+              LU,   !! <LU, d4>
+              SZ);  !! <SZ, d5>
+
+    ErfVorlHerkunft = (Amt_fuer_Umwelt,        !! <Amt für Umwelt, d1>
+                       Amt_fuer_Grundbuch_und_Geoinformation,  !! <Amt für Grundbuch und Geoinformation, d2>
+                       privater_Betreiber,     !! <privater Betreiber, d3>
+                       Schutzzonen_Bearbeiter, !! <Schutzzonen Bearbeiter, d4>
+                       Wasserversorgung,       !! <Wasserversorgung, d5>
+                       Eigentuemer,            !! <Eigentümer, d6>
+                       unbekannt,              !! <unbekannt, d7>
+                       andere);                !! <andere, d8>
+
+    ErfVorlBemerk = (GPS_0_01m,          !! <GPS: 0.01m, d1>
+                     GPS_0_10m,          !! <GPS: 0.10m, d2>
+                     GPS_1_00m,          !! <GPS: 1.00m, d3>
+                     GPS_10_00m,         !! <GPS: 10.00m, d4>
+                     Grundbuchplan_Papier,        !! <Grundbuchplan Papier, d5>
+                     keine_Einpassmoeglichkeit,   !! <keine Einpassmöglichkeit, d6>
+                     nach_muendlicher_Angabe,     !! <nach mündlicher_Angabe, d7>
+                     Schematisch,                 !! <Schematisch, d8>
+                     schlechte_Einpassmoeglichkeit,         !! <schlechte_Einpassmöglichkeit, d9>
+                     Vorlage_mit_massiver_Generalisierung,  !! <Vorlage mit massiver Generalisierung, d10>
+                     Vorlage_unzuverlaessig);               !! <Vorlage unzuverlässig, d11>
+
+    Farbe = (blau,   !! <blau, d1>
+             gruen,  !! <grün, d2>
+             rot,    !! <rot, d3>
+             braun,  !! <braun, d4>
+             keine); !! <keine, d5>
+
+    ResSymbTyp = (Vol_5_29,        !! <Vol: 5-29, d1>
+                  Vol_30_1000,    !! <Vol: 30-1000, d2>
+                  Vol_1001_5000,  !! <Vol: 1'001-5'000, d3>
+                  Vol_5001_9999,  !! <Vol: 5'001-9'999, d4>
+                  Vol_10000);     !! <Vol: 10'000-, d5>
+
+    TextTyp = (NameText,
+               TechData,
+               TechData1,
+               TechData2,
+               TechData3,
+               TechData4);
+
+    PlanTyp = (M_1_1000,   !! <1:1000, d1>
+               M_1_2000,   !! <1:2000, d2>              
+               M_1_5000,   !! <1:5000, d3>
+               M_1_10000,  !! <1:10000, d4>
+               M_1_25000); !! <1:25000, d5>
+
+    SizeTyp = (kleinst,        !! <kleinst, d1>
+               klein,          !! <klein, d2>
+               mittel,         !! <mittel, d3>
+               gross,          !! <gross, d4>
+               unterdrueckt);  !! <unterdrückt, d5>
+
+    LiterMinute = 0.00 .. 1000000.00 [lmin];      !! analog MGDM
+    KubikmeterTag = 0.00 .. 1440000.00 [m3day];   !! analog MGDM
+    IdentifikatorTyp = TEXT*255; !! value = <Kantonscode:CHAdminCodes_V1.CHCantonCode>-<Kantonsidentifikator> aus MGDM
+
+    CHLine    = POLYLINE WITH (STRAIGHTS) VERTEX GeometryCHLV95_V1.Coord2;   !! analog MGDM
+    CHSurface = SURFACE WITH (STRAIGHTS) VERTEX GeometryCHLV95_V1.Coord2 WITHOUT OVERLAPS > 0.001;  !! analog MGDM
+
+!! Hilfstruktur, um mehrere Texte zu erfassen, z.B. Verwendungszweck. Dateiname kann in QwFsgEndpunkt auch als Assoziation zur Klasse Datei modelliert werden.
+   STRUCTURE HilfsText =
+      Text : TEXT*254;
+    END HilfsText;
+
+  STRUCTURE Texte =
+      Texte: BAG {1..*} OF HilfsText;
+    END Texte;
+
+!! Hilfstruktur, um mehrere Zahlenwerte zu erfassen, z.B. bei Fördermengen Pumpen
+    STRUCTURE Zahl =
+      Zahl : 0 ..99999;
+    END Zahl;
+
+    STRUCTURE Zahlen =
+      Zahlen: BAG {0..*} OF Zahl;
+    END Zahlen; 
+
+ TOPIC Wasserversorgung_Zug EXTENDS TWVinNotlagen_LV95_V1.TWVinNotlagen =
+    OID AS INTERLIS.UUIDOID;  !! Erweiterung des MGDM-TOPIC um OID-Deklaration
+    DEPENDS ON ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche,ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen,ZG_PlanerischerGewaesserschutz_V1_1.TransferMetadaten;
+
+!! Mehrfach verwendete Klassen
+    CLASS TextPos =
+      TextTyp : MANDATORY TextTyp;
+      IntranetPos : MANDATORY (Pos2, Pos5);
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      Farbe : MANDATORY Farbe;
+      Ori : 0.000 .. 399.999 [Grads];
+      Hali : HALIGNMENT;
+      Vali : VALIGNMENT;
+      Size : SizeTyp;
+    END TextPos;
+
+    CLASS IntranetPos =
+      TextTyp : MANDATORY TextTyp;
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      Ori : 0.000 .. 399.999 [Grads];
+      Hali : HALIGNMENT;
+      Vali : VALIGNMENT;
+      Size : SizeTyp;
+      Plantyp : PlanTyp;
+    END IntranetPos;
+
+    CLASS QwfMenge_Karte25Pos EXTENDS IntranetPos =
+      PlatzhalterBeschriftung : TEXT*1;
+    END QwfMenge_Karte25Pos;
+
+    CLASS AnschriftNummer =
+      Pos : MANDATORY GeometryCHLV95_V1.Coord2;
+      Nummer : MANDATORY TEXT*12;
+      Ori : 0.000 .. 399.999 [Grads];
+      Hali : HALIGNMENT;
+      Vali : VALIGNMENT;      
+  END AnschriftNummer;
+
+    CLASS Hilfslinie =
+      SymbolGeo : MANDATORY CHLine;
+      Farbe : MANDATORY Farbe;
+    END Hilfslinie;
+
+    CLASS Datei =
+      Name : MANDATORY TEXT*254;
+      Dateiname : MANDATORY TEXT*254;
+    END Datei;
+
+    CLASS Grundlage =
+      DetailplanArt : DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab : DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanBz : TEXT*100;
+      ErfGenauigkeit : ErfGenauigkeit;
+      GeometrieHerkunft : Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      KontaktDatum : INTERLIS.XMLDate;
+    END Grundlage;
+
+    CLASS Adresse =
+      Name : MANDATORY TEXT*60; 
+      Vorname : TEXT*40; 
+      Adresse : TEXT*100;  
+      PLZ : 0..9999;  
+      Ort : TEXT*100;  
+      TelefonP : TEXT*15;  
+      TelefonG : TEXT*15; 
+      Email : TEXT*100;
+    END Adresse; 
+
+    CLASS MutatPerson =
+      MutatPerson: TEXT*100;
+    END MutatPerson;
+
+    CLASS Wasserversorgung =
+      WVName : MANDATORY TEXT*254;
+      Nummer : MANDATORY 0 .. 999;
+      EigentumArt : MANDATORY EigentumArt;
+    END Wasserversorgung;
+
+    CLASS BewiReg =
+      BewiNummer : MANDATORY 0 .. 99999;
+      Entnahmemenge : 0 .. 100000;      !! Liter pro Minute
+      Pumpmenge : 0 .. 100000;          !! Liter pro Minute
+      Vesickerungsmenge : 0 .. 100000;  !! Liter pro Minute
+      Datum : INTERLIS.XMLDate;
+    END BewiReg;
+
+!! Fachobjekte
+    CLASS QwFsgEndpunkt EXTENDS Quelle =
+	  ObjektNummer : 1..99999;
+      PrivatNutzer : TEXT*254;
+      ErtragMinAng : ErtragAngaben;
+      ErtragMaxAng : ErtragAngaben;
+      ErtragMittlAng : ErtragAngaben;
+      SchzNr : 0 .. 99999;
+      SchzPflicht : BOOLEAN;
+      SchzGutachten: BOOLEAN;
+      SchzGutAutor : TEXT*100;
+      SchzGutDatum : INTERLIS.XMLDate;
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      Auskunftsstelle : TEXT*100;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      HoeheTerrain : 0.00 .. 3000.00;
+      HoeheAuslauf : 0.00 .. 3000.00;
+      MutatPerson : TEXT*100;
+      MutatBemerk : TEXT*240;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      QkatPlanNr : 0 .. 999;
+      GrundstNr : TEXT*254;
+      KontaktDatum : INTERLIS.XMLDate;
+!!      Dateiname : MultiText;   Als Assoz
+  END QwFsgEndpunkt;
+
+    CLASS Quellschacht EXTENDS Brunnenstube =
+      Typ : MANDATORY QWFSchachtTyp;
+      ObjNrAfu : TEXT*50;
+      EigentumArt : EigentumArt;
+      PrivatNutzer : TEXT*254;
+      ErtragMinAng : ErtragAngaben;
+      ErtragMaxAng : ErtragAngaben;
+      ErtragMittlAng : ErtragAngaben;
+      SchzNr : 0 .. 99999;
+      SchzPflicht : BOOLEAN;
+      SchzGutachten: BOOLEAN;
+      SchzGutAutor : TEXT*100;
+      SchzGutDatum : INTERLIS.XMLDate;
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      Auskunftsstelle : TEXT*100;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      HoeheTerrain : 0.00 .. 3000.00;
+      HoeheAuslauf : 0.00 .. 3000.00;
+      ErtragBrst : TEXT*50;
+      ErtragGrp : TEXT*50;
+      TextArt : (QueSchaErtragBrst, QueSchaErtragGrp, Name, Techdata);
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+      SymbolGeo: GeometryCHLV95_V1.Coord2;
+      SymbolRot: 0.000 .. 399.999 [Grads];
+      Farbe : Farbe;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      MaxDarst : Darstellung; 
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      QkatPlanNr : 0 .. 999;
+      GrundstNr : TEXT*254;
+      KontaktDatum : INTERLIS.XMLDate;
+    END Quellschacht;      
+
+    CLASS Sammelschacht EXTENDS Quellschacht =
+      Leitungsart : MANDATORY LeitungsArt;
+      Betriebsart : BetriebsArt;      
+      TechData : TEXT*50;  
+    END Sammelschacht;
+
+    CLASS Entnahmebrunnen EXTENDS Grundwasserfassung =
+      EntnahmebrunnenTyp : MANDATORY EntnahmebrunnenTyp;
+	  TextTyp : MANDATORY TextTyp;
+	  ObjNrAfu : TEXT*50;
+      EigentumArt : EigentumArt;
+      PrivatNutzer : TEXT*254;
+      TiefeTerrAbstich: 0.00 .. 999.99;   !! in [m]
+      HoeheTerrAbstuch : 0.00 .. 999.99;  !! in [m]
+      WspHoeheTiefst: 0.00 .. 9999.99;    !! Höhe m ü.M. 
+      K_Wert: 0.000 .. 99.999;            !! [10^-3 m/s]
+      SchzNr : 0 .. 99999;
+      SchzPflicht : BOOLEAN;
+      SchzGutachten: BOOLEAN;
+      SchzGutAutor : TEXT*100;
+      SchzGutDatum : INTERLIS.XMLDate;
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      Auskunftsstelle : TEXT*100;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+      SymbolGeo: GeometryCHLV95_V1.Coord2;
+      SymbolRot: 0.000 .. 399.999 [Grads];
+      Farbe : Farbe;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      Techdata1 : TEXT*50;
+      Techdata2 : TEXT*50;
+      Techdata3 : TEXT*50;
+      Techdata4 : TEXT*50;
+      MaxDarst : Darstellung; 
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      QkatPlanNr : 0 .. 999;
+      GrundstNr : TEXT*254;
+      KontaktDatum : INTERLIS.XMLDate;
+      Verwendungszweck : Texte;
+    END Entnahmebrunnen;
+
+    CLASS OberflaechenGewFassung EXTENDS Oberflaechengewaesserfassung =
+      ObjNrAfu : TEXT*50;
+      EigentumArt : EigentumArt;
+      PrivatNutzer : TEXT*254;
+      Tiefe: 0 .. 999;     !! in [m]
+      GewAbschnittCode : 1000 .. 9999;
+      GewAbschnittKm : 0 .. 1000;
+      Nutzung : MANDATORY (Trinkwasser, Brauchwasser);
+      SchzNr : 0 .. 99999;
+      SchzPflicht : BOOLEAN;
+      SchzGutachten: BOOLEAN;
+      SchzGutAutor : TEXT*100;
+      SchzGutDatum : INTERLIS.XMLDate;
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      Auskunftsstelle : TEXT*100;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+      SymbolGeo: GeometryCHLV95_V1.Coord2;
+      SymbolRot: 0.000 .. 399.999 [Grads];
+      Farbe : Farbe;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      MaxDarst : Darstellung; 
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      QkatPlanNr : 0 .. 999;
+      GrundstNr : TEXT*254;
+      KontaktDatum : INTERLIS.XMLDate;
+      Verwendungszweck : Texte;
+    END OberflaechenGewFassung;
+
+    CLASS Foerderanlage (EXTENDED) =            !! Pumpwerk, Hydraulischer Widder, Reinwasser-Pumpwerk (hat zus. Assoziationen)
+      FoerderanlageArt : (Pumpwerk, HydWidder, ReinwasserPW, OberflGewRohwaPW);
+      SymbolGeo : MANDATORY GeometryCHLV95_V1.Coord2;
+      SymbolRot : MANDATORY 0.000 .. 399.999 [Grads];
+      Farbe : MANDATORY Farbe;
+      Betriebsart : BetriebsArt;      
+      Nutzungsart : Nutzungsart;
+      TotFoerdermenge : 0 .. 99999;
+      Techdata : TEXT*50;
+      Techdata1 : TEXT*50;
+      Techdata2 : TEXT*50;
+      Techdata3 : TEXT*50;
+      Techdata4 : TEXT*50;
+      Notversorgung : Notversorgung;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      MaxDarst : Darstellung; 
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+      EinzelFoerdermenge : Zahlen;
+    END Foerderanlage;      
+
+    CLASS OberflGewRohwaPW EXTENDS Foerderanlage =
+      EigentumArt : EigentumArt;
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      Auskunftsstelle : TEXT*100;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      QkatPlanNr : 0 .. 999;
+      GrundstNr : TEXT*254;
+      KontaktDatum : INTERLIS.XMLDate;     
+    END OberflGewRohwaPW;
+
+    CLASS Reservoir (EXTENDED) =
+      TextTyp : TextTyp;
+      SymbolGeo: GeometryCHLV95_V1.Coord2;
+      SymbolRot: 0.000 .. 399.999 [Grads];
+      Farbe : Farbe;
+      SymbolTyp : MANDATORY ResSymbTyp;
+      Gesamtinhalt : 0 .. 99999;
+      Techdata : TEXT*50;
+      Betriebsart : BetriebsArt;      
+      Nutzungsart : Nutzungsart;
+      Notversorgung : Notversorgung;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      MaxDarst : Darstellung; 
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+    END Reservoir;
+
+    CLASS WeitereAnlage (EXTENDED) =            !! Laufbrunnen, Kaliberwechsel, RWZisterne
+      WeitereAnlageArt : (Laufbrunnen, Kaliberwechsel, RWZisterne);
+      SymbolGeo: GeometryCHLV95_V1.Coord2;
+      SymbolRot: 0.000 .. 399.999 [Grads];
+      Farbe : Farbe;
+      Betriebsart : BetriebsArt;      
+      Nutzungsart : Nutzungsart;
+      Notversorgung : Notversorgung;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100;
+      MaxDarst : Darstellung; 
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+    END WeitereAnlage;
+
+    CLASS Schieberschacht EXTENDS WeitereAnlage =
+       Leitungsart : MANDATORY LeitungsArt;
+    END Schieberschacht;
+
+    CLASS Druckreduktion EXTENDS Schieberschacht =
+      Typ : MANDATORY DruckRedTyp;
+      Druckeingang : 0.00 .. 99.99;
+      Druckausgang : 0.00 .. 99.99;
+    END Druckreduktion;
+
+    CLASS Aufbereitungswerk EXTENDS WeitereAnlage =
+       FilterLeist : TEXT*50;
+       TextArt : MANDATORY (AufbWkrName, AufbWkrFilterleist);
+    END Aufbereitungswerk;
+
+    CLASS TWTurbine EXTENDS WeitereAnlage =
+      Baujahr : 1800 .. 9999;
+      Turbine : TEXT*50;
+      Durchfluss : 0 .. 999999;
+      Bruttofallhoehe : 0 .. 9999;
+      Nettofallhoehe : 0 .. 9999;
+      Turbinenleistung : 0.0 .. 9999.9;
+      Jahresproduktion : 0 .. 999999;
+    END TWTurbine;
+
+    CLASS Leitung (EXTENDED) =             !! OberflGewFsgLeitung und RueckgabeLeitung aus Hydrogeo-Obj, LeitungsnetzWV, WVAFassungsleitung, OberflGewFsgLeitung aus WVA
+      LeitArt : (OberflGewFsgLeitung, RueckgabeLeitung, LeitungsnetzWV, WVAFassungsleitung);
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      Typ : MANDATORY LeitungsArt;         !! OberflGewFsgLeitung = Versorgungsleitung; RueckgabeLeitung = Rueckgabeleitung
+      LeitText : TEXT*50;
+      Farbe : MANDATORY Farbe;
+      Betriebsart : BetriebsArt;      
+      Nutzungsart : Nutzungsart;
+      Notversorgung : Notversorgung;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      MaxDarst : Darstellung; 
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      MutatBemerk : TEXT*240;
+      MutatDatum : INTERLIS.XMLDate;
+    END Leitung;  
+
+!! Objekte, die nur im Thema Hydreogeologische Objekte vorkommen
+
+    CLASS Anreicherungsanlage =       !! analog MGDM definiert
+      Identifikator : MANDATORY IdentifikatorTyp;
+      Name : TEXT*500;
+      Typ : MANDATORY (oberirdisch, unterirdisch, kombiniert, unbestimmt);
+      Typ_Bemerkung : TEXT*255;
+      Max_Versickerung : KubikmeterTag;
+      Bezugsgewaesser : TEXT*255;
+      Zweck : TEXT*500;
+      GeometriePunkt : GeometryCHLV95_V1.Coord2;
+      ObjNrAfu : TEXT*50;              !! Ergänzungen ZG
+      Bewilligungsdatum : INTERLIS.XMLDate;
+      Betriebsart : BetriebsArt;      
+      Nachfuehrungsstand : INTERLIS.XMLDate;
+      AuskunftsStelle : TEXT*100;
+      Kanton : Kanton;
+      GdeNrBFS : 0 .. 9999;
+      Lokalitaet : TEXT*100; 
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum : INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft : ErfVorlHerkunft;
+      DetailplanNr : TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk : ErfVorlBemerk;
+      MutatBemerk : TEXT*240;
+      UNIQUE Identifikator;
+    END Anreicherungsanlage;
+
+    CLASS Fassungseinzugsgebiet =
+      Geometrie: MANDATORY CHSurface;
+      DetailplanArt: DetailplanArt;
+      DetailplanMstab: DetailplanMstab;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      Bewilligungsdatum: INTERLIS.XMLDate;
+      Nachfuehrungsstand: INTERLIS.XMLDate;
+      Bemerkungen: TEXT*254;
+      GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+   END Fassungseinzugsgebiet;
+
+    CLASS Rueckgabebrunnen =       !! analog MGDM definiert
+      Identifikator : MANDATORY IdentifikatorTyp;
+      Name : TEXT*500;
+      Nutzungszustand : MANDATORY (genutzt,ungenutzt,aufgehoben,unbestimmt);
+      Zweck : TEXT*500;
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      Typ : VersickerungTyp;           !! Ergänzungen ZG
+      Art : VersickerungArt;           !! Ergänzungen ZG
+      ObjNrAfu: TEXT*15;
+      EigentumArt: EigentumArt;
+      BetriebsArt: BetriebsArt;
+      Nachfuehrungsstand: INTERLIS.XMLDate;
+      Bemerkungen: TEXT*254;
+      AuskunftsStelle: TEXT*100;
+      Kanton: Kanton;
+      GdeNrBFS: 0..9999;
+      Lokalitaet: TEXT*100;
+      MutatBemerk: TEXT*254;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum: INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft: ErfVorlHerkunft;
+      DetailplanNr: TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk: ErfVorlBemerk;
+      QkatPlanNr: 0..999;
+      GrundstNr:  TEXT*10;
+      KontaktDatum: INTERLIS.XMLDate;
+      UNIQUE Identifikator;
+    END Rueckgabebrunnen;
+
+    CLASS Sammeleinrichtung =                  !! Analog Fassungsstrang_Stollen gemäss MGDM definiert
+      Identifikator : MANDATORY IdentifikatorTyp;
+      Typ : MANDATORY (Fassungsstrang, Fassungsstollen, unbestimmt);
+      Geometrie : MANDATORY CHLine;
+      ArtSammeleinrichtung : MANDATORY (Qwf, Gwf);         !! Ergänzungen ZG
+      FsgHorizont : TEXT*10;
+      FsgStrangNr : TEXT*10;
+      FsgHorizontKote : 0.00 .. 9999.99;
+      LtgDimension : 0.0 .. 9999.9;
+      FsgLeitungRichtung: FsgLtgRichtung;
+      FsgLeitungLaenge: FsgLtgLaenge;
+      Nachfuehrungsstand: INTERLIS.XMLDate;
+      Bemerkungen: TEXT*254;
+      MutatBemerk: TEXT*254;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum: INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft: ErfVorlHerkunft;
+      DetailplanNr: TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: Herkunftsart;
+      ErfVorlBemerk: ErfVorlBemerk;
+    END Sammeleinrichtung;
+
+    CLASS  SammeleinrichtungQwf EXTENDS Sammeleinrichtung =
+      BetriebsArt: BetriebsArt;
+      SchuettmengeMin: 0..99999;
+      ErtragMinAng: ErtragAngaben;
+      SchuettmengeMax: 0..99999;
+      ErtragMaxAng: ErtragAngaben;
+      SchuettmengeMittl: 0..99999;
+      ErtragMittlAng: ErtragAngaben;
+    END SammeleinrichtungQwf;
+
+    CLASS Versickerungsanlage =
+      Lage: MANDATORY GeometryCHLV95_V1.Coord2;
+      Typ: MANDATORY VersickerungTyp; 
+      Art: VersickerungArt;
+      Name: TEXT*50;
+      ObjNrAfu: TEXT*15;
+      BetriebsArt: BetriebsArt;
+      Qualitaet: (belastet,      !! <belastet, d1> 
+                  unbelastet);  !! <unbelastet, d2> 
+      Nachfuehrungsstand: INTERLIS.XMLDate;
+      Bemerkungen: TEXT*254;
+      AuskunftsStelle: TEXT*100;
+      Kanton: Kanton;
+      GdeNrBFS: 0..9999;
+      Lokalitaet: TEXT*100;
+      MutatBemerk: TEXT*254;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum: INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft: ErfVorlHerkunft;
+      DetailplanNr: TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: Herkunftsart;
+      ErfVorlBemerk: ErfVorlBemerk;
+      QkatPlanNr: 0..999;
+      GrundstNr: TEXT*10;
+      KontaktDatum: INTERLIS.XMLDate;
+      GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+    END Versickerungsanlage;
+
+    CLASS BautenGW (ABSTRACT) =
+      Typ: MANDATORY BautenGWTyp;
+      Name: TEXT*50;
+      ObjNrAfu: TEXT*15;
+      Nachfuehrungsstand: INTERLIS.XMLDate;
+      Bemerkungen: TEXT*254;
+      AuskunftsStelle: TEXT*100;
+      Kanton: Kanton;
+      GdeNrBFS: 0..9999;
+      Lokalitaet: TEXT*100;
+      MutatBemerk: TEXT*254;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum: INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft: ErfVorlHerkunft;
+      DetailplanNr: TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk: ErfVorlBemerk;
+      GrundstNr: TEXT*10;
+      KontaktDatum: INTERLIS.XMLDate;
+      GUID: MANDATORY TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+    END BautenGW;
+
+    CLASS BautenGW_Punkt EXTENDS BautenGW =
+      Lage: MANDATORY GeometryCHLV95_V1.Coord2;
+    END BautenGW_Punkt;
+
+    CLASS BautenGW_Flaeche EXTENDS BautenGW =
+      Lage: MANDATORY CHSurface;
+    END BautenGW_Flaeche;
+
+    CLASS Einleit (ABSTRACT) =
+      Lage: MANDATORY GeometryCHLV95_V1.Coord2;
+      Name: TEXT*50;
+      ObjNrAfu: TEXT*15;
+      BetriebArt: BetriebsArt;
+      Nachfuehrungsstand: INTERLIS.XMLDate;
+      Bemerkungen: TEXT*254;
+      AuskunftsStelle: TEXT*100; 
+      Kanton: Kanton;
+      GdeNrBFS: 0..9999;
+      Lokalitaet: TEXT*100;
+      MutatBemerk: TEXT*254;
+      DetailplanArt: DetailplanArt;
+      DetailplanDatum: INTERLIS.XMLDate;
+      DetailplanMstab: DetailplanMstab;
+      DetailplanHerkunft: ErfVorlHerkunft;
+      DetailplanNr: TEXT*100;
+      ErfGenauigkeit: ErfGenauigkeit;
+      GeometrieHerkunft: MANDATORY Herkunftsart;
+      ErfVorlBemerk: ErfVorlBemerk;
+      QkatPlanNr: 0..999;
+      GrundstNr: TEXT*10;
+      KontaktDatum: INTERLIS.XMLDate;
+      GUID: MANDATORY TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+    END Einleit;
+
+    CLASS AbWaEinleit EXTENDS Einleit =
+      Typ: MANDATORY AbWaEinleitTyp;
+    END AbWaEinleit;
+
+    CLASS SaubWaEinleit EXTENDS Einleit =
+      Typ: MANDATORY SaubWaEinleitTyp;
+    END SaubWaEinleit;
+
+    ASSOCIATION KontaktPerson =
+      Adresse -- {1} Adresse;
+      Grundlage -- {0..*} Grundlage;
+    END KontaktPerson;
+
+    ASSOCIATION QwFsgEndpunktQuellschacht =
+      QwFsgEndpunkt -- {0..*} QwFsgEndpunkt;
+      Quellschacht -- {0..*} Quellschacht;
+    END QwFsgEndpunktQuellschacht;
+
+    ASSOCIATION QwFsgEndpunktMutatPerson =
+      QwFsgEndpunkt -- {0..*} QwFsgEndpunkt;
+      Person -- {0..1} MutatPerson;
+    END QwFsgEndpunktMutatPerson;
+
+    ASSOCIATION QwFsgEndpunktAnlageEigentuemer =
+      QwFsgEndpunkt1 -- {0..*} QwFsgEndpunkt;
+      Adresse1 -- {0..1} Adresse;
+    END QwFsgEndpunktAnlageEigentuemer;
+
+    ASSOCIATION QwFsgEndpunktGrundEigentuemer =
+      QwFsgEndpunkt2 -- {0..*} QwFsgEndpunkt;
+      Adresse2 -- {0..1} Adresse;
+    END QwFsgEndpunktGrundEigentuemer;
+
+    ASSOCIATION QwFsgEndpunktKontaktPerson =
+      QwFsgEndpunkt -- {0..*} QwFsgEndpunkt;
+      Adresse -- {0..1} Adresse;
+    END QwFsgEndpunktKontaktPerson;
+
+    ASSOCIATION QuellScha_SaSchaText =
+      Quell_Sammelschacht -- {1..*} Quellschacht;
+      TextPos -- {0..*} TextPos;
+    END QuellScha_SaSchaText;
+
+    ASSOCIATION QuellSchaSaSchaMutatPerson =
+      Quell_Sammelschacht -- {0..*} Quellschacht;
+      Person -- {0..1} MutatPerson;
+    END QuellSchaSaSchaMutatPerson;
+
+    ASSOCIATION QueSchaSaScha =
+      Sammelschacht -- {0..*} Sammelschacht;
+      Quellschacht -- {0..*} Quellschacht;
+    END QueSchaSaScha;
+
+    ASSOCIATION SaSchaDatei =
+      Sammelschacht -- {1} Sammelschacht;
+      Datei -- {0..*} Datei;
+    END SaSchaDatei;
+
+    ASSOCIATION SaSchaGrundlage =
+      Sammelschacht -- {0..*} Sammelschacht;
+      Grundlage -- {1} Grundlage;
+    END SaSchaGrundlage;
+
+    ASSOCIATION SaSchaWasservsg =
+      Sammelschacht -- {0..*} Sammelschacht;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END SaSchaWasservsg;
+
+    ASSOCIATION EntbruDatei =
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+      Datei -- {1} Datei;
+    END EntbruDatei;
+
+    ASSOCIATION EntbruMutatPerson =
+      Entnahmebrunnen -- {0..1} Entnahmebrunnen;
+      MutatPerson -- {0..*} MutatPerson;
+    END EntbruMutatPerson;
+
+    ASSOCIATION EntbruText =
+      Entnahmebrunnen -- {1..*} Entnahmebrunnen;
+      TextPos -- {0..*} TextPos;
+    END EntbruText;
+
+    ASSOCIATION OberflGewFassungTiefeText =
+      OberflGewFassung -- {0..1} OberflaechenGewFassung;
+      TextPos -- {0..*} TextPos;
+    END OberflGewFassungTiefeText;
+
+    ASSOCIATION FoerderanlageDatei =
+      Foerderanlage -- {0..*} Foerderanlage;
+      Datei -- {1} Datei;
+    END FoerderanlageDatei;
+
+    ASSOCIATION FoerderanlageGrundlage =
+      Foerderanlage -- {0..*} Foerderanlage;
+      Grundlage -- {0..1} Grundlage;
+    END FoerderanlageGrundlage;
+
+    ASSOCIATION FoerderanlageMutatPerson =
+      Foerderanlage -- {0..*} Foerderanlage;
+      MutatPerson -- {0..1} MutatPerson;
+    END FoerderanlageMutatPerson;
+
+    ASSOCIATION FoerderanlageText =
+      Foerderanlage -- {0..*} Foerderanlage;
+      TextPos -- {0..*} TextPos;
+    END FoerderanlageText;
+
+    ASSOCIATION FoerderanlageWasservsg =
+      Foerderanlage -- {0..*} Foerderanlage;
+      Wasserversorgung -- {0..1} Wasserversorgung;
+    END FoerderanlageWasservsg;
+
+    ASSOCIATION QueSchaFoerderanlage =
+      Quellschacht -- {0..*} Quellschacht;
+      Foerderanlage -- {0..*} Foerderanlage;
+    END QueSchaFoerderanlage;
+
+    ASSOCIATION ReinwasserPWOberflGewRohwaPW =
+      ReinwasserPW -- {0..*} Foerderanlage;
+      OberflGewRohwaPW -- {0..*} OberflGewRohwaPW;
+    END ReinwasserPWOberflGewRohwaPW;
+
+    ASSOCIATION QueSchaRes =
+      Quellschacht -- {0..*} Quellschacht;
+      Reservoir -- {0..*} Reservoir;
+    END QueSchaRes;
+
+    ASSOCIATION ResDatei =
+      Reservoir -- {0..*} Reservoir;
+      Datei -- {1} Datei;
+    END ResDatei;
+
+    ASSOCIATION ResGrundlage =
+      Reservoir_ -- {0..*} Reservoir;
+      Grundlage_ -- {0..1} Grundlage;
+    END ResGrundlage;
+
+    ASSOCIATION ResMutatPerson =
+      Reservoir -- {0..*} Reservoir;
+      MutatPerson -- {0..1} MutatPerson;
+    END ResMutatPerson;
+
+    ASSOCIATION ResText =
+      Reservoir -- {1..*} Reservoir;
+      TextPos -- {0..*} TextPos;
+    END ResText;
+
+    ASSOCIATION ResWasservsg =
+      Reservoir -- {0..*} Reservoir;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END ResWasservsg;
+
+    ASSOCIATION Stufenpumpwerk =
+      Reservoir -- {0..*} Reservoir;
+      Foerderanlage -- {0..*} Foerderanlage;
+    END Stufenpumpwerk;
+
+    ASSOCIATION QueSchaLaufbrunnen =
+      Quellschacht -- {0..*} Quellschacht;
+      WeitereAnlage -- {0..*} WeitereAnlage;
+    END QueSchaLaufbrunnen;
+
+    ASSOCIATION WeitereAnlageDatei =
+      WeitereAnlage -- {0..1} WeitereAnlage;
+      Datei -- {0..*} Datei;
+    END WeitereAnlageDatei;
+
+    ASSOCIATION WeitereAnlageGrundlage =
+      WeitereAnlage -- {0..*} WeitereAnlage;
+      Grundlage -- {0..1} Grundlage;
+    END WeitereAnlageGrundlage;
+
+    ASSOCIATION WeitereAnlageMutatPerson =
+      WeitereAnlage -- {0..*} WeitereAnlage;
+      MutatPerson -- {0..1} MutatPerson;
+    END WeitereAnlageMutatPerson;
+
+    ASSOCIATION WeitereAnlageWasservsg =
+      WeiterAnlage -- {0..*} WeitereAnlage;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END WeitereAnlageWasservsg;
+
+    ASSOCIATION AufbWkrText =
+      Aufbereitungswerk -- {0..*} Aufbereitungswerk;
+      TextPos -- {2..*} TextPos;
+    END AufbWkrText;
+
+    ASSOCIATION AufbWrkRes =
+      Aufbereitungswerk -- {0..*} Aufbereitungswerk;
+      Reservoir -- {0..*} Reservoir;
+    END AufbWrkRes;
+
+    ASSOCIATION FoerderanlageAufbereitungswerk =
+      Foerderanlage -- {0..*} Foerderanlage;
+      Aufbereitungswerk -- {0..*} Aufbereitungswerk;
+    END FoerderanlageAufbereitungswerk;
+
+    ASSOCIATION LeitMutatPerson =
+      Leitung -- {0..1} Leitung;
+      MutatPerson -- {0..*} MutatPerson;
+    END LeitMutatPerson;
+
+    ASSOCIATION LeitText =
+      Leitung -- {0..1} Leitung;
+      TextPos -- {0..*} TextPos;
+    END LeitText;
+
+    ASSOCIATION LeitWasservsg =
+      Leitung -- {0..*} Leitung;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END LeitWasservsg;
+
+    ASSOCIATION AnranlDatei =
+      Anreicherungsanlage -- {0..*} Anreicherungsanlage;
+      Datei -- {1} Datei;
+    END AnranlDatei;
+
+    ASSOCIATION AnranlWasservsg =
+      Anreicherungsanlage -- {0..*} Anreicherungsanlage;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END AnranlWasservsg;
+
+    ASSOCIATION AnreicherungsanlageMutatPerson =
+      Anreicherungsanlage -- {0..*} Anreicherungsanlage;
+      Person -- {0..1} MutatPerson;
+    END AnreicherungsanlageMutatPerson;
+
+    ASSOCIATION AnrNrAfu =
+      Anreicherungsanlage -- {1..*} Anreicherungsanlage;
+      IntranetPos -- {0..*} IntranetPos;
+    END AnrNrAfu;
+
+    ASSOCIATION FassgebWasservsg =
+      Fassungseinzugsgebiet -- {0..*} Fassungseinzugsgebiet;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END FassgebWasservsg;
+
+    ASSOCIATION RueBruAnlageEigentuemer =
+      Rueckgabebrunnen1 -- {0..*} Rueckgabebrunnen;
+      Adresse1 -- {0..1} Adresse;
+    END RueBruAnlageEigentuemer;
+
+    ASSOCIATION RueBruBewiReg =
+      RueBru -- {0..*} Rueckgabebrunnen;
+      BewiReg -- {1..*} BewiReg;
+    END RueBruBewiReg;
+
+    ASSOCIATION RuebruEntBru =
+      Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+    END RuebruEntBru;
+
+    ASSOCIATION RueBruGrundEigentuemer =
+      Rueckgabebrunnen2 -- {0..*} Rueckgabebrunnen;
+      Adresse2 -- {0..1} Adresse;
+    END RueBruGrundEigentuemer;
+
+    ASSOCIATION RueBruKontaktPerson =
+      Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
+      Adresse -- {0..1} Adresse;
+    END RueBruKontaktPerson;
+
+    ASSOCIATION RueBruMutatPerson =
+      Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
+      Person -- {0..1} MutatPerson;
+    END RueBruMutatPerson;
+
+    ASSOCIATION SammeleinrichtungEntBru =
+      Sammeleinrichtung -- {0..*} Sammeleinrichtung;
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+    END SammeleinrichtungEntBru;
+
+    ASSOCIATION SammeleinrichtungMutatPerson =
+      Sammeleinrichtung -- {0..*} Sammeleinrichtung;
+      MutatPerson -- {0..1} MutatPerson;
+    END SammeleinrichtungMutatPerson;
+
+    ASSOCIATION SammeleinrichtungQwfQuellschacht =
+      SammeleinrichtungQwf -- {0..*} SammeleinrichtungQwf;
+      Quellschacht -- {0..*} Quellschacht;
+    END SammeleinrichtungQwfQuellschacht;
+
+    ASSOCIATION VerNrAfuIntranetPos =
+      Versickerungsanlage -- {0..*} Versickerungsanlage;
+      IntranetPos -- {1..*} IntranetPos;
+    END VerNrAfuIntranetPos;
+
+    ASSOCIATION VersiBewiReg =
+      Versickerungsanlage -- {0..*} Versickerungsanlage;
+      BewiReg -- {1..*} BewiReg;
+    END VersiBewiReg;
+
+    ASSOCIATION VersickerungsanlageAnlageEigentuemer =
+      Versickerungsanlage1 -- {0..*} Versickerungsanlage;
+      Adresse1 -- {0..1} Adresse;
+    END VersickerungsanlageAnlageEigentuemer;
+
+    ASSOCIATION VersickerungsanlageGrundEigentuemer =
+      Versickerungsanlage2 -- {0..*} Versickerungsanlage;
+      Adresse2 -- {0..1} Adresse;
+    END VersickerungsanlageGrundEigentuemer;
+
+    ASSOCIATION VersickerungsanlageKontaktPerson =
+      Versickerungsanlage -- {0..*} Versickerungsanlage;
+      Adresse -- {0..1} Adresse;
+    END VersickerungsanlageKontaktPerson;
+
+    ASSOCIATION VersickerungsanlageMutatPerson =
+      Versickerungsanlage -- {0..*} Versickerungsanlage;
+      MutatPerson -- {0..1} MutatPerson;
+    END VersickerungsanlageMutatPerson;
+
+    ASSOCIATION VersiDatei =
+      Versickerungsanlage -- {0..*} Versickerungsanlage;
+      Datei -- {1..*} Datei;
+    END VersiDatei;
+
+    ASSOCIATION VersiWasservsg =
+      Versickerungsanlage -- {0..*} Versickerungsanlage;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END VersiWasservsg;
+
+    ASSOCIATION BautenGWAnlageEigentuemer =
+      BautenGW1 -- {0..*} BautenGW;
+      Adresse1 -- {0..1} Adresse;
+    END BautenGWAnlageEigentuemer;
+
+    ASSOCIATION BautenGWBewiReg =
+      BautenGW -- {0..*} BautenGW;
+      BewiReg -- {1..*} BewiReg;
+    END BautenGWBewiReg;
+
+    ASSOCIATION BautenGWDatei =
+      BautenGW -- {0..*} BautenGW;
+      Datei -- {1} Datei;
+    END BautenGWDatei;
+
+    ASSOCIATION BautenGWGrundEigentuemer =
+      BautenGW2 -- {0..*} BautenGW;
+      Adresse2 -- {0..1} Adresse;
+    END BautenGWGrundEigentuemer;
+
+    ASSOCIATION BautenGWKontakPerson =
+      BautenGW -- {0..*} BautenGW;
+      Adresse -- {0..1} Adresse;
+    END BautenGWKontakPerson;
+
+    ASSOCIATION BautenGWMutatPerson =
+      BautenGW -- {0..*} BautenGW;
+      MutatPerson -- {0..1} MutatPerson;
+    END BautenGWMutatPerson;
+
+    ASSOCIATION BgwNrAfuIntranet =
+      BautenGW -- {0..*} BautenGW;
+      IntranetPos -- {1..*} IntranetPos;
+    END BgwNrAfuIntranet;
+
+    ASSOCIATION EinleitAnlageEigentuemer =
+      Einleit1 -- {0..*} Einleit;
+      Adresse1 -- {0..1} Adresse;
+    END EinleitAnlageEigentuemer;
+
+    ASSOCIATION EinleitBewiReg =
+      Einleit -- {0..*} Einleit;
+      BewiReg -- {1..*} BewiReg;
+    END EinleitBewiReg;
+
+    ASSOCIATION EinleitDatei =
+      Einleit -- {0..*} Einleit;
+      Datei -- {1} Datei;
+    END EinleitDatei;
+
+    ASSOCIATION EinleitGrundEigentuemer =
+      Einleit2 -- {0..*} Einleit;
+      Adresse2 -- {0..1} Adresse;
+    END EinleitGrundEigentuemer;
+
+    ASSOCIATION EinleitKontaktPerson =
+      Einleit -- {0..*} Einleit;
+      Adresse -- {0..1} Adresse;
+    END EinleitKontaktPerson;
+
+    ASSOCIATION EinleitMutatPerson =
+      Einleit -- {0..*} Einleit;
+      MutatPerson -- {0..1} MutatPerson;
+    END EinleitMutatPerson;
+
+    ASSOCIATION EinleitNrAfuIntranet =
+      Einleit -- {0..*} Einleit;
+      IntranetPos -- {1..*} IntranetPos;
+    END EinleitNrAfuIntranet;
+
+    ASSOCIATION QwfMenge_Karte25 =
+      Quellschacht -- {0..*} Quellschacht;
+      QwfMenge_Karte25Pos -- {1..*} QwfMenge_Karte25Pos;
+    END QwfMenge_Karte25;
+
+!! Assoziationen zu Tabellen in Planerischem Gewässerschutz
+    ASSOCIATION EntbruGSBAoTw_ZsBeZu =
+      EntbruGUID -- {0..*} Entnahmebrunnen;
+      GSBAoTw_ZsBeZuGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END EntbruGSBAoTw_ZsBeZu;
+
+    ASSOCIATION EntbruGWSZone =
+      EntbruGUID -- {0..*} Entnahmebrunnen;
+      GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
+    END EntbruGWSZone;
+
+    ASSOCIATION ObFasGSBAoTw_ZsBeZu =
+      ObFasGUID -- {0..*} OberflaechenGewFassung;
+      GSBAoTw_ZsBeZuGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END ObFasGSBAoTw_ZsBeZu;
+
+    ASSOCIATION ObFasGWSZone =
+      ObFasGUID -- {0..*} OberflaechenGewFassung;
+      GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
+    END ObFasGWSZone;
+
+    ASSOCIATION QuellSchGSBAoTw_ZsBeZu =
+      QuellSchGUID -- {0..*} Quellschacht;
+      GSBAoTw_ZsBeZuGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END QuellSchGSBAoTw_ZsBeZu;
+
+    ASSOCIATION QuellSchGWSZone =
+      QuellSchGUID -- {0..*} Quellschacht;
+      GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
+    END QuellSchGWSZone;
+
+   END Wasserversorgung_Zug;
+   
+  /* Transfermetadaten */
+  TOPIC TransferMetadaten =
+    OID AS INTERLIS.UUIDOID;
+    
+    CLASS Zustaendige_Stelle =
+      Name : MANDATORY TEXT*80;
+    END Zustaendige_Stelle;
+    
+    CLASS Datenbestand =
+      BehaelterID : INTERLIS.UUIDOID;
+	  Stand : MANDATORY INTERLIS.XMLDate;
+      Lieferdatum : MANDATORY INTERLIS.XMLDate;
+      Bemerkungen : MTEXT;
+    END Datenbestand;
+
+    ASSOCIATION zustStelle_Daten =
+      zustaendigeStelle -<> {1} Zustaendige_Stelle;
+      Datenbestand -- {0..*} Datenbestand;
+    END zustStelle_Daten;
+
+  END TransferMetadaten;
+
+END ZG_hydrogeo_wva_V1.

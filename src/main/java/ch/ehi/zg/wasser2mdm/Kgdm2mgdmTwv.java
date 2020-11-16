@@ -12,7 +12,7 @@ import ch.interlis.iox.IoxException;
 import ch.interlis.iox.StartBasketEvent;
 import ch.interlis.iox_j.filter.ReduceToBaseModel;
 import ch.interlis.models.TWVINNOTLAGEN_LV95_V1;
-import ch.interlis.models.ZG_WASSER_V1;
+import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 
 public class Kgdm2mgdmTwv extends ReduceToBaseModel {
 
@@ -34,7 +34,7 @@ public class Kgdm2mgdmTwv extends ReduceToBaseModel {
         IoxEvent ret=super.filter(event);
         if(ret!=null) {
             if(ret instanceof StartBasketEvent) {
-                if(((StartBasketEvent) ret).getType().equals(ZG_WASSER_V1.TransferMetadaten)) {
+                if(((StartBasketEvent) ret).getType().equals(ZG_HYDROGEO_WVA_V1.TransferMetadaten)) {
                     filter=true;
                     ret=null;
                 }

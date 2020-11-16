@@ -7,9 +7,9 @@ import ch.ehi.basics.settings.Settings;
 import ch.interlis.iom.IomObject;
 import ch.interlis.iox.*;
 import ch.interlis.models.GRUNDWASSERAUSTRITTE_LV95_V1;
-import ch.interlis.models.ZG_WASSER_V1;
+import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsstrang_Stollen_Typ;
-import ch.interlis.models.ZG_Wasser_V1.Wasserversorgung_Zug.Sammeleinrichtung_Typ;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_Typ;
 
 public class Kgdm2MgdmGwa {
 
@@ -32,15 +32,15 @@ public class Kgdm2MgdmGwa {
         if(event instanceof StartTransferEvent) {
             pendingEvents.add(new ch.interlis.iox_j.StartTransferEvent(appName));
         }else if(event instanceof StartBasketEvent) {
-            if(((StartBasketEvent) event).getType().equals(ZG_WASSER_V1.Wasserversorgung_Zug)) {
+            if(((StartBasketEvent) event).getType().equals(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug)) {
                 collectObjects=true;
                 pendingEvents.add(new ch.interlis.iox_j.StartBasketEvent(GRUNDWASSERAUSTRITTE_LV95_V1.Grundwasseraustritte,"b1"));
             }
         }else if(event instanceof ObjectEvent) {
             if(collectObjects) {
                 IomObject iomObj=((ObjectEvent) event).getIomObject();
-                if(iomObj instanceof ch.interlis.models.ZG_Wasser_V1.Wasserversorgung_Zug.Sammeleinrichtung) {
-                    ch.interlis.models.ZG_Wasser_V1.Wasserversorgung_Zug.Sammeleinrichtung from=(ch.interlis.models.ZG_Wasser_V1.Wasserversorgung_Zug.Sammeleinrichtung)iomObj;
+                if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung) {
+                    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung from=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung)iomObj;
                     ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsstrang_Stollen to=new ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsstrang_Stollen(from.getobjectoid());
                     to.setIdentifikator(from.getIdentifikator());
                     to.setTyp(mapSammeleinrichtung_Typ(from.getTyp()));

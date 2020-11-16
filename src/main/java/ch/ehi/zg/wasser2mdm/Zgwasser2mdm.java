@@ -43,7 +43,7 @@ import ch.interlis.models.UNITS;
 import ch.interlis.models.ZG_HYDROGEOLOGISCHEOBJEKTE_2_3;
 import ch.interlis.models.ZG_PLANERISCHERGEWAESSERSCHUTZ_V1_1;
 import ch.interlis.models.ZG_WASSERVERSORGUNGSATLAS_1_0;
-import ch.interlis.models.ZG_WASSER_V1;
+import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 
 public class Zgwasser2mdm {
 
@@ -148,8 +148,8 @@ public class Zgwasser2mdm {
                 // compile required ili files
                 EhiLogger.logState("compile models...");
                 ch.interlis.ili2c.config.Configuration modelv=new ch.interlis.ili2c.config.Configuration();
-                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry("ZG_Wasserversorgungsatlas_1_0",ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
-                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry("ZG_HydrogeologischeObjekte_2_3",ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
+                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry(ZG_WASSERVERSORGUNGSATLAS_1_0.MODEL,ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
+                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry(ZG_HYDROGEOLOGISCHEOBJEKTE_2_3.MODEL,ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
                modelv.setAutoCompleteModelList(true);
                 modelv.setGenerateWarnings(false);
                 td_ili1 = ch.interlis.ili2c.Main.runCompiler(modelv,
@@ -159,8 +159,8 @@ public class Zgwasser2mdm {
                     return false;
                 }
                 modelv=new ch.interlis.ili2c.config.Configuration();
-                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry("ZG_Wasser_V1",ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
-                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry("Grundwasseraustritte_LV95_V1",ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
+                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry(ZG_HYDROGEO_WVA_V1.MODEL,ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
+                modelv.addFileEntry(new ch.interlis.ili2c.config.FileEntry(GRUNDWASSERAUSTRITTE_LV95_V1.MODEL,ch.interlis.ili2c.config.FileEntryKind.ILIMODELFILE));             
                modelv.setAutoCompleteModelList(true);
                 modelv.setGenerateWarnings(false);
                 td_ili2 = ch.interlis.ili2c.Main.runCompiler(modelv,
@@ -228,7 +228,7 @@ public class Zgwasser2mdm {
             // setup data reader
             XtfReader ioxReader=new XtfReader(kgdmFile);
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
-            factories.registerFactory(ZG_WASSER_V1.getIoxFactory());
+            factories.registerFactory(ZG_HYDROGEO_WVA_V1.getIoxFactory());
             ioxReader.setFactory(factories);
             readerStat.setFilename(kgdmFile.getPath());
             Kgdm2MgdmGwa gwaFilter=new Kgdm2MgdmGwa(settings);
@@ -319,7 +319,7 @@ public class Zgwasser2mdm {
             // setup data reader
             XtfReader ioxReader=new XtfReader(kgdmFile);
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
-            factories.registerFactory(ZG_WASSER_V1.getIoxFactory());
+            factories.registerFactory(ZG_HYDROGEO_WVA_V1.getIoxFactory());
             ioxReader.setFactory(factories);
             readerStat.setFilename(kgdmFile.getPath());
             Kgdm2LegacyHydro gwaFilter=new Kgdm2LegacyHydro(settings);
@@ -389,7 +389,7 @@ public class Zgwasser2mdm {
 
             kgdmWriter = new XtfWriterBase( kgdmFile,  getIoxMapping(),"2.3");
             kgdmWriter.setModels(new XtfModel[]{
-                    ZG_WASSER_V1.getXtfModel(),
+                    ZG_HYDROGEO_WVA_V1.getXtfModel(),
                     TWVINNOTLAGEN_LV95_V1.getXtfModel(),
                     LOCALISATIONCH_V1.getXtfModel(),
                     GEOMETRYCHLV95_V1.getXtfModel(),
@@ -403,7 +403,7 @@ public class Zgwasser2mdm {
             IoxEvent event=null;
             event=new ch.interlis.iox_j.StartTransferEvent(settings.getValue(SETTING_APPNAME));
             writeIoxEvent(event, kgdmWriter, writerStat);
-            event=new ch.interlis.iox_j.StartBasketEvent(ZG_WASSER_V1.Wasserversorgung_Zug,"b1");
+            event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug,"b1");
             writeIoxEvent(event, kgdmWriter, writerStat);
             try{
                 do{
@@ -468,7 +468,7 @@ public class Zgwasser2mdm {
             }
             event=new ch.interlis.iox_j.EndBasketEvent();
             writeIoxEvent(event, kgdmWriter, writerStat);
-            event=new ch.interlis.iox_j.StartBasketEvent(ZG_WASSER_V1.TransferMetadaten,"b2");
+            event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.TransferMetadaten,"b2");
             writeIoxEvent(event, kgdmWriter, writerStat);
             // TODO TransferMetadaten
             event=new ch.interlis.iox_j.EndBasketEvent();
@@ -500,7 +500,7 @@ public class Zgwasser2mdm {
     public static ViewableProperties getIoxMapping()
     {
        ViewableProperties mapping=INTERLIS_.getIoxMapping();
-       mapping.addAll(ZG_WASSER_V1.getIoxMapping());
+       mapping.addAll(ZG_HYDROGEO_WVA_V1.getIoxMapping());
        mapping.addAll(TWVINNOTLAGEN_LV95_V1.getIoxMapping());
        mapping.addAll(GRUNDWASSERAUSTRITTE_LV95_V1.getIoxMapping());
        mapping.addAll(LOCALISATIONCH_V1.getIoxMapping());
