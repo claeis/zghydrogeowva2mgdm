@@ -1,4 +1,4 @@
-package ch.ehi.zg.wasser2mdm;
+package ch.ehi.zg.hydrogeowva2mgdm;
 
 import java.util.ArrayList;
 import java.util.List;

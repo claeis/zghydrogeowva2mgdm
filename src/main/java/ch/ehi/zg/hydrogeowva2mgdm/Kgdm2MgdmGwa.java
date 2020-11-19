@@ -1,4 +1,4 @@
-package ch.ehi.zg.wasser2mdm;
+package ch.ehi.zg.hydrogeowva2mgdm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class Kgdm2MgdmGwa {
     private boolean collectObjects=false;
     
     public Kgdm2MgdmGwa(Settings settings) {
-        appName=settings.getValue(Zgwasser2mdm.SETTING_APPNAME);
+        appName=settings.getValue(Converter.SETTING_APPNAME);
 
     }
 

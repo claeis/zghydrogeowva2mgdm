@@ -1,4 +1,4 @@
-package ch.ehi.zg.wasser2mdm;
+package ch.ehi.zg.hydrogeowva2mgdm;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import ch.interlis.models.ZG_PLANERISCHERGEWAESSERSCHUTZ_V1_1;
 import ch.interlis.models.ZG_WASSERVERSORGUNGSATLAS_1_0;
 import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 
-public class Zgwasser2mdm {
+public class Converter {
 
     /** Path with folders of Interlis model files. Multiple entries are separated by semicolon (';'). 
      * Might contain "http:" URLs which should contain model repositories. 
@@ -53,16 +53,16 @@ public class Zgwasser2mdm {
      * @see #ITF_DIR
      * @see #JAR_DIR
      */
-    public static final String SETTING_ILIDIRS="ch.ehi.zg.wasser2mdm.ilidirs";
+    public static final String SETTING_ILIDIRS="ch.ehi.zg.hydrogeowva2mgdm.ilidirs";
     /** the main folder of program.
      */
-    public static final String SETTING_APPHOME="ch.ehi.zg.wasser2mdm.appHome";
+    public static final String SETTING_APPHOME="ch.ehi.zg.hydrogeowva2mgdm.appHome";
     /** the name of the program.
      */
-    public static final String SETTING_APPNAME="ch.ehi.zg.wasser2mdm.appName";
+    public static final String SETTING_APPNAME="ch.ehi.zg.hydrogeowva2mgdm.appName";
     /** Name of the log file that receives the conversion results.
      */
-    public static final String SETTING_LOGFILE = "ch.ehi.zg.wasser2mdm.log";
+    public static final String SETTING_LOGFILE = "ch.ehi.zg.hydrogeowva2mgdm.log";
     /** Placeholder, that will be replaced by the folder of the current to be converted transfer file. 
      * @see #SETTING_ILIDIRS
      */

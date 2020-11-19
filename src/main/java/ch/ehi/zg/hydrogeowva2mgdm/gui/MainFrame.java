@@ -1,4 +1,4 @@
-package ch.ehi.zg.wasser2mdm.gui;
+package ch.ehi.zg.hydrogeowva2mgdm.gui;
 
 import ch.ehi.basics.settings.Settings;
 

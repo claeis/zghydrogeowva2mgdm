@@ -66,7 +66,7 @@ task generateMyResources {
 		def versionProps = new Properties()
 		versionProps.setProperty('version', "$project.version")
 		versionProps.setProperty('versionCommit', getGitHash())
-		def versionPropsFile = new File(generatedResources,"ch/ehi/zg/wasser2mdm/Version.properties")
+		def versionPropsFile = new File(generatedResources,"ch/ehi/zg/hydrogeowva2mgdm/Version.properties")
 		versionPropsFile.getParentFile().mkdirs();
 		versionProps.store(versionPropsFile.newWriter(), null);
 	}
@@ -90,7 +90,7 @@ task bindist(type: Zip){
 jar {
   manifest {
     attributes(
-      "Main-Class": "ch.ehi.zg.wasser2mdm.Main",
+      "Main-Class": "ch.ehi.zg.hydrogeowva2mgdm.Main",
       "Class-Path": configurations.runtimeClasspath.collect { 'libs/'+it.getName() }.join(' '))
   }
 }

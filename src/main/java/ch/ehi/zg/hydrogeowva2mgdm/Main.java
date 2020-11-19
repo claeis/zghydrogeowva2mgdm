@@ -1,11 +1,11 @@
-package ch.ehi.zg.wasser2mdm;
+package ch.ehi.zg.hydrogeowva2mgdm;
 
 import java.io.File;
 
 
 import ch.ehi.basics.logging.EhiLogger;
 import ch.ehi.basics.settings.Settings;
-import ch.ehi.zg.wasser2mdm.gui.MainFrame;
+import ch.ehi.zg.hydrogeowva2mgdm.gui.MainFrame;
 
 /** Main program and commandline interface of zgwasser2mdm.
  */
@@ -13,10 +13,10 @@ public class Main {
     
     /** name of application as shown to user.
      */
-    public static final String APP_NAME="zgwasser2mdm";
+    public static final String APP_NAME="zghydrogeowva2mgdm";
     /** name of jar file.
      */
-    public static final String APP_JAR="zgwasser2mdm.jar";
+    public static final String APP_JAR="zghydrogeowva2mgdm.jar";
     /** version of application.
      */
     private static String version=null;
@@ -25,11 +25,11 @@ public class Main {
      */
     static public void main(String args[]){
         Settings settings=new Settings();
-        settings.setValue(Zgwasser2mdm.SETTING_APPNAME, APP_NAME);
-        settings.setValue(Zgwasser2mdm.SETTING_ILIDIRS, Zgwasser2mdm.SETTING_DEFAULT_ILIDIRS);
+        settings.setValue(Converter.SETTING_APPNAME, APP_NAME);
+        settings.setValue(Converter.SETTING_ILIDIRS, Converter.SETTING_DEFAULT_ILIDIRS);
         String appHome=getAppHome();
         if(appHome!=null){
-            settings.setValue(Zgwasser2mdm.SETTING_APPHOME, appHome);
+            settings.setValue(Converter.SETTING_APPHOME, appHome);
         }
         // arguments on export
         String httpProxyHost = null;
@@ -40,7 +40,7 @@ public class Main {
             return;
         }
         int argi=0;
-        int function=Zgwasser2mdm.FC_ITF2KGDM;
+        int function=Converter.FC_ITF2KGDM;
         boolean doGui=false;
         File wvaFile=null;
         File hydroFile=null;
@@ -52,11 +52,11 @@ public class Main {
             if(arg.equals("--trace")){
                 EhiLogger.getInstance().setTraceFilter(false);
             }else if(arg.equals("--itf2kgdm")){
-                function=Zgwasser2mdm.FC_ITF2KGDM;
+                function=Converter.FC_ITF2KGDM;
             }else if(arg.equals("--kgdm2itf")){
-                function=Zgwasser2mdm.FC_KGDM2ITF;
+                function=Converter.FC_KGDM2ITF;
             }else if(arg.equals("--kgdm2mgdm")){
-                function=Zgwasser2mdm.FC_KGDM2MGDM;
+                function=Converter.FC_KGDM2MGDM;
             }else if(arg.equals("--wva")){
                 argi++;
                 wvaFile=new File(args[argi]);
@@ -77,10 +77,10 @@ public class Main {
                 doGui=true;
             }else if(arg.equals("--modeldir")){
                 argi++;
-                settings.setValue(Zgwasser2mdm.SETTING_ILIDIRS, args[argi]);
+                settings.setValue(Converter.SETTING_ILIDIRS, args[argi]);
             }else if(arg.equals("--log")) {
                 argi++;
-                settings.setValue(Zgwasser2mdm.SETTING_LOGFILE, args[argi]);
+                settings.setValue(Converter.SETTING_LOGFILE, args[argi]);
             }else if(arg.equals("--proxy")) {
                     argi++;
                     settings.setValue(ch.interlis.ili2c.gui.UserSettings.HTTP_PROXY_HOST, args[argi]);
@@ -101,7 +101,7 @@ public class Main {
                     System.err.println();
                     System.err.println("--gui                 start GUI.");
                     System.err.println("--log file            text file, that receives validation results.");
-                    System.err.println("--modeldir "+Zgwasser2mdm.SETTING_DEFAULT_ILIDIRS+" list of directories/repositories with ili-files.");
+                    System.err.println("--modeldir "+Converter.SETTING_DEFAULT_ILIDIRS+" list of directories/repositories with ili-files.");
                     System.err.println("--proxy host          proxy server to access model repositories.");
                     System.err.println("--proxyPort port      proxy port to access model repositories.");
                     System.err.println("--trace               enable trace messages.");
@@ -120,14 +120,14 @@ public class Main {
             MainFrame.main(settings);
         }else{
             boolean ok=false;
-            ok = new Zgwasser2mdm().convert(function,wvaFile,hydroFile,kgdmFile,mgdmTwvFile,mgdmGwaFile,settings);
+            ok = new Converter().convert(function,wvaFile,hydroFile,kgdmFile,mgdmTwvFile,mgdmGwaFile,settings);
             System.exit(ok ? 0 : 1);
         }
         
     }
     /** Name of file with program settings. Only used by GUI, not used by commandline version.
      */
-    private final static String SETTINGS_FILE = System.getProperty("user.home") + "/.zgwasser2mdm";
+    private final static String SETTINGS_FILE = System.getProperty("user.home") + "/.zghydrogeowva2mgdm";
     /** Reads program settings.
      * @param settings Program configuration as read from file.
      */
