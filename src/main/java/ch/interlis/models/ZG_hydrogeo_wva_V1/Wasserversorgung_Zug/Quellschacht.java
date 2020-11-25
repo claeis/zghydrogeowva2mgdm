@@ -399,6 +399,33 @@ public class Quellschacht extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVin
     if(value==null){setattrundefined("KontaktDatum");return;}
     setattrvalue("KontaktDatum", value);
   }
+  public final static String tag_Verwendungszweck="Verwendungszweck";
+  public int sizeVerwendungszweck() {return getattrvaluecount("Verwendungszweck");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Texte getVerwendungszweck() {
+    int size=getattrvaluecount("Verwendungszweck");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Texte value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Texte)getattrobj("Verwendungszweck",0);
+    return value;
+  }
+  public void setVerwendungszweck(ch.interlis.models.ZG_hydrogeo_wva_V1.Texte value) {
+    if(getattrvaluecount("Verwendungszweck")>0){
+      changeattrobj("Verwendungszweck",0, value);
+    }else{
+      addattrobj("Verwendungszweck", value);
+    }
+  }
+  public final static String tag_Datei="Datei";
+  public String getDatei() {
+    ch.interlis.iom.IomObject value=getattrobj("Datei",0);
+    if(value==null)throw new IllegalStateException();
+    String oid=value.getobjectrefoid();
+    if(oid==null)throw new IllegalStateException();
+    return oid;
+  }
+  public void setDatei(String oid) {
+    ch.interlis.iom.IomObject structvalue=addattrobj("Datei","REF");
+    structvalue.setobjectrefoid(oid);
+  }
   public final static String tag_Person="Person";
   public String getPerson() {
     ch.interlis.iom.IomObject value=getattrobj("Person",0);

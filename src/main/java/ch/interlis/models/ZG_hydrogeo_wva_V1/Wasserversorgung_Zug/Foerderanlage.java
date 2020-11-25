@@ -34,19 +34,23 @@ public class Foerderanlage extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     }
   }
   public final static String tag_SymbolRot="SymbolRot";
-  public double getSymbolRot() {
+  public Double getSymbolRot() {
+    if(getattrvaluecount("SymbolRot")==0)return null;
     String value=getattrvalue("SymbolRot");
     return Double.parseDouble(value);
   }
-  public void setSymbolRot(double value) {
+  public void setSymbolRot(Double value) {
+    if(value==null){setattrundefined("SymbolRot");return;}
     setattrvalue("SymbolRot", Double.toString(value));
   }
   public final static String tag_Farbe="Farbe";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe getFarbe() {
+    if(getattrvaluecount("Farbe")==0)return null;
     String value=getattrvalue("Farbe");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.parseXmlCode(value);
   }
   public void setFarbe(ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe value) {
+    if(value==null){setattrundefined("Farbe");return;}
     setattrvalue("Farbe", ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.toXmlCode(value));
   }
   public final static String tag_Betriebsart="Betriebsart";

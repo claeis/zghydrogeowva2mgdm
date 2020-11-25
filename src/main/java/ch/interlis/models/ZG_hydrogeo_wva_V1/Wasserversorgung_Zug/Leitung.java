@@ -36,6 +36,21 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   public void setTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt value) {
     setattrvalue("Typ", ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt.toXmlCode(value));
   }
+  public final static String tag_SymbolGeo="SymbolGeo";
+  public int sizeSymbolGeo() {return getattrvaluecount("SymbolGeo");}
+  public ch.interlis.iom.IomObject getSymbolGeo() {
+    int size=getattrvaluecount("SymbolGeo");
+    if(size==0)return null;
+    ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("SymbolGeo",0);
+    return value;
+  }
+  public void setSymbolGeo(ch.interlis.iom.IomObject value) {
+    if(getattrvaluecount("SymbolGeo")>0){
+      changeattrobj("SymbolGeo",0, value);
+    }else{
+      addattrobj("SymbolGeo", value);
+    }
+  }
   public final static String tag_LeitText="LeitText";
   public String getLeitText() {
     if(getattrvaluecount("LeitText")==0)return null;
@@ -48,10 +63,12 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   }
   public final static String tag_Farbe="Farbe";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe getFarbe() {
+    if(getattrvaluecount("Farbe")==0)return null;
     String value=getattrvalue("Farbe");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.parseXmlCode(value);
   }
   public void setFarbe(ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe value) {
+    if(value==null){setattrundefined("Farbe");return;}
     setattrvalue("Farbe", ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.toXmlCode(value));
   }
   public final static String tag_Betriebsart="Betriebsart";
@@ -211,6 +228,18 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   public void setMutatDatum(String value) {
     if(value==null){setattrundefined("MutatDatum");return;}
     setattrvalue("MutatDatum", value);
+  }
+  public final static String tag_Grundlage="Grundlage";
+  public String getGrundlage() {
+    ch.interlis.iom.IomObject value=getattrobj("Grundlage",0);
+    if(value==null)throw new IllegalStateException();
+    String oid=value.getobjectrefoid();
+    if(oid==null)throw new IllegalStateException();
+    return oid;
+  }
+  public void setGrundlage(String oid) {
+    ch.interlis.iom.IomObject structvalue=addattrobj("Grundlage","REF");
+    structvalue.setobjectrefoid(oid);
   }
   public final static String tag_Wasserversorgung="Wasserversorgung";
   public String getWasserversorgung() {

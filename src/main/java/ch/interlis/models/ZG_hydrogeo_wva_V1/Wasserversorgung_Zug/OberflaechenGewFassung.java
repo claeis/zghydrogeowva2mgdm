@@ -364,4 +364,28 @@ public class OberflaechenGewFassung extends ch.interlis.models.TWVinNotlagen_LV9
       addattrobj("Verwendungszweck", value);
     }
   }
+  public final static String tag_Datei="Datei";
+  public String getDatei() {
+    ch.interlis.iom.IomObject value=getattrobj("Datei",0);
+    if(value==null)throw new IllegalStateException();
+    String oid=value.getobjectrefoid();
+    if(oid==null)throw new IllegalStateException();
+    return oid;
+  }
+  public void setDatei(String oid) {
+    ch.interlis.iom.IomObject structvalue=addattrobj("Datei","REF");
+    structvalue.setobjectrefoid(oid);
+  }
+  public final static String tag_Wasserversorgung="Wasserversorgung";
+  public String getWasserversorgung() {
+    ch.interlis.iom.IomObject value=getattrobj("Wasserversorgung",0);
+    if(value==null)throw new IllegalStateException();
+    String oid=value.getobjectrefoid();
+    if(oid==null)throw new IllegalStateException();
+    return oid;
+  }
+  public void setWasserversorgung(String oid) {
+    ch.interlis.iom.IomObject structvalue=addattrobj("Wasserversorgung","REF");
+    structvalue.setobjectrefoid(oid);
+  }
 }

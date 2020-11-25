@@ -18,10 +18,12 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
   }
   public final static String tag_TextTyp="TextTyp";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp getTextTyp() {
+    if(getattrvaluecount("TextTyp")==0)return null;
     String value=getattrvalue("TextTyp");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.parseXmlCode(value);
   }
   public void setTextTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp value) {
+    if(value==null){setattrundefined("TextTyp");return;}
     setattrvalue("TextTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.toXmlCode(value));
   }
   public final static String tag_ObjNrAfu="ObjNrAfu";
@@ -64,15 +66,15 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
     if(value==null){setattrundefined("TiefeTerrAbstich");return;}
     setattrvalue("TiefeTerrAbstich", Double.toString(value));
   }
-  public final static String tag_HoeheTerrAbstuch="HoeheTerrAbstuch";
-  public Double getHoeheTerrAbstuch() {
-    if(getattrvaluecount("HoeheTerrAbstuch")==0)return null;
-    String value=getattrvalue("HoeheTerrAbstuch");
+  public final static String tag_HoeheTerrAbstich="HoeheTerrAbstich";
+  public Double getHoeheTerrAbstich() {
+    if(getattrvaluecount("HoeheTerrAbstich")==0)return null;
+    String value=getattrvalue("HoeheTerrAbstich");
     return Double.parseDouble(value);
   }
-  public void setHoeheTerrAbstuch(Double value) {
-    if(value==null){setattrundefined("HoeheTerrAbstuch");return;}
-    setattrvalue("HoeheTerrAbstuch", Double.toString(value));
+  public void setHoeheTerrAbstich(Double value) {
+    if(value==null){setattrundefined("HoeheTerrAbstich");return;}
+    setattrvalue("HoeheTerrAbstich", Double.toString(value));
   }
   public final static String tag_WspHoeheTiefst="WspHoeheTiefst";
   public Double getWspHoeheTiefst() {
@@ -432,6 +434,18 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
   }
   public void setDatei(String oid) {
     ch.interlis.iom.IomObject structvalue=addattrobj("Datei","REF");
+    structvalue.setobjectrefoid(oid);
+  }
+  public final static String tag_Wasserversorgung="Wasserversorgung";
+  public String getWasserversorgung() {
+    ch.interlis.iom.IomObject value=getattrobj("Wasserversorgung",0);
+    if(value==null)throw new IllegalStateException();
+    String oid=value.getobjectrefoid();
+    if(oid==null)throw new IllegalStateException();
+    return oid;
+  }
+  public void setWasserversorgung(String oid) {
+    ch.interlis.iom.IomObject structvalue=addattrobj("Wasserversorgung","REF");
     structvalue.setobjectrefoid(oid);
   }
 }

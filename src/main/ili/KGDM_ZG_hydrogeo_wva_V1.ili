@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2020-10-30"  =
+VERSION "2020-11-24"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -275,7 +275,7 @@ VERSION "2020-10-30"  =
     DEPENDS ON ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche,ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen,ZG_PlanerischerGewaesserschutz_V1_1.TransferMetadaten;
 
 !! Mehrfach verwendete Klassen
-    CLASS TextPos =
+    CLASS IntranetPos =
       TextTyp : MANDATORY TextTyp;
       IntranetPos : MANDATORY (Pos2, Pos5);
       Pos : MANDATORY GeometryCHLV95_V1.Coord2;
@@ -284,9 +284,9 @@ VERSION "2020-10-30"  =
       Hali : HALIGNMENT;
       Vali : VALIGNMENT;
       Size : SizeTyp;
-    END TextPos;
+    END IntranetPos;
 
-    CLASS IntranetPos =
+    CLASS TextPos =
       TextTyp : MANDATORY TextTyp;
       Pos : MANDATORY GeometryCHLV95_V1.Coord2;
       Ori : 0.000 .. 399.999 [Grads];
@@ -294,7 +294,7 @@ VERSION "2020-10-30"  =
       Vali : VALIGNMENT;
       Size : SizeTyp;
       Plantyp : PlanTyp;
-    END IntranetPos;
+    END TextPos;
 
     CLASS QwfMenge_Karte25Pos EXTENDS IntranetPos =
       PlatzhalterBeschriftung : TEXT*1;
@@ -347,8 +347,8 @@ VERSION "2020-10-30"  =
 
     CLASS Wasserversorgung =
       WVName : MANDATORY TEXT*254;
-      Nummer : MANDATORY 0 .. 999;
-      EigentumArt : MANDATORY EigentumArt;
+      Nummer : 0 .. 999;
+      EigentumArt : EigentumArt;
     END Wasserversorgung;
 
     CLASS BewiReg =
@@ -378,7 +378,6 @@ VERSION "2020-10-30"  =
       Lokalitaet : TEXT*100;
       HoeheTerrain : 0.00 .. 3000.00;
       HoeheAuslauf : 0.00 .. 3000.00;
-      MutatPerson : TEXT*100;
       MutatBemerk : TEXT*240;
       DetailplanArt: DetailplanArt;
       DetailplanDatum : INTERLIS.XMLDate;
@@ -434,6 +433,7 @@ VERSION "2020-10-30"  =
       QkatPlanNr : 0 .. 999;
       GrundstNr : TEXT*254;
       KontaktDatum : INTERLIS.XMLDate;
+      Verwendungszweck : Texte;
     END Quellschacht;      
 
     CLASS Sammelschacht EXTENDS Quellschacht =
@@ -444,12 +444,12 @@ VERSION "2020-10-30"  =
 
     CLASS Entnahmebrunnen EXTENDS Grundwasserfassung =
       EntnahmebrunnenTyp : MANDATORY EntnahmebrunnenTyp;
-	  TextTyp : MANDATORY TextTyp;
+	  TextTyp : TextTyp;
 	  ObjNrAfu : TEXT*50;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
       TiefeTerrAbstich: 0.00 .. 999.99;   !! in [m]
-      HoeheTerrAbstuch : 0.00 .. 999.99;  !! in [m]
+      HoeheTerrAbstich : 0.00 .. 999.99;  !! in [m]
       WspHoeheTiefst: 0.00 .. 9999.99;    !! Höhe m ü.M. 
       K_Wert: 0.000 .. 99.999;            !! [10^-3 m/s]
       SchzNr : 0 .. 99999;
@@ -526,9 +526,9 @@ VERSION "2020-10-30"  =
 
     CLASS Foerderanlage (EXTENDED) =            !! Pumpwerk, Hydraulischer Widder, Reinwasser-Pumpwerk (hat zus. Assoziationen)
       FoerderanlageArt : (Pumpwerk, HydWidder, ReinwasserPW, OberflGewRohwaPW);
-      SymbolGeo : MANDATORY GeometryCHLV95_V1.Coord2;
-      SymbolRot : MANDATORY 0.000 .. 399.999 [Grads];
-      Farbe : MANDATORY Farbe;
+      SymbolGeo : GeometryCHLV95_V1.Coord2;
+      SymbolRot : 0.000 .. 399.999 [Grads];
+      Farbe : Farbe;
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
       TotFoerdermenge : 0 .. 99999;
@@ -588,6 +588,8 @@ VERSION "2020-10-30"  =
       SymbolGeo: GeometryCHLV95_V1.Coord2;
       SymbolRot: 0.000 .. 399.999 [Grads];
       Farbe : Farbe;
+      SymbolTyp : ResSymbTyp;
+      Leitungsart : LeitungsArt;
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
       Notversorgung : Notversorgung;
@@ -600,7 +602,7 @@ VERSION "2020-10-30"  =
     END WeitereAnlage;
 
     CLASS Schieberschacht EXTENDS WeitereAnlage =
-       Leitungsart : MANDATORY LeitungsArt;
+       Leitungsart (EXTENDED) : MANDATORY LeitungsArt;
     END Schieberschacht;
 
     CLASS Druckreduktion EXTENDS Schieberschacht =
@@ -628,8 +630,9 @@ VERSION "2020-10-30"  =
       LeitArt : (OberflGewFsgLeitung, RueckgabeLeitung, LeitungsnetzWV, WVAFassungsleitung);
       Nachfuehrungsstand : INTERLIS.XMLDate;
       Typ : MANDATORY LeitungsArt;         !! OberflGewFsgLeitung = Versorgungsleitung; RueckgabeLeitung = Rueckgabeleitung
+      SymbolGeo: CHLine;
       LeitText : TEXT*50;
-      Farbe : MANDATORY Farbe;
+      Farbe : Farbe;
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
       Notversorgung : Notversorgung;
@@ -747,7 +750,7 @@ VERSION "2020-10-30"  =
       ErfVorlBemerk: ErfVorlBemerk;
     END Sammeleinrichtung;
 
-    CLASS  SammeleinrichtungQwf EXTENDS Sammeleinrichtung =
+    CLASS  SammeleinrichtungQwf EXTENDS Sammeleinrichtung = 
       BetriebsArt: BetriebsArt;
       SchuettmengeMin: 0..99999;
       ErtragMinAng: ErtragAngaben;
@@ -898,10 +901,10 @@ VERSION "2020-10-30"  =
       Quellschacht -- {0..*} Quellschacht;
     END QueSchaSaScha;
 
-    ASSOCIATION SaSchaDatei =
-      Sammelschacht -- {1} Sammelschacht;
-      Datei -- {0..*} Datei;
-    END SaSchaDatei;
+    ASSOCIATION QuellSchDatei =
+      Quellschacht -- {0..*} Quellschacht;
+      Datei -- {1} Datei;
+    END QuellSchDatei;
 
     ASSOCIATION SaSchaGrundlage =
       Sammelschacht -- {0..*} Sammelschacht;
@@ -917,6 +920,11 @@ VERSION "2020-10-30"  =
       Entnahmebrunnen -- {0..*} Entnahmebrunnen;
       Datei -- {1} Datei;
     END EntbruDatei;
+ 
+   ASSOCIATION EntbruBewiReg =
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+      BewiReg -- {1..*} BewiReg;
+    END EntbruBewiReg;
 
     ASSOCIATION EntbruMutatPerson =
       Entnahmebrunnen -- {0..1} Entnahmebrunnen;
@@ -925,13 +933,33 @@ VERSION "2020-10-30"  =
 
     ASSOCIATION EntbruText =
       Entnahmebrunnen -- {1..*} Entnahmebrunnen;
-      TextPos -- {0..*} TextPos;
+      IntranetPos -- {0..*} IntranetPos;
     END EntbruText;
+
+    ASSOCIATION EntbruWasservsg =
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END EntbruWasservsg;
 
     ASSOCIATION OberflGewFassungTiefeText =
       OberflGewFassung -- {0..1} OberflaechenGewFassung;
       TextPos -- {0..*} TextPos;
     END OberflGewFassungTiefeText;
+
+    ASSOCIATION ObFasWasservsg =
+      OberflGewFassung -- {0..*} OberflaechenGewFassung;
+      Wasserversorgung -- {1} Wasserversorgung;
+    END ObFasWasservsg;
+
+    ASSOCIATION ObFasBewiReg =
+      OberflGewFassung -- {0..*} OberflaechenGewFassung;
+      BewiReg -- {1..*} BewiReg;
+    END ObFasBewiReg;
+
+    ASSOCIATION ObFasDatei =
+      OberflGewFassung -- {0..*} OberflaechenGewFassung;
+      Datei -- {1} Datei;
+    END ObFasDatei;
 
     ASSOCIATION FoerderanlageDatei =
       Foerderanlage -- {0..*} Foerderanlage;
@@ -1024,14 +1052,14 @@ VERSION "2020-10-30"  =
     END WeitereAnlageMutatPerson;
 
     ASSOCIATION WeitereAnlageWasservsg =
-      WeiterAnlage -- {0..*} WeitereAnlage;
+      WeitereAnlage -- {0..*} WeitereAnlage;
       Wasserversorgung -- {1} Wasserversorgung;
     END WeitereAnlageWasservsg;
 
-    ASSOCIATION AufbWkrText =
-      Aufbereitungswerk -- {0..*} Aufbereitungswerk;
-      TextPos -- {2..*} TextPos;
-    END AufbWkrText;
+    ASSOCIATION WeitereAnlageText =
+      WeitereAnlage -- {0..1} WeitereAnlage;
+      TextPos -- {0..1} TextPos;
+    END WeitereAnlageText;
 
     ASSOCIATION AufbWrkRes =
       Aufbereitungswerk -- {0..*} Aufbereitungswerk;
@@ -1055,8 +1083,13 @@ VERSION "2020-10-30"  =
 
     ASSOCIATION LeitWasservsg =
       Leitung -- {0..*} Leitung;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {0..1} Wasserversorgung;
     END LeitWasservsg;
+
+    ASSOCIATION LeitGrundlage =
+      Leitung -- {0..*} Leitung;
+      Grundlage -- {1} Grundlage;
+    END LeitGrundlage;
 
     ASSOCIATION AnranlDatei =
       Anreicherungsanlage -- {0..*} Anreicherungsanlage;

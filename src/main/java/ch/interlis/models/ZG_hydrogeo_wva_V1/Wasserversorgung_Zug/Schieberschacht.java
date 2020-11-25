@@ -8,12 +8,4 @@ public class Schieberschacht extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
   public String getobjecttag() {
     return tag;
   }
-  public final static String tag_Leitungsart="Leitungsart";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt getLeitungsart() {
-    String value=getattrvalue("Leitungsart");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt.parseXmlCode(value);
-  }
-  public void setLeitungsart(ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt value) {
-    setattrvalue("Leitungsart", ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt.toXmlCode(value));
-  }
 }

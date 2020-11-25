@@ -24,18 +24,6 @@ public class Datei extends ch.interlis.iom_j.Iom_jObject
   public void setDateiname(String value) {
     setattrvalue("Dateiname", value);
   }
-  public final static String tag_Sammelschacht="Sammelschacht";
-  public String getSammelschacht() {
-    ch.interlis.iom.IomObject value=getattrobj("Sammelschacht",0);
-    if(value==null)throw new IllegalStateException();
-    String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
-    return oid;
-  }
-  public void setSammelschacht(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Sammelschacht","REF");
-    structvalue.setobjectrefoid(oid);
-  }
   public final static String tag_WeitereAnlage="WeitereAnlage";
   public String getWeitereAnlage() {
     ch.interlis.iom.IomObject value=getattrobj("WeitereAnlage",0);

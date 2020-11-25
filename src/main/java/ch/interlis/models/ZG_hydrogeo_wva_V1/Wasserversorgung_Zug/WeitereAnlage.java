@@ -53,6 +53,26 @@ public class WeitereAnlage extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     if(value==null){setattrundefined("Farbe");return;}
     setattrvalue("Farbe", ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.toXmlCode(value));
   }
+  public final static String tag_SymbolTyp="SymbolTyp";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp getSymbolTyp() {
+    if(getattrvaluecount("SymbolTyp")==0)return null;
+    String value=getattrvalue("SymbolTyp");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp.parseXmlCode(value);
+  }
+  public void setSymbolTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp value) {
+    if(value==null){setattrundefined("SymbolTyp");return;}
+    setattrvalue("SymbolTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp.toXmlCode(value));
+  }
+  public final static String tag_Leitungsart="Leitungsart";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt getLeitungsart() {
+    if(getattrvaluecount("Leitungsart")==0)return null;
+    String value=getattrvalue("Leitungsart");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt.parseXmlCode(value);
+  }
+  public void setLeitungsart(ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt value) {
+    if(value==null){setattrundefined("Leitungsart");return;}
+    setattrvalue("Leitungsart", ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt.toXmlCode(value));
+  }
   public final static String tag_Betriebsart="Betriebsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebsart() {
     if(getattrvaluecount("Betriebsart")==0)return null;

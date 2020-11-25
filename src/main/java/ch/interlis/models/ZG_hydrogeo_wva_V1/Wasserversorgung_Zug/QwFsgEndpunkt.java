@@ -178,16 +178,6 @@ public class QwFsgEndpunkt extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     if(value==null){setattrundefined("HoeheAuslauf");return;}
     setattrvalue("HoeheAuslauf", Double.toString(value));
   }
-  public final static String tag_MutatPerson="MutatPerson";
-  public String getMutatPerson() {
-    if(getattrvaluecount("MutatPerson")==0)return null;
-    String value=getattrvalue("MutatPerson");
-    return value;
-  }
-  public void setMutatPerson(String value) {
-    if(value==null){setattrundefined("MutatPerson");return;}
-    setattrvalue("MutatPerson", value);
-  }
   public final static String tag_MutatBemerk="MutatBemerk";
   public String getMutatBemerk() {
     if(getattrvaluecount("MutatBemerk")==0)return null;
