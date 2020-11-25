@@ -10,10 +10,12 @@ public class Datenbestand extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_BehaelterID="BehaelterID";
   public String getBehaelterID() {
+    if(getattrvaluecount("BehaelterID")==0)return null;
     String value=getattrvalue("BehaelterID");
     return value;
   }
   public void setBehaelterID(String value) {
+    if(value==null){setattrundefined("BehaelterID");return;}
     setattrvalue("BehaelterID", value);
   }
   public final static String tag_Stand="Stand";
@@ -34,10 +36,12 @@ public class Datenbestand extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Bemerkungen="Bemerkungen";
   public String getBemerkungen() {
+    if(getattrvaluecount("Bemerkungen")==0)return null;
     String value=getattrvalue("Bemerkungen");
     return value;
   }
   public void setBemerkungen(String value) {
+    if(value==null){setattrundefined("Bemerkungen");return;}
     setattrvalue("Bemerkungen", value);
   }
   public final static String tag_zustaendigeStelle="zustaendigeStelle";

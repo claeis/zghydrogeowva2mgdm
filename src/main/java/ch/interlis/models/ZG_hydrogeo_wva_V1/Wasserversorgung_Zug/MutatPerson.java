@@ -10,10 +10,12 @@ public class MutatPerson extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_MutatPerson="MutatPerson";
   public String getMutatPerson() {
+    if(getattrvaluecount("MutatPerson")==0)return null;
     String value=getattrvalue("MutatPerson");
     return value;
   }
   public void setMutatPerson(String value) {
+    if(value==null){setattrundefined("MutatPerson");return;}
     setattrvalue("MutatPerson", value);
   }
   public final static String tag_Entnahmebrunnen="Entnahmebrunnen";

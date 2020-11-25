@@ -10,18 +10,22 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   }
   public final static String tag_LeitArt="LeitArt";
   public Leitung_LeitArt getLeitArt() {
+    if(getattrvaluecount("LeitArt")==0)return null;
     String value=getattrvalue("LeitArt");
     return Leitung_LeitArt.parseXmlCode(value);
   }
   public void setLeitArt(Leitung_LeitArt value) {
+    if(value==null){setattrundefined("LeitArt");return;}
     setattrvalue("LeitArt", Leitung_LeitArt.toXmlCode(value));
   }
   public final static String tag_Nachfuehrungsstand="Nachfuehrungsstand";
   public String getNachfuehrungsstand() {
+    if(getattrvaluecount("Nachfuehrungsstand")==0)return null;
     String value=getattrvalue("Nachfuehrungsstand");
     return value;
   }
   public void setNachfuehrungsstand(String value) {
+    if(value==null){setattrundefined("Nachfuehrungsstand");return;}
     setattrvalue("Nachfuehrungsstand", value);
   }
   public final static String tag_Typ="Typ";
@@ -34,10 +38,12 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   }
   public final static String tag_LeitText="LeitText";
   public String getLeitText() {
+    if(getattrvaluecount("LeitText")==0)return null;
     String value=getattrvalue("LeitText");
     return value;
   }
   public void setLeitText(String value) {
+    if(value==null){setattrundefined("LeitText");return;}
     setattrvalue("LeitText", value);
   }
   public final static String tag_Farbe="Farbe";
@@ -50,98 +56,122 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   }
   public final static String tag_Betriebsart="Betriebsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebsart() {
+    if(getattrvaluecount("Betriebsart")==0)return null;
     String value=getattrvalue("Betriebsart");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.parseXmlCode(value);
   }
   public void setBetriebsart(ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt value) {
+    if(value==null){setattrundefined("Betriebsart");return;}
     setattrvalue("Betriebsart", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
   }
   public final static String tag_Nutzungsart="Nutzungsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Nutzungsart getNutzungsart() {
+    if(getattrvaluecount("Nutzungsart")==0)return null;
     String value=getattrvalue("Nutzungsart");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.Nutzungsart.parseXmlCode(value);
   }
   public void setNutzungsart(ch.interlis.models.ZG_hydrogeo_wva_V1.Nutzungsart value) {
+    if(value==null){setattrundefined("Nutzungsart");return;}
     setattrvalue("Nutzungsart", ch.interlis.models.ZG_hydrogeo_wva_V1.Nutzungsart.toXmlCode(value));
   }
   public final static String tag_Notversorgung="Notversorgung";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung getNotversorgung() {
+    if(getattrvaluecount("Notversorgung")==0)return null;
     String value=getattrvalue("Notversorgung");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.parseXmlCode(value);
   }
   public void setNotversorgung(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung value) {
+    if(value==null){setattrundefined("Notversorgung");return;}
     setattrvalue("Notversorgung", ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.toXmlCode(value));
   }
   public final static String tag_Kanton="Kanton";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Kanton getKanton() {
+    if(getattrvaluecount("Kanton")==0)return null;
     String value=getattrvalue("Kanton");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.Kanton.parseXmlCode(value);
   }
   public void setKanton(ch.interlis.models.ZG_hydrogeo_wva_V1.Kanton value) {
+    if(value==null){setattrundefined("Kanton");return;}
     setattrvalue("Kanton", ch.interlis.models.ZG_hydrogeo_wva_V1.Kanton.toXmlCode(value));
   }
   public final static String tag_GdeNrBFS="GdeNrBFS";
-  public int getGdeNrBFS() {
+  public Integer getGdeNrBFS() {
+    if(getattrvaluecount("GdeNrBFS")==0)return null;
     String value=getattrvalue("GdeNrBFS");
     return Integer.parseInt(value);
   }
-  public void setGdeNrBFS(int value) {
+  public void setGdeNrBFS(Integer value) {
+    if(value==null){setattrundefined("GdeNrBFS");return;}
     setattrvalue("GdeNrBFS", Integer.toString(value));
   }
   public final static String tag_DetailplanArt="DetailplanArt";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanArt getDetailplanArt() {
+    if(getattrvaluecount("DetailplanArt")==0)return null;
     String value=getattrvalue("DetailplanArt");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanArt.parseXmlCode(value);
   }
   public void setDetailplanArt(ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanArt value) {
+    if(value==null){setattrundefined("DetailplanArt");return;}
     setattrvalue("DetailplanArt", ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanArt.toXmlCode(value));
   }
   public final static String tag_DetailplanDatum="DetailplanDatum";
   public String getDetailplanDatum() {
+    if(getattrvaluecount("DetailplanDatum")==0)return null;
     String value=getattrvalue("DetailplanDatum");
     return value;
   }
   public void setDetailplanDatum(String value) {
+    if(value==null){setattrundefined("DetailplanDatum");return;}
     setattrvalue("DetailplanDatum", value);
   }
   public final static String tag_DetailplanMstab="DetailplanMstab";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanMstab getDetailplanMstab() {
+    if(getattrvaluecount("DetailplanMstab")==0)return null;
     String value=getattrvalue("DetailplanMstab");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanMstab.parseXmlCode(value);
   }
   public void setDetailplanMstab(ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanMstab value) {
+    if(value==null){setattrundefined("DetailplanMstab");return;}
     setattrvalue("DetailplanMstab", ch.interlis.models.ZG_hydrogeo_wva_V1.DetailplanMstab.toXmlCode(value));
   }
   public final static String tag_DetailplanHerkunft="DetailplanHerkunft";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlHerkunft getDetailplanHerkunft() {
+    if(getattrvaluecount("DetailplanHerkunft")==0)return null;
     String value=getattrvalue("DetailplanHerkunft");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlHerkunft.parseXmlCode(value);
   }
   public void setDetailplanHerkunft(ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlHerkunft value) {
+    if(value==null){setattrundefined("DetailplanHerkunft");return;}
     setattrvalue("DetailplanHerkunft", ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlHerkunft.toXmlCode(value));
   }
   public final static String tag_DetailplanNr="DetailplanNr";
   public String getDetailplanNr() {
+    if(getattrvaluecount("DetailplanNr")==0)return null;
     String value=getattrvalue("DetailplanNr");
     return value;
   }
   public void setDetailplanNr(String value) {
+    if(value==null){setattrundefined("DetailplanNr");return;}
     setattrvalue("DetailplanNr", value);
   }
   public final static String tag_MaxDarst="MaxDarst";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung getMaxDarst() {
+    if(getattrvaluecount("MaxDarst")==0)return null;
     String value=getattrvalue("MaxDarst");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung.parseXmlCode(value);
   }
   public void setMaxDarst(ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung value) {
+    if(value==null){setattrundefined("MaxDarst");return;}
     setattrvalue("MaxDarst", ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung.toXmlCode(value));
   }
   public final static String tag_ErfGenauigkeit="ErfGenauigkeit";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.ErfGenauigkeit getErfGenauigkeit() {
+    if(getattrvaluecount("ErfGenauigkeit")==0)return null;
     String value=getattrvalue("ErfGenauigkeit");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.ErfGenauigkeit.parseXmlCode(value);
   }
   public void setErfGenauigkeit(ch.interlis.models.ZG_hydrogeo_wva_V1.ErfGenauigkeit value) {
+    if(value==null){setattrundefined("ErfGenauigkeit");return;}
     setattrvalue("ErfGenauigkeit", ch.interlis.models.ZG_hydrogeo_wva_V1.ErfGenauigkeit.toXmlCode(value));
   }
   public final static String tag_GeometrieHerkunft="GeometrieHerkunft";
@@ -154,26 +184,32 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   }
   public final static String tag_ErfVorlBemerk="ErfVorlBemerk";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlBemerk getErfVorlBemerk() {
+    if(getattrvaluecount("ErfVorlBemerk")==0)return null;
     String value=getattrvalue("ErfVorlBemerk");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlBemerk.parseXmlCode(value);
   }
   public void setErfVorlBemerk(ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlBemerk value) {
+    if(value==null){setattrundefined("ErfVorlBemerk");return;}
     setattrvalue("ErfVorlBemerk", ch.interlis.models.ZG_hydrogeo_wva_V1.ErfVorlBemerk.toXmlCode(value));
   }
   public final static String tag_MutatBemerk="MutatBemerk";
   public String getMutatBemerk() {
+    if(getattrvaluecount("MutatBemerk")==0)return null;
     String value=getattrvalue("MutatBemerk");
     return value;
   }
   public void setMutatBemerk(String value) {
+    if(value==null){setattrundefined("MutatBemerk");return;}
     setattrvalue("MutatBemerk", value);
   }
   public final static String tag_MutatDatum="MutatDatum";
   public String getMutatDatum() {
+    if(getattrvaluecount("MutatDatum")==0)return null;
     String value=getattrvalue("MutatDatum");
     return value;
   }
   public void setMutatDatum(String value) {
+    if(value==null){setattrundefined("MutatDatum");return;}
     setattrvalue("MutatDatum", value);
   }
   public final static String tag_Wasserversorgung="Wasserversorgung";

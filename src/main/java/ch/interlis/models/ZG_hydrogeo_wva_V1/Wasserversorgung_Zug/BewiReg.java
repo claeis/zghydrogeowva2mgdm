@@ -17,35 +17,43 @@ public class BewiReg extends ch.interlis.iom_j.Iom_jObject
     setattrvalue("BewiNummer", Integer.toString(value));
   }
   public final static String tag_Entnahmemenge="Entnahmemenge";
-  public int getEntnahmemenge() {
+  public Integer getEntnahmemenge() {
+    if(getattrvaluecount("Entnahmemenge")==0)return null;
     String value=getattrvalue("Entnahmemenge");
     return Integer.parseInt(value);
   }
-  public void setEntnahmemenge(int value) {
+  public void setEntnahmemenge(Integer value) {
+    if(value==null){setattrundefined("Entnahmemenge");return;}
     setattrvalue("Entnahmemenge", Integer.toString(value));
   }
   public final static String tag_Pumpmenge="Pumpmenge";
-  public int getPumpmenge() {
+  public Integer getPumpmenge() {
+    if(getattrvaluecount("Pumpmenge")==0)return null;
     String value=getattrvalue("Pumpmenge");
     return Integer.parseInt(value);
   }
-  public void setPumpmenge(int value) {
+  public void setPumpmenge(Integer value) {
+    if(value==null){setattrundefined("Pumpmenge");return;}
     setattrvalue("Pumpmenge", Integer.toString(value));
   }
   public final static String tag_Vesickerungsmenge="Vesickerungsmenge";
-  public int getVesickerungsmenge() {
+  public Integer getVesickerungsmenge() {
+    if(getattrvaluecount("Vesickerungsmenge")==0)return null;
     String value=getattrvalue("Vesickerungsmenge");
     return Integer.parseInt(value);
   }
-  public void setVesickerungsmenge(int value) {
+  public void setVesickerungsmenge(Integer value) {
+    if(value==null){setattrundefined("Vesickerungsmenge");return;}
     setattrvalue("Vesickerungsmenge", Integer.toString(value));
   }
   public final static String tag_Datum="Datum";
   public String getDatum() {
+    if(getattrvaluecount("Datum")==0)return null;
     String value=getattrvalue("Datum");
     return value;
   }
   public void setDatum(String value) {
+    if(value==null){setattrundefined("Datum");return;}
     setattrvalue("Datum", value);
   }
 }

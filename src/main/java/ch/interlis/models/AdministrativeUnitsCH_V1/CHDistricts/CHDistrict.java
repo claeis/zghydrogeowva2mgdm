@@ -17,7 +17,10 @@ public class CHDistrict extends ch.interlis.models.AdministrativeUnits_V1.Admini
     setattrvalue("ShortName", value);
   }
   public final static String tag_Name="Name";
+  public int sizeName() {return getattrvaluecount("Name");}
   public ch.interlis.models.LocalisationCH_V1.MultilingualText getName() {
+    int size=getattrvaluecount("Name");
+    if(size==0)return null;
     ch.interlis.models.LocalisationCH_V1.MultilingualText value=(ch.interlis.models.LocalisationCH_V1.MultilingualText)getattrobj("Name",0);
     return value;
   }

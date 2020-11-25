@@ -15,6 +15,7 @@ public class MultiDirectedLine extends ch.interlis.iom_j.Iom_jObject
   public int sizeLines() {return getattrvaluecount("Lines");}
   public ch.interlis.models.GeometryCHLV03_V1.DirectedLineStructure[] getLines() {
     int size=getattrvaluecount("Lines");
+    if(size==0)return null;
     ch.interlis.models.GeometryCHLV03_V1.DirectedLineStructure value[]=new ch.interlis.models.GeometryCHLV03_V1.DirectedLineStructure[size];
     for(int i=0;i<size;i++){
       value[i]=(ch.interlis.models.GeometryCHLV03_V1.DirectedLineStructure)getattrobj("Lines",i);

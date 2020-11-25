@@ -21,19 +21,23 @@ public class Brunnenstube extends ch.interlis.models.TWVinNotlagen_LV03_V1.TWVin
     setattrvalue("Ertrag_minimal", Integer.toString(value));
   }
   public final static String tag_Ertrag_mittel="Ertrag_mittel";
-  public int getErtrag_mittel() {
+  public Integer getErtrag_mittel() {
+    if(getattrvaluecount("Ertrag_mittel")==0)return null;
     String value=getattrvalue("Ertrag_mittel");
     return Integer.parseInt(value);
   }
-  public void setErtrag_mittel(int value) {
+  public void setErtrag_mittel(Integer value) {
+    if(value==null){setattrundefined("Ertrag_mittel");return;}
     setattrvalue("Ertrag_mittel", Integer.toString(value));
   }
   public final static String tag_Ertrag_maximal="Ertrag_maximal";
-  public int getErtrag_maximal() {
+  public Integer getErtrag_maximal() {
+    if(getattrvaluecount("Ertrag_maximal")==0)return null;
     String value=getattrvalue("Ertrag_maximal");
     return Integer.parseInt(value);
   }
-  public void setErtrag_maximal(int value) {
+  public void setErtrag_maximal(Integer value) {
+    if(value==null){setattrundefined("Ertrag_maximal");return;}
     setattrvalue("Ertrag_maximal", Integer.toString(value));
   }
   public final static String tag_Fassungsart="Fassungsart";

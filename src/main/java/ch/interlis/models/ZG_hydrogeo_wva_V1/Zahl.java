@@ -12,11 +12,13 @@ public class Zahl extends ch.interlis.iom_j.Iom_jObject
     return tag;
   }
   public final static String tag_Zahl="Zahl";
-  public int getZahl() {
+  public Integer getZahl() {
+    if(getattrvaluecount("Zahl")==0)return null;
     String value=getattrvalue("Zahl");
     return Integer.parseInt(value);
   }
-  public void setZahl(int value) {
+  public void setZahl(Integer value) {
+    if(value==null){setattrundefined("Zahl");return;}
     setattrvalue("Zahl", Integer.toString(value));
   }
 }

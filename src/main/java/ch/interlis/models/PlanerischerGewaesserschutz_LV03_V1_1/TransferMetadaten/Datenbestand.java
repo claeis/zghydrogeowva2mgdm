@@ -26,30 +26,36 @@ public class Datenbestand extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Lieferdatum="Lieferdatum";
   public String getLieferdatum() {
+    if(getattrvaluecount("Lieferdatum")==0)return null;
     String value=getattrvalue("Lieferdatum");
     return value;
   }
   public void setLieferdatum(String value) {
+    if(value==null){setattrundefined("Lieferdatum");return;}
     setattrvalue("Lieferdatum", value);
   }
   public final static String tag_Bemerkungen="Bemerkungen";
   public String getBemerkungen() {
+    if(getattrvaluecount("Bemerkungen")==0)return null;
     String value=getattrvalue("Bemerkungen");
     return value;
   }
   public void setBemerkungen(String value) {
+    if(value==null){setattrundefined("Bemerkungen");return;}
     setattrvalue("Bemerkungen", value);
   }
   public final static String tag_weitereMetadaten="weitereMetadaten";
   /** Verweis auf weitere maschinenlesbare Metadaten (XML). z.B. http://www.geocat.ch/geonetwork/srv/deu/gm03.xml?id=705
    */
   public String getweitereMetadaten() {
+    if(getattrvaluecount("weitereMetadaten")==0)return null;
     String value=getattrvalue("weitereMetadaten");
     return value;
   }
   /** Verweis auf weitere maschinenlesbare Metadaten (XML). z.B. http://www.geocat.ch/geonetwork/srv/deu/gm03.xml?id=705
    */
   public void setweitereMetadaten(String value) {
+    if(value==null){setattrundefined("weitereMetadaten");return;}
     setattrvalue("weitereMetadaten", value);
   }
   public final static String tag_Darstellungsdienst="Darstellungsdienst";

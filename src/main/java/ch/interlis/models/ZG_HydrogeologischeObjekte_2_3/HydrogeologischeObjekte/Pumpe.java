@@ -9,27 +9,33 @@ public class Pumpe extends ch.interlis.iom_j.Iom_jObject
     return tag;
   }
   public final static String tag_PumpeNummer="PumpeNummer";
-  public int getPumpeNummer() {
+  public Integer getPumpeNummer() {
+    if(getattrvaluecount("PumpeNummer")==0)return null;
     String value=getattrvalue("PumpeNummer");
     return Integer.parseInt(value);
   }
-  public void setPumpeNummer(int value) {
+  public void setPumpeNummer(Integer value) {
+    if(value==null){setattrundefined("PumpeNummer");return;}
     setattrvalue("PumpeNummer", Integer.toString(value));
   }
   public final static String tag_Foerdermenge="Foerdermenge";
-  public int getFoerdermenge() {
+  public Integer getFoerdermenge() {
+    if(getattrvaluecount("Foerdermenge")==0)return null;
     String value=getattrvalue("Foerdermenge");
     return Integer.parseInt(value);
   }
-  public void setFoerdermenge(int value) {
+  public void setFoerdermenge(Integer value) {
+    if(value==null){setattrundefined("Foerdermenge");return;}
     setattrvalue("Foerdermenge", Integer.toString(value));
   }
   public final static String tag_MotorLeistung="MotorLeistung";
-  public double getMotorLeistung() {
+  public Double getMotorLeistung() {
+    if(getattrvaluecount("MotorLeistung")==0)return null;
     String value=getattrvalue("MotorLeistung");
     return Double.parseDouble(value);
   }
-  public void setMotorLeistung(double value) {
+  public void setMotorLeistung(Double value) {
+    if(value==null){setattrundefined("MotorLeistung");return;}
     setattrvalue("MotorLeistung", Double.toString(value));
   }
   public final static String tag_Pumpenanlage="Pumpenanlage";

@@ -15,6 +15,7 @@ public class MultiLine extends ch.interlis.iom_j.Iom_jObject
   public int sizeLines() {return getattrvaluecount("Lines");}
   public ch.interlis.models.GeometryCHLV03_V1.LineStructure[] getLines() {
     int size=getattrvaluecount("Lines");
+    if(size==0)return null;
     ch.interlis.models.GeometryCHLV03_V1.LineStructure value[]=new ch.interlis.models.GeometryCHLV03_V1.LineStructure[size];
     for(int i=0;i<size;i++){
       value[i]=(ch.interlis.models.GeometryCHLV03_V1.LineStructure)getattrobj("Lines",i);

@@ -18,14 +18,19 @@ public class Status extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Rechtskraftdatum="Rechtskraftdatum";
   public String getRechtskraftdatum() {
+    if(getattrvaluecount("Rechtskraftdatum")==0)return null;
     String value=getattrvalue("Rechtskraftdatum");
     return value;
   }
   public void setRechtskraftdatum(String value) {
+    if(value==null){setattrundefined("Rechtskraftdatum");return;}
     setattrvalue("Rechtskraftdatum", value);
   }
   public final static String tag_Bemerkungen="Bemerkungen";
+  public int sizeBemerkungen() {return getattrvaluecount("Bemerkungen");}
   public ch.interlis.models.LocalisationCH_V1.LocalisedMText getBemerkungen() {
+    int size=getattrvaluecount("Bemerkungen");
+    if(size==0)return null;
     ch.interlis.models.LocalisationCH_V1.LocalisedMText value=(ch.interlis.models.LocalisationCH_V1.LocalisedMText)getattrobj("Bemerkungen",0);
     return value;
   }
@@ -37,7 +42,10 @@ public class Status extends ch.interlis.iom_j.Iom_jObject
     }
   }
   public final static String tag_KantonalerStatus="KantonalerStatus";
+  public int sizeKantonalerStatus() {return getattrvaluecount("KantonalerStatus");}
   public ch.interlis.models.LocalisationCH_V1.LocalisedText getKantonalerStatus() {
+    int size=getattrvaluecount("KantonalerStatus");
+    if(size==0)return null;
     ch.interlis.models.LocalisationCH_V1.LocalisedText value=(ch.interlis.models.LocalisationCH_V1.LocalisedText)getattrobj("KantonalerStatus",0);
     return value;
   }

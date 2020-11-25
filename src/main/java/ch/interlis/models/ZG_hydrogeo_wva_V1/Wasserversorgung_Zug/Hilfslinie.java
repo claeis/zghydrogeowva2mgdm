@@ -9,7 +9,10 @@ public class Hilfslinie extends ch.interlis.iom_j.Iom_jObject
     return tag;
   }
   public final static String tag_SymbolGeo="SymbolGeo";
+  public int sizeSymbolGeo() {return getattrvaluecount("SymbolGeo");}
   public ch.interlis.iom.IomObject getSymbolGeo() {
+    int size=getattrvaluecount("SymbolGeo");
+    if(size==0)return null;
     ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("SymbolGeo",0);
     return value;
   }

@@ -1,8 +1,8 @@
 package ch.interlis.models.ZG_HydrogeologischeObjekte_2_3;
 public class Kanton{
-  static private java.util.HashMap valuev=new java.util.HashMap();
+  static protected java.util.HashMap valuev=new java.util.HashMap();
   private String value=null;
-  private Kanton(String value) {
+  protected Kanton(String value) {
     this.value=value;
     valuev.put(value,this);
   }

@@ -1,8 +1,8 @@
 package ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte;
 public class ObjektArt{
-  static private java.util.HashMap valuev=new java.util.HashMap();
+  static protected java.util.HashMap valuev=new java.util.HashMap();
   private String value=null;
-  private ObjektArt(String value) {
+  protected ObjektArt(String value) {
     this.value=value;
     valuev.put(value,this);
   }

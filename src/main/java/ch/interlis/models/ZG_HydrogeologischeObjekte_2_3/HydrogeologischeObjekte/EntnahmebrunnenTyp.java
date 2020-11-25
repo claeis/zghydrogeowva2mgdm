@@ -1,8 +1,8 @@
 package ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte;
 public class EntnahmebrunnenTyp{
-  static private java.util.HashMap valuev=new java.util.HashMap();
+  static protected java.util.HashMap valuev=new java.util.HashMap();
   private String value=null;
-  private EntnahmebrunnenTyp(String value) {
+  protected EntnahmebrunnenTyp(String value) {
     this.value=value;
     valuev.put(value,this);
   }

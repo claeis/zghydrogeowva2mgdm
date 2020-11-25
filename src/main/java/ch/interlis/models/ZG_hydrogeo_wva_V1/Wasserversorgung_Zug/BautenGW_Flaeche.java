@@ -9,7 +9,10 @@ public class BautenGW_Flaeche extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wass
     return tag;
   }
   public final static String tag_Lage="Lage";
+  public int sizeLage() {return getattrvaluecount("Lage");}
   public ch.interlis.iom.IomObject getLage() {
+    int size=getattrvaluecount("Lage");
+    if(size==0)return null;
     ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("Lage",0);
     return value;
   }

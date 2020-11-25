@@ -17,19 +17,23 @@ public class Druckreduktion extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasser
     setattrvalue("Typ", ch.interlis.models.ZG_hydrogeo_wva_V1.DruckRedTyp.toXmlCode(value));
   }
   public final static String tag_Druckeingang="Druckeingang";
-  public double getDruckeingang() {
+  public Double getDruckeingang() {
+    if(getattrvaluecount("Druckeingang")==0)return null;
     String value=getattrvalue("Druckeingang");
     return Double.parseDouble(value);
   }
-  public void setDruckeingang(double value) {
+  public void setDruckeingang(Double value) {
+    if(value==null){setattrundefined("Druckeingang");return;}
     setattrvalue("Druckeingang", Double.toString(value));
   }
   public final static String tag_Druckausgang="Druckausgang";
-  public double getDruckausgang() {
+  public Double getDruckausgang() {
+    if(getattrvaluecount("Druckausgang")==0)return null;
     String value=getattrvalue("Druckausgang");
     return Double.parseDouble(value);
   }
-  public void setDruckausgang(double value) {
+  public void setDruckausgang(Double value) {
+    if(value==null){setattrundefined("Druckausgang");return;}
     setattrvalue("Druckausgang", Double.toString(value));
   }
 }

@@ -1,8 +1,8 @@
 package ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte;
 public class WVAFassungsleitung_Genauigkeit{
-  static private java.util.HashMap valuev=new java.util.HashMap();
+  static protected java.util.HashMap valuev=new java.util.HashMap();
   private String value=null;
-  private WVAFassungsleitung_Genauigkeit(String value) {
+  protected WVAFassungsleitung_Genauigkeit(String value) {
     this.value=value;
     valuev.put(value,this);
   }

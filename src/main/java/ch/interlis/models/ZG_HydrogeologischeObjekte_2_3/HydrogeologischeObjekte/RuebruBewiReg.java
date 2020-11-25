@@ -18,18 +18,22 @@ public class RuebruBewiReg extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Datum="Datum";
   public String getDatum() {
+    if(getattrvaluecount("Datum")==0)return null;
     String value=getattrvalue("Datum");
     return value;
   }
   public void setDatum(String value) {
+    if(value==null){setattrundefined("Datum");return;}
     setattrvalue("Datum", value);
   }
   public final static String tag_Versickerungsmenge="Versickerungsmenge";
-  public int getVersickerungsmenge() {
+  public Integer getVersickerungsmenge() {
+    if(getattrvaluecount("Versickerungsmenge")==0)return null;
     String value=getattrvalue("Versickerungsmenge");
     return Integer.parseInt(value);
   }
-  public void setVersickerungsmenge(int value) {
+  public void setVersickerungsmenge(Integer value) {
+    if(value==null){setattrundefined("Versickerungsmenge");return;}
     setattrvalue("Versickerungsmenge", Integer.toString(value));
   }
   public final static String tag_Rueckgabebrunnen="Rueckgabebrunnen";

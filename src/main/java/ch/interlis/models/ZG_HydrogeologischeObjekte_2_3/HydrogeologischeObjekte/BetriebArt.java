@@ -1,8 +1,8 @@
 package ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte;
 public class BetriebArt{
-  static private java.util.HashMap valuev=new java.util.HashMap();
+  static protected java.util.HashMap valuev=new java.util.HashMap();
   private String value=null;
-  private BetriebArt(String value) {
+  protected BetriebArt(String value) {
     this.value=value;
     valuev.put(value,this);
   }

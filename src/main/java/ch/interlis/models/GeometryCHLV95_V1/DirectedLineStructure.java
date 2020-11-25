@@ -12,7 +12,10 @@ public class DirectedLineStructure extends ch.interlis.iom_j.Iom_jObject
     return tag;
   }
   public final static String tag_Line="Line";
+  public int sizeLine() {return getattrvaluecount("Line");}
   public ch.interlis.iom.IomObject getLine() {
+    int size=getattrvaluecount("Line");
+    if(size==0)return null;
     ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("Line",0);
     return value;
   }

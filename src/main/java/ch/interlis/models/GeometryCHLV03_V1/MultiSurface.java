@@ -15,6 +15,7 @@ public class MultiSurface extends ch.interlis.iom_j.Iom_jObject
   public int sizeSurfaces() {return getattrvaluecount("Surfaces");}
   public ch.interlis.models.GeometryCHLV03_V1.SurfaceStructure[] getSurfaces() {
     int size=getattrvaluecount("Surfaces");
+    if(size==0)return null;
     ch.interlis.models.GeometryCHLV03_V1.SurfaceStructure value[]=new ch.interlis.models.GeometryCHLV03_V1.SurfaceStructure[size];
     for(int i=0;i<size;i++){
       value[i]=(ch.interlis.models.GeometryCHLV03_V1.SurfaceStructure)getattrobj("Surfaces",i);

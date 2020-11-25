@@ -10,14 +10,19 @@ public class GWSZone extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Identifikator="Identifikator";
   public String getIdentifikator() {
+    if(getattrvaluecount("Identifikator")==0)return null;
     String value=getattrvalue("Identifikator");
     return value;
   }
   public void setIdentifikator(String value) {
+    if(value==null){setattrundefined("Identifikator");return;}
     setattrvalue("Identifikator", value);
   }
   public final static String tag_Geometrie="Geometrie";
+  public int sizeGeometrie() {return getattrvaluecount("Geometrie");}
   public ch.interlis.iom.IomObject getGeometrie() {
+    int size=getattrvaluecount("Geometrie");
+    if(size==0)return null;
     ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("Geometrie",0);
     return value;
   }
@@ -29,7 +34,10 @@ public class GWSZone extends ch.interlis.iom_j.Iom_jObject
     }
   }
   public final static String tag_Bemerkungen="Bemerkungen";
+  public int sizeBemerkungen() {return getattrvaluecount("Bemerkungen");}
   public ch.interlis.models.LocalisationCH_V1.LocalisedMText getBemerkungen() {
+    int size=getattrvaluecount("Bemerkungen");
+    if(size==0)return null;
     ch.interlis.models.LocalisationCH_V1.LocalisedMText value=(ch.interlis.models.LocalisationCH_V1.LocalisedMText)getattrobj("Bemerkungen",0);
     return value;
   }
@@ -49,7 +57,10 @@ public class GWSZone extends ch.interlis.iom_j.Iom_jObject
     setattrvalue("Typ", ch.interlis.models.PlanerischerGewaesserschutz_LV95_V1_1.GWSZonen.SchutzzoneTyp.toXmlCode(value));
   }
   public final static String tag_KantonaleTypBezeichnung="KantonaleTypBezeichnung";
+  public int sizeKantonaleTypBezeichnung() {return getattrvaluecount("KantonaleTypBezeichnung");}
   public ch.interlis.models.LocalisationCH_V1.LocalisedText getKantonaleTypBezeichnung() {
+    int size=getattrvaluecount("KantonaleTypBezeichnung");
+    if(size==0)return null;
     ch.interlis.models.LocalisationCH_V1.LocalisedText value=(ch.interlis.models.LocalisationCH_V1.LocalisedText)getattrobj("KantonaleTypBezeichnung",0);
     return value;
   }

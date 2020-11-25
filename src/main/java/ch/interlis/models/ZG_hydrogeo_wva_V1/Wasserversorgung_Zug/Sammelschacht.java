@@ -18,18 +18,22 @@ public class Sammelschacht extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserv
   }
   public final static String tag_Betriebsart="Betriebsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebsart() {
+    if(getattrvaluecount("Betriebsart")==0)return null;
     String value=getattrvalue("Betriebsart");
     return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.parseXmlCode(value);
   }
   public void setBetriebsart(ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt value) {
+    if(value==null){setattrundefined("Betriebsart");return;}
     setattrvalue("Betriebsart", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
   }
   public final static String tag_TechData="TechData";
   public String getTechData() {
+    if(getattrvaluecount("TechData")==0)return null;
     String value=getattrvalue("TechData");
     return value;
   }
   public void setTechData(String value) {
+    if(value==null){setattrundefined("TechData");return;}
     setattrvalue("TechData", value);
   }
   public final static String tag_Grundlage="Grundlage";

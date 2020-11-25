@@ -18,18 +18,22 @@ public class ObFasBewiReg extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Datum="Datum";
   public String getDatum() {
+    if(getattrvaluecount("Datum")==0)return null;
     String value=getattrvalue("Datum");
     return value;
   }
   public void setDatum(String value) {
+    if(value==null){setattrundefined("Datum");return;}
     setattrvalue("Datum", value);
   }
   public final static String tag_Entnahmemenge="Entnahmemenge";
-  public int getEntnahmemenge() {
+  public Integer getEntnahmemenge() {
+    if(getattrvaluecount("Entnahmemenge")==0)return null;
     String value=getattrvalue("Entnahmemenge");
     return Integer.parseInt(value);
   }
-  public void setEntnahmemenge(int value) {
+  public void setEntnahmemenge(Integer value) {
+    if(value==null){setattrundefined("Entnahmemenge");return;}
     setattrvalue("Entnahmemenge", Integer.toString(value));
   }
   public final static String tag_OberflaechenGewFassung="OberflaechenGewFassung";

@@ -18,10 +18,12 @@ public class Fassungsbrunnen extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Name="Name";
   public String getName() {
+    if(getattrvaluecount("Name")==0)return null;
     String value=getattrvalue("Name");
     return value;
   }
   public void setName(String value) {
+    if(value==null){setattrundefined("Name");return;}
     setattrvalue("Name", value);
   }
   public final static String tag_Brunnenart="Brunnenart";
@@ -58,10 +60,12 @@ public class Fassungsbrunnen extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Zweck="Zweck";
   public String getZweck() {
+    if(getattrvaluecount("Zweck")==0)return null;
     String value=getattrvalue("Zweck");
     return value;
   }
   public void setZweck(String value) {
+    if(value==null){setattrundefined("Zweck");return;}
     setattrvalue("Zweck", value);
   }
   public final static String tag_Notwasserversorgung="Notwasserversorgung";
@@ -81,15 +85,20 @@ public class Fassungsbrunnen extends ch.interlis.iom_j.Iom_jObject
     setattrvalue("Oeffentliches_Interesse", ch.interlis.models.Grundwasseraustritte_LV03_V1.JaNeinUnbestimmt.toXmlCode(value));
   }
   public final static String tag_Pkonz="Pkonz";
-  public double getPkonz() {
+  public Double getPkonz() {
+    if(getattrvaluecount("Pkonz")==0)return null;
     String value=getattrvalue("Pkonz");
     return Double.parseDouble(value);
   }
-  public void setPkonz(double value) {
+  public void setPkonz(Double value) {
+    if(value==null){setattrundefined("Pkonz");return;}
     setattrvalue("Pkonz", Double.toString(value));
   }
   public final static String tag_Geometrie="Geometrie";
+  public int sizeGeometrie() {return getattrvaluecount("Geometrie");}
   public ch.interlis.iom.IomObject getGeometrie() {
+    int size=getattrvaluecount("Geometrie");
+    if(size==0)return null;
     ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("Geometrie",0);
     return value;
   }

@@ -9,12 +9,19 @@ public class TWTurbine extends ch.interlis.iom_j.Iom_jObject
     return tag;
   }
   public final static String tag_SymbolGeo="SymbolGeo";
-  public String getSymbolGeo() {
-    String value=getattrvalue("SymbolGeo");
+  public int sizeSymbolGeo() {return getattrvaluecount("SymbolGeo");}
+  public ch.interlis.iom.IomObject getSymbolGeo() {
+    int size=getattrvaluecount("SymbolGeo");
+    if(size==0)return null;
+    ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("SymbolGeo",0);
     return value;
   }
-  public void setSymbolGeo(String value) {
-    setattrvalue("SymbolGeo", value);
+  public void setSymbolGeo(ch.interlis.iom.IomObject value) {
+    if(getattrvaluecount("SymbolGeo")>0){
+      changeattrobj("SymbolGeo",0, value);
+    }else{
+      addattrobj("SymbolGeo", value);
+    }
   }
   public final static String tag_SymbolRot="SymbolRot";
   public double getSymbolRot() {
@@ -58,122 +65,152 @@ public class TWTurbine extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Name="Name";
   public String getName() {
+    if(getattrvaluecount("Name")==0)return null;
     String value=getattrvalue("Name");
     return value;
   }
   public void setName(String value) {
+    if(value==null){setattrundefined("Name");return;}
     setattrvalue("Name", value);
   }
   public final static String tag_Betriebsart="Betriebsart";
   public ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.BetriebsArt getBetriebsart() {
+    if(getattrvaluecount("Betriebsart")==0)return null;
     String value=getattrvalue("Betriebsart");
     return ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.BetriebsArt.parseXmlCode(value);
   }
   public void setBetriebsart(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.BetriebsArt value) {
+    if(value==null){setattrundefined("Betriebsart");return;}
     setattrvalue("Betriebsart", ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.BetriebsArt.toXmlCode(value));
   }
   public final static String tag_Baujahr="Baujahr";
-  public int getBaujahr() {
+  public Integer getBaujahr() {
+    if(getattrvaluecount("Baujahr")==0)return null;
     String value=getattrvalue("Baujahr");
     return Integer.parseInt(value);
   }
-  public void setBaujahr(int value) {
+  public void setBaujahr(Integer value) {
+    if(value==null){setattrundefined("Baujahr");return;}
     setattrvalue("Baujahr", Integer.toString(value));
   }
   public final static String tag_Turbine="Turbine";
   public String getTurbine() {
+    if(getattrvaluecount("Turbine")==0)return null;
     String value=getattrvalue("Turbine");
     return value;
   }
   public void setTurbine(String value) {
+    if(value==null){setattrundefined("Turbine");return;}
     setattrvalue("Turbine", value);
   }
   public final static String tag_Durchfluss="Durchfluss";
-  public int getDurchfluss() {
+  public Integer getDurchfluss() {
+    if(getattrvaluecount("Durchfluss")==0)return null;
     String value=getattrvalue("Durchfluss");
     return Integer.parseInt(value);
   }
-  public void setDurchfluss(int value) {
+  public void setDurchfluss(Integer value) {
+    if(value==null){setattrundefined("Durchfluss");return;}
     setattrvalue("Durchfluss", Integer.toString(value));
   }
   public final static String tag_Bruttofallhoehe="Bruttofallhoehe";
-  public int getBruttofallhoehe() {
+  public Integer getBruttofallhoehe() {
+    if(getattrvaluecount("Bruttofallhoehe")==0)return null;
     String value=getattrvalue("Bruttofallhoehe");
     return Integer.parseInt(value);
   }
-  public void setBruttofallhoehe(int value) {
+  public void setBruttofallhoehe(Integer value) {
+    if(value==null){setattrundefined("Bruttofallhoehe");return;}
     setattrvalue("Bruttofallhoehe", Integer.toString(value));
   }
   public final static String tag_Nettofallhoehe="Nettofallhoehe";
-  public int getNettofallhoehe() {
+  public Integer getNettofallhoehe() {
+    if(getattrvaluecount("Nettofallhoehe")==0)return null;
     String value=getattrvalue("Nettofallhoehe");
     return Integer.parseInt(value);
   }
-  public void setNettofallhoehe(int value) {
+  public void setNettofallhoehe(Integer value) {
+    if(value==null){setattrundefined("Nettofallhoehe");return;}
     setattrvalue("Nettofallhoehe", Integer.toString(value));
   }
   public final static String tag_Turbinenleistung="Turbinenleistung";
-  public double getTurbinenleistung() {
+  public Double getTurbinenleistung() {
+    if(getattrvaluecount("Turbinenleistung")==0)return null;
     String value=getattrvalue("Turbinenleistung");
     return Double.parseDouble(value);
   }
-  public void setTurbinenleistung(double value) {
+  public void setTurbinenleistung(Double value) {
+    if(value==null){setattrundefined("Turbinenleistung");return;}
     setattrvalue("Turbinenleistung", Double.toString(value));
   }
   public final static String tag_Jahresproduktion="Jahresproduktion";
-  public int getJahresproduktion() {
+  public Integer getJahresproduktion() {
+    if(getattrvaluecount("Jahresproduktion")==0)return null;
     String value=getattrvalue("Jahresproduktion");
     return Integer.parseInt(value);
   }
-  public void setJahresproduktion(int value) {
+  public void setJahresproduktion(Integer value) {
+    if(value==null){setattrundefined("Jahresproduktion");return;}
     setattrvalue("Jahresproduktion", Integer.toString(value));
   }
   public final static String tag_Kanton="Kanton";
   public ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.Kanton getKanton() {
+    if(getattrvaluecount("Kanton")==0)return null;
     String value=getattrvalue("Kanton");
     return ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.Kanton.parseXmlCode(value);
   }
   public void setKanton(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.Kanton value) {
+    if(value==null){setattrundefined("Kanton");return;}
     setattrvalue("Kanton", ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.Kanton.toXmlCode(value));
   }
   public final static String tag_GdeNrBFS="GdeNrBFS";
-  public int getGdeNrBFS() {
+  public Integer getGdeNrBFS() {
+    if(getattrvaluecount("GdeNrBFS")==0)return null;
     String value=getattrvalue("GdeNrBFS");
     return Integer.parseInt(value);
   }
-  public void setGdeNrBFS(int value) {
+  public void setGdeNrBFS(Integer value) {
+    if(value==null){setattrundefined("GdeNrBFS");return;}
     setattrvalue("GdeNrBFS", Integer.toString(value));
   }
   public final static String tag_Lokalitaet="Lokalitaet";
   public String getLokalitaet() {
+    if(getattrvaluecount("Lokalitaet")==0)return null;
     String value=getattrvalue("Lokalitaet");
     return value;
   }
   public void setLokalitaet(String value) {
+    if(value==null){setattrundefined("Lokalitaet");return;}
     setattrvalue("Lokalitaet", value);
   }
   public final static String tag_MaxDarst="MaxDarst";
   public ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Darstellung getMaxDarst() {
+    if(getattrvaluecount("MaxDarst")==0)return null;
     String value=getattrvalue("MaxDarst");
     return ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Darstellung.parseXmlCode(value);
   }
   public void setMaxDarst(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Darstellung value) {
+    if(value==null){setattrundefined("MaxDarst");return;}
     setattrvalue("MaxDarst", ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Darstellung.toXmlCode(value));
   }
   public final static String tag_MutatDatum="MutatDatum";
   public String getMutatDatum() {
+    if(getattrvaluecount("MutatDatum")==0)return null;
     String value=getattrvalue("MutatDatum");
     return value;
   }
   public void setMutatDatum(String value) {
+    if(value==null){setattrundefined("MutatDatum");return;}
     setattrvalue("MutatDatum", value);
   }
   public final static String tag_MutatBemerk="MutatBemerk";
   public String getMutatBemerk() {
+    if(getattrvaluecount("MutatBemerk")==0)return null;
     String value=getattrvalue("MutatBemerk");
     return value;
   }
   public void setMutatBemerk(String value) {
+    if(value==null){setattrundefined("MutatBemerk");return;}
     setattrvalue("MutatBemerk", value);
   }
   public final static String tag_Grundlage="Grundlage";

@@ -1,8 +1,8 @@
 package ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte;
 public class RueckgabeLeitung_Typ{
-  static private java.util.HashMap valuev=new java.util.HashMap();
+  static protected java.util.HashMap valuev=new java.util.HashMap();
   private String value=null;
-  private RueckgabeLeitung_Typ(String value) {
+  protected RueckgabeLeitung_Typ(String value) {
     this.value=value;
     valuev.put(value,this);
   }

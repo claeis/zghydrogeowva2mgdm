@@ -9,11 +9,13 @@ public class Grundwasserfassung extends ch.interlis.models.TWVinNotlagen_LV95_V1
     return tag;
   }
   public final static String tag_Durchmesser="Durchmesser";
-  public double getDurchmesser() {
+  public Double getDurchmesser() {
+    if(getattrvaluecount("Durchmesser")==0)return null;
     String value=getattrvalue("Durchmesser");
     return Double.parseDouble(value);
   }
-  public void setDurchmesser(double value) {
+  public void setDurchmesser(Double value) {
+    if(value==null){setattrundefined("Durchmesser");return;}
     setattrvalue("Durchmesser", Double.toString(value));
   }
   public final static String tag_Fassungsart="Fassungsart";
@@ -26,18 +28,22 @@ public class Grundwasserfassung extends ch.interlis.models.TWVinNotlagen_LV95_V1
   }
   public final static String tag_Nutzungszustand="Nutzungszustand";
   public Grundwasserfassung_Nutzungszustand getNutzungszustand() {
+    if(getattrvaluecount("Nutzungszustand")==0)return null;
     String value=getattrvalue("Nutzungszustand");
     return Grundwasserfassung_Nutzungszustand.parseXmlCode(value);
   }
   public void setNutzungszustand(Grundwasserfassung_Nutzungszustand value) {
+    if(value==null){setattrundefined("Nutzungszustand");return;}
     setattrvalue("Nutzungszustand", Grundwasserfassung_Nutzungszustand.toXmlCode(value));
   }
   public final static String tag_Pkonz="Pkonz";
-  public int getPkonz() {
+  public Integer getPkonz() {
+    if(getattrvaluecount("Pkonz")==0)return null;
     String value=getattrvalue("Pkonz");
     return Integer.parseInt(value);
   }
-  public void setPkonz(int value) {
+  public void setPkonz(Integer value) {
+    if(value==null){setattrundefined("Pkonz");return;}
     setattrvalue("Pkonz", Integer.toString(value));
   }
 }

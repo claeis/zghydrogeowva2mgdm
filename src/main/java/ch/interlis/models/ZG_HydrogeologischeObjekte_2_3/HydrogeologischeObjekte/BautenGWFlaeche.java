@@ -9,12 +9,19 @@ public class BautenGWFlaeche extends ch.interlis.iom_j.Iom_jObject
     return tag;
   }
   public final static String tag_Geometrie="Geometrie";
-  public String getGeometrie() {
-    String value=getattrvalue("Geometrie");
+  public int sizeGeometrie() {return getattrvaluecount("Geometrie");}
+  public ch.interlis.iom.IomObject getGeometrie() {
+    int size=getattrvaluecount("Geometrie");
+    if(size==0)return null;
+    ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("Geometrie",0);
     return value;
   }
-  public void setGeometrie(String value) {
-    setattrvalue("Geometrie", value);
+  public void setGeometrie(ch.interlis.iom.IomObject value) {
+    if(getattrvaluecount("Geometrie")>0){
+      changeattrobj("Geometrie",0, value);
+    }else{
+      addattrobj("Geometrie", value);
+    }
   }
   public final static String tag_BautenGW="BautenGW";
   public String getBautenGW() {

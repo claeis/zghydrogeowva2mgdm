@@ -10,10 +10,12 @@ public class Aufbereitungswerk extends ch.interlis.models.ZG_hydrogeo_wva_V1.Was
   }
   public final static String tag_FilterLeist="FilterLeist";
   public String getFilterLeist() {
+    if(getattrvaluecount("FilterLeist")==0)return null;
     String value=getattrvalue("FilterLeist");
     return value;
   }
   public void setFilterLeist(String value) {
+    if(value==null){setattrundefined("FilterLeist");return;}
     setattrvalue("FilterLeist", value);
   }
   public final static String tag_TextArt="TextArt";

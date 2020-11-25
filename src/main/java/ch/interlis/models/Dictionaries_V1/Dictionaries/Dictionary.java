@@ -20,6 +20,7 @@ public class Dictionary extends ch.interlis.iom_j.Iom_jObject
   public int sizeEntries() {return getattrvaluecount("Entries");}
   public ch.interlis.models.Dictionaries_V1.Dictionaries.Entry[] getEntries() {
     int size=getattrvaluecount("Entries");
+    if(size==0)return null;
     ch.interlis.models.Dictionaries_V1.Dictionaries.Entry value[]=new ch.interlis.models.Dictionaries_V1.Dictionaries.Entry[size];
     for(int i=0;i<size;i++){
       value[i]=(ch.interlis.models.Dictionaries_V1.Dictionaries.Entry)getattrobj("Entries",i);

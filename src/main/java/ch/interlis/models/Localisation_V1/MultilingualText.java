@@ -15,6 +15,7 @@ public class MultilingualText extends ch.interlis.iom_j.Iom_jObject
   public int sizeLocalisedText() {return getattrvaluecount("LocalisedText");}
   public ch.interlis.models.Localisation_V1.LocalisedText[] getLocalisedText() {
     int size=getattrvaluecount("LocalisedText");
+    if(size==0)return null;
     ch.interlis.models.Localisation_V1.LocalisedText value[]=new ch.interlis.models.Localisation_V1.LocalisedText[size];
     for(int i=0;i<size;i++){
       value[i]=(ch.interlis.models.Localisation_V1.LocalisedText)getattrobj("LocalisedText",i);
