@@ -40,19 +40,22 @@ public class Main {
             return;
         }
         int argi=0;
-        int function=Converter.FC_ITF2KGDM;
+        int function=Converter.FC_ITFHYDRO2KGDM;
         boolean doGui=false;
         File wvaFile=null;
         File hydroFile=null;
         File kgdmFile=null;
+        File kgdm0File=null;
         File mgdmTwvFile=null;
         File mgdmGwaFile=null;
         for(;argi<args.length;argi++){
             String arg=args[argi];
             if(arg.equals("--trace")){
                 EhiLogger.getInstance().setTraceFilter(false);
-            }else if(arg.equals("--itf2kgdm")){
-                function=Converter.FC_ITF2KGDM;
+            }else if(arg.equals("--itfHydro2kgdm")){
+                function=Converter.FC_ITFHYDRO2KGDM;
+            }else if(arg.equals("--itfWva2kgdm")){
+                function=Converter.FC_ITFWVA2KGDM;
             }else if(arg.equals("--kgdm2itf")){
                 function=Converter.FC_KGDM2ITF;
             }else if(arg.equals("--kgdm2mgdm")){
@@ -66,6 +69,9 @@ public class Main {
             }else if(arg.equals("--kgdm")){
                 argi++;
                 kgdmFile=new File(args[argi]);
+            }else if(arg.equals("--kgdm0")){
+                argi++;
+                kgdm0File=new File(args[argi]);
             }else if(arg.equals("--mgdmTwv")){
                 argi++;
                 mgdmTwvFile=new File(args[argi]);
@@ -120,7 +126,7 @@ public class Main {
             MainFrame.main(settings);
         }else{
             boolean ok=false;
-            ok = new Converter().convert(function,wvaFile,hydroFile,kgdmFile,mgdmTwvFile,mgdmGwaFile,settings);
+            ok = new Converter().convert(function,wvaFile,hydroFile,kgdm0File,kgdmFile,mgdmTwvFile,mgdmGwaFile,settings);
             System.exit(ok ? 0 : 1);
         }
         

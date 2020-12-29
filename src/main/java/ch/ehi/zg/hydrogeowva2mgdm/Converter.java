@@ -75,15 +75,16 @@ public class Converter {
      * @see #SETTING_ILIDIRS
      */
     public static final String SETTING_DEFAULT_ILIDIRS = XTF_DIR+";http://models.interlis.ch/;"+JAR_DIR+"/ilimodels";
-    public static final int FC_ITF2KGDM=0;
-    public static final int FC_KGDM2ITF=1;
-    public static final int FC_KGDM2MGDM=2;
-    public boolean convert(int function, File wvaFile, File hydroFile, File kgdmFile, File mgdmTwvFile, File mgdmGwaFile, Settings settings) {
-        if(wvaFile==null && function==FC_ITF2KGDM){
+    public static final int FC_ITFHYDRO2KGDM=0;
+    public static final int FC_ITFWVA2KGDM=1;
+    public static final int FC_KGDM2ITF=2;
+    public static final int FC_KGDM2MGDM=3;
+    public boolean convert(int function, File wvaFile, File hydroFile, File kgdm0File,File kgdmFile, File mgdmTwvFile, File mgdmGwaFile, Settings settings) {
+        if(wvaFile==null && function==FC_ITFWVA2KGDM){
             EhiLogger.logError("no WVA file given");
             return false;
         }
-        if(hydroFile==null && (function==FC_ITF2KGDM || function==FC_KGDM2ITF)){
+        if(hydroFile==null && (function==FC_ITFHYDRO2KGDM || function==FC_KGDM2ITF)){
             EhiLogger.logError("no hydro file given");
             return false;
         }
@@ -123,11 +124,14 @@ public class Converter {
             EhiLogger.logState("ili2c-"+ch.interlis.ili2c.Ili2c.getVersion());
             EhiLogger.logState("iox-ili-"+ch.interlis.iox_j.IoxUtility.getVersion());
             EhiLogger.logState("maxMemory "+java.lang.Runtime.getRuntime().maxMemory()/1024L+" KB");
-            if(function==FC_ITF2KGDM) {
+            if(function==FC_ITFWVA2KGDM) {
                 EhiLogger.logState("wvaFile <"+wvaFile.getPath()+">");
             }
-            if(function==FC_ITF2KGDM || function==FC_KGDM2ITF) {
+            if(function==FC_ITFHYDRO2KGDM || function==FC_KGDM2ITF) {
                 EhiLogger.logState("hydroFile <"+hydroFile.getPath()+">");
+            }
+            if(function==FC_ITFHYDRO2KGDM && kgdm0File!=null) {
+                EhiLogger.logState("kgdm0File <"+kgdm0File.getPath()+">");
             }
             EhiLogger.logState("kgdmFile <"+kgdmFile.getPath()+">");
             if(function==FC_KGDM2MGDM) {
@@ -176,8 +180,10 @@ public class Converter {
             try{
                 
                 
-                if(function==FC_ITF2KGDM) {
-                    itf2kgdm(wvaFile, hydroFile, kgdmFile, settings, td_ili1);
+                if(function==FC_ITFHYDRO2KGDM) {
+                    itfHydro2kgdm(kgdm0File, hydroFile, kgdmFile, settings, td_ili1);
+                }else if(function==FC_ITFWVA2KGDM) {
+                    itfWva2kgdm(wvaFile, kgdmFile, settings, td_ili1);
                 }else if(function==FC_KGDM2ITF){
                     kgdm2itf(kgdmFile, hydroFile,settings, td_ili1);
                 }else if(function==FC_KGDM2MGDM){
@@ -370,23 +376,19 @@ public class Converter {
         }
         
     }
-    private void itf2kgdm(File wvaFile, File hydroFile, File kgdmFile, Settings settings,TransferDescription td) throws IoxException {
+    private void itfHydro2kgdm(File kgdm0File, File hydroFile, File kgdmFile, Settings settings,TransferDescription td) throws IoxException {
         IoxStatistics readerStat=null;
         IoxStatistics writerStat=null;
         XtfWriterBase kgdmWriter=null;
         try{
             readerStat=new IoxStatistics(td,settings);
             writerStat=new IoxStatistics(td,settings);
-            // setup data reader
-            ItfReader2 ioxReader=new ItfReader2(wvaFile,true);
-            ioxReader.setModel(td);
+            LegacyHydro2kgdm mapper=new LegacyHydro2kgdm();
+
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
             factories.registerFactory(ZG_WASSERVERSORGUNGSATLAS_1_0.getIoxFactory());
             factories.registerFactory(ZG_HYDROGEOLOGISCHEOBJEKTE_2_3.getIoxFactory());
-            ioxReader.setFactory(factories);
-            readerStat.setFilename(wvaFile.getPath());
-            Legacy2kgdm mapper=new Legacy2kgdm();
-
+            
             kgdmWriter = new XtfWriterBase( kgdmFile,  getIoxMapping(),"2.3");
             kgdmWriter.setModels(new XtfModel[]{
                     ZG_HYDROGEO_WVA_V1.getXtfModel(),
@@ -405,6 +407,46 @@ public class Converter {
             writeIoxEvent(event, kgdmWriter, writerStat);
             event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug,"b1");
             writeIoxEvent(event, kgdmWriter, writerStat);
+            if(kgdm0File!=null) {
+                // setup data reader
+                XtfReader ioxReader=new XtfReader(kgdm0File);
+                ioxReader.setModel(td);
+                ioxReader.setFactory(factories);
+                readerStat.setFilename(kgdm0File.getPath());
+                try{
+                    do{
+                        event=ioxReader.read();
+                        readerStat.add(event);
+                        mapper.addInput(event);
+                        if(event instanceof ObjectEvent) {
+                            IomObject mappedObj=mapper.getMappedObject();
+                            while(mappedObj!=null) {
+                                writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
+                                mappedObj=mapper.getMappedObject();
+                            }
+                        }
+                    }while(!(event instanceof EndTransferEvent));
+                    IomObject mappedObj=mapper.getMappedObject();
+                    while(mappedObj!=null) {
+                        writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
+                        mappedObj=mapper.getMappedObject();
+                    }
+                }finally{
+                    if(ioxReader!=null){
+                        try {
+                            ioxReader.close();
+                        } catch (IoxException e) {
+                            EhiLogger.logError(e);
+                        }
+                        ioxReader=null;
+                    }
+                }
+            }
+            // setup data reader
+            ItfReader2 ioxReader=new ItfReader2(hydroFile,true);
+            ioxReader.setModel(td);
+            ioxReader.setFactory(factories);
+            readerStat.setFilename(hydroFile.getPath());
             try{
                 do{
                     event=ioxReader.read();
@@ -433,11 +475,63 @@ public class Converter {
                     ioxReader=null;
                 }
             }
+            event=new ch.interlis.iox_j.EndBasketEvent();
+            writeIoxEvent(event, kgdmWriter, writerStat);
+            event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.TransferMetadaten,"b2");
+            writeIoxEvent(event, kgdmWriter, writerStat);
+            // TODO TransferMetadaten
+            event=new ch.interlis.iox_j.EndBasketEvent();
+            writeIoxEvent(event, kgdmWriter, writerStat);
+
+            event=new ch.interlis.iox_j.EndTransferEvent();
+            writeIoxEvent(event, kgdmWriter, writerStat);
+            readerStat.write2logger();
+            writerStat.write2logger();
+        }finally{
+            if(kgdmWriter!=null){
+                try {
+                    kgdmWriter.close();
+                } catch (IoxException e) {
+                    EhiLogger.logError(e);
+                }
+                kgdmWriter=null;
+            }
+        }
+    }
+    private void itfWva2kgdm(File wvaFile, File kgdmFile, Settings settings,TransferDescription td) throws IoxException {
+        IoxStatistics readerStat=null;
+        IoxStatistics writerStat=null;
+        XtfWriterBase kgdmWriter=null;
+        try{
+            readerStat=new IoxStatistics(td,settings);
+            writerStat=new IoxStatistics(td,settings);
             // setup data reader
-            ioxReader=new ItfReader2(hydroFile,true);
+            ItfReader2 ioxReader=new ItfReader2(wvaFile,true);
             ioxReader.setModel(td);
+            DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
+            factories.registerFactory(ZG_WASSERVERSORGUNGSATLAS_1_0.getIoxFactory());
             ioxReader.setFactory(factories);
-            readerStat.setFilename(hydroFile.getPath());
+            readerStat.setFilename(wvaFile.getPath());
+            LegacyWva2kgdm mapper=new LegacyWva2kgdm();
+
+            kgdmWriter = new XtfWriterBase( kgdmFile,  getIoxMapping(),"2.3");
+            kgdmWriter.setModels(new XtfModel[]{
+                    ZG_HYDROGEO_WVA_V1.getXtfModel(),
+                    TWVINNOTLAGEN_LV95_V1.getXtfModel(),
+                    LOCALISATIONCH_V1.getXtfModel(),
+                    GEOMETRYCHLV95_V1.getXtfModel(),
+                    UNITS.getXtfModel(),
+                    ZG_PLANERISCHERGEWAESSERSCHUTZ_V1_1.getXtfModel(),
+                    PLANERISCHERGEWAESSERSCHUTZ_LV95_V1_1.getXtfModel(),
+                    LOCALISATION_V1.getXtfModel(),
+                    INTERNATIONALCODES_V1.getXtfModel(),
+                    CHADMINCODES_V1.getXtfModel()
+                    });
+            IoxEvent event=null;
+            event=new ch.interlis.iox_j.StartTransferEvent(settings.getValue(SETTING_APPNAME));
+            writeIoxEvent(event, kgdmWriter, writerStat);
+            event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug,"b1");
+            writeIoxEvent(event, kgdmWriter, writerStat);
             try{
                 do{
                     event=ioxReader.read();
