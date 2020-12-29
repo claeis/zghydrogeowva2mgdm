@@ -18,6 +18,8 @@ public class Notversorgung{
   public final static String tag_nur_Notversorgung="nur_Notversorgung";
   static public Notversorgung Not_und_Normalversorgung=new Notversorgung("Not_und_Normalversorgung");
   public final static String tag_Not_und_Normalversorgung="Not_und_Normalversorgung";
+  static public Notversorgung nicht_geeignet=new Notversorgung("nicht_geeignet");
+  public final static String tag_nicht_geeignet="nicht_geeignet";
   static public Notversorgung unbekannt=new Notversorgung("unbekannt");
   public final static String tag_unbekannt="unbekannt";
 }

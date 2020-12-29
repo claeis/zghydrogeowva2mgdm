@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2020-11-24"  =
+VERSION "2020-12-09"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -125,6 +125,9 @@ VERSION "2020-11-24"  =
                    in_Betrieb,      !! <in Betrieb, d3>
                    projektiert,     !! <projektiert, d4>
                    stillgelegt,     !! <stillgelegt, d5>
+                   ungenutzt,
+                   zerstoert,
+                   im_Verwurf,
                    unbekannt);      !! <unbekannt, d6>
 
     Darstellung = (keine,       !! <keine, d1>
@@ -146,14 +149,14 @@ VERSION "2020-11-24"  =
     Notversorgung = (Normalversorgung,         !! <Normalversorgung, d1>
                      nur_Notversorgung,        !! <nur Notversorgung, d2>
                      Not_und_Normalversorgung, !! <Not und Normalversorgung, d3>
+                     nicht_geeignet,
                      unbekannt);               !! <unbekannt, d4>
 
     DruckRedTyp = (Druckbrecherschacht,  !! <Druckbrecherschacht, d1>
                    Druckreduzierventil,  !! <Druckreduzierventil, d2>
                    unbekannt);           !! <unbekannt, d3>
 
-    VersickerungTyp = (Rueckgabebrunnen,
-                       Versickerungsbecken,    !!<Versickerungsbecken, d1>
+    VersickerungTyp = (Versickerungsbecken,    !!<Versickerungsbecken, d1>
                        Versickerungsgraben,    !!<Versickerungsgraben, d2>
                        Rigolenversickerung,    !!<Rigolenversickerung, d3>
                        Kieskoerper,            !!<Kieskörper, d4>
@@ -378,7 +381,7 @@ VERSION "2020-11-24"  =
       Lokalitaet : TEXT*100;
       HoeheTerrain : 0.00 .. 3000.00;
       HoeheAuslauf : 0.00 .. 3000.00;
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       DetailplanArt: DetailplanArt;
       DetailplanDatum : INTERLIS.XMLDate;
       DetailplanMstab: DetailplanMstab;
@@ -388,16 +391,17 @@ VERSION "2020-11-24"  =
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
       QkatPlanNr : 0 .. 999;
-      GrundstNr : TEXT*254;
+      GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
 !!      Dateiname : MultiText;   Als Assoz
   END QwFsgEndpunkt;
 
     CLASS Quellschacht EXTENDS Brunnenstube =
       Typ : MANDATORY QWFSchachtTyp;
-      ObjNrAfu : TEXT*50;
+      ObjNrAfu : TEXT*15;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
+      Betriebsart : BetriebsArt;      
       ErtragMinAng : ErtragAngaben;
       ErtragMaxAng : ErtragAngaben;
       ErtragMittlAng : ErtragAngaben;
@@ -416,7 +420,7 @@ VERSION "2020-11-24"  =
       ErtragBrst : TEXT*50;
       ErtragGrp : TEXT*50;
       TextArt : (QueSchaErtragBrst, QueSchaErtragGrp, Name, Techdata);
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
       SymbolGeo: GeometryCHLV95_V1.Coord2;
       SymbolRot: 0.000 .. 399.999 [Grads];
@@ -431,14 +435,13 @@ VERSION "2020-11-24"  =
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
       QkatPlanNr : 0 .. 999;
-      GrundstNr : TEXT*254;
+      GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
     END Quellschacht;      
 
     CLASS Sammelschacht EXTENDS Quellschacht =
       Leitungsart : MANDATORY LeitungsArt;
-      Betriebsart : BetriebsArt;      
       TechData : TEXT*50;  
     END Sammelschacht;
 
@@ -462,7 +465,7 @@ VERSION "2020-11-24"  =
       Kanton : Kanton;
       GdeNrBFS : 0 .. 9999;
       Lokalitaet : TEXT*100;
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
       SymbolGeo: GeometryCHLV95_V1.Coord2;
       SymbolRot: 0.000 .. 399.999 [Grads];
@@ -481,15 +484,16 @@ VERSION "2020-11-24"  =
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
       QkatPlanNr : 0 .. 999;
-      GrundstNr : TEXT*254;
+      GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
     END Entnahmebrunnen;
 
     CLASS OberflaechenGewFassung EXTENDS Oberflaechengewaesserfassung =
-      ObjNrAfu : TEXT*50;
+      ObjNrAfu : TEXT*15;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
+      Betriebsart : BetriebsArt;      
       Tiefe: 0 .. 999;     !! in [m]
       GewAbschnittCode : 1000 .. 9999;
       GewAbschnittKm : 0 .. 1000;
@@ -504,7 +508,7 @@ VERSION "2020-11-24"  =
       Kanton : Kanton;
       GdeNrBFS : 0 .. 9999;
       Lokalitaet : TEXT*100;
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
       SymbolGeo: GeometryCHLV95_V1.Coord2;
       SymbolRot: 0.000 .. 399.999 [Grads];
@@ -519,7 +523,7 @@ VERSION "2020-11-24"  =
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
       QkatPlanNr : 0 .. 999;
-      GrundstNr : TEXT*254;
+      GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
     END OberflaechenGewFassung;
@@ -542,7 +546,7 @@ VERSION "2020-11-24"  =
       GdeNrBFS : 0 .. 9999;
       Lokalitaet : TEXT*100;
       MaxDarst : Darstellung; 
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
       EinzelFoerdermenge : Zahlen;
     END Foerderanlage;      
@@ -560,7 +564,7 @@ VERSION "2020-11-24"  =
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
       QkatPlanNr : 0 .. 999;
-      GrundstNr : TEXT*254;
+      GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;     
     END OberflGewRohwaPW;
 
@@ -579,7 +583,7 @@ VERSION "2020-11-24"  =
       GdeNrBFS : 0 .. 9999;
       Lokalitaet : TEXT*100;
       MaxDarst : Darstellung; 
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
     END Reservoir;
 
@@ -597,7 +601,7 @@ VERSION "2020-11-24"  =
       GdeNrBFS : 0 .. 9999;
       Lokalitaet : TEXT*100;
       MaxDarst : Darstellung; 
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
     END WeitereAnlage;
 
@@ -647,7 +651,7 @@ VERSION "2020-11-24"  =
       ErfGenauigkeit: ErfGenauigkeit;
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
     END Leitung;  
 
@@ -662,7 +666,7 @@ VERSION "2020-11-24"  =
       Bezugsgewaesser : TEXT*255;
       Zweck : TEXT*500;
       GeometriePunkt : GeometryCHLV95_V1.Coord2;
-      ObjNrAfu : TEXT*50;              !! Ergänzungen ZG
+      ObjNrAfu : TEXT*15;              !! Ergänzungen ZG
       Bewilligungsdatum : INTERLIS.XMLDate;
       Betriebsart : BetriebsArt;      
       Nachfuehrungsstand : INTERLIS.XMLDate;
@@ -678,7 +682,7 @@ VERSION "2020-11-24"  =
       ErfGenauigkeit: ErfGenauigkeit;
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
-      MutatBemerk : TEXT*240;
+      MutatBemerk : TEXT*254;
       UNIQUE Identifikator;
     END Anreicherungsanlage;
 
@@ -847,6 +851,18 @@ VERSION "2020-11-24"  =
       KontaktDatum: INTERLIS.XMLDate;
       GUID: MANDATORY TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
     END Einleit;
+
+    CLASS Pumpenanlage =
+      AnzahlPumpen: 0..99;
+      Pumpmenge: 0..99999;
+      PumpenBetrieb: TEXT*254;
+    END Pumpenanlage;
+
+    CLASS Pumpe =
+      PumpeNummer: 0..99;
+      Foerdermenge: 0..99999;
+      MotorLeistung: 0.0..999.9;
+    END Pumpe;
 
     CLASS AbWaEinleit EXTENDS Einleit =
       Typ: MANDATORY AbWaEinleitTyp;
@@ -1275,6 +1291,21 @@ VERSION "2020-11-24"  =
       Quellschacht -- {0..*} Quellschacht;
       QwfMenge_Karte25Pos -- {1..*} QwfMenge_Karte25Pos;
     END QwfMenge_Karte25;
+
+    ASSOCIATION Pumpe_PumpenAnlage =
+      PumpenAnlage -- {0..*} Pumpenanlage;
+      Pumpe -- {1..*} Pumpe;
+    END Pumpe_PumpenAnlage;
+
+    ASSOCIATION Pumpe_EntBru =
+      Pumpe -- {0..*} Pumpe;
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+    END Pumpe_EntBru;
+
+    ASSOCIATION Pumpe_OberflGewRohwaPW =
+      Pumpe -- {0..*} Pumpe;
+      OberflGewRohwaPW -- {1..*} OberflGewRohwaPW;
+    END Pumpe_OberflGewRohwaPW;
 
 !! Assoziationen zu Tabellen in Planerischem Gewässerschutz
     ASSOCIATION EntbruGSBAoTw_ZsBeZu =

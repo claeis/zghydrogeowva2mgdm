@@ -12,8 +12,6 @@ public class VersickerungTyp{
   static public VersickerungTyp parseXmlCode(String value) {
      return (VersickerungTyp)valuev.get(value);
   }
-  static public VersickerungTyp Rueckgabebrunnen=new VersickerungTyp("Rueckgabebrunnen");
-  public final static String tag_Rueckgabebrunnen="Rueckgabebrunnen";
   static public VersickerungTyp Versickerungsbecken=new VersickerungTyp("Versickerungsbecken");
   public final static String tag_Versickerungsbecken="Versickerungsbecken";
   static public VersickerungTyp Versickerungsgraben=new VersickerungTyp("Versickerungsgraben");

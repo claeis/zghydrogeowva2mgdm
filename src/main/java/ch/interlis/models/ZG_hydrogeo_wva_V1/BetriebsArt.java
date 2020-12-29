@@ -22,6 +22,12 @@ public class BetriebsArt{
   public final static String tag_projektiert="projektiert";
   static public BetriebsArt stillgelegt=new BetriebsArt("stillgelegt");
   public final static String tag_stillgelegt="stillgelegt";
+  static public BetriebsArt ungenutzt=new BetriebsArt("ungenutzt");
+  public final static String tag_ungenutzt="ungenutzt";
+  static public BetriebsArt zerstoert=new BetriebsArt("zerstoert");
+  public final static String tag_zerstoert="zerstoert";
+  static public BetriebsArt im_Verwurf=new BetriebsArt("im_Verwurf");
+  public final static String tag_im_Verwurf="im_Verwurf";
   static public BetriebsArt unbekannt=new BetriebsArt("unbekannt");
   public final static String tag_unbekannt="unbekannt";
 }

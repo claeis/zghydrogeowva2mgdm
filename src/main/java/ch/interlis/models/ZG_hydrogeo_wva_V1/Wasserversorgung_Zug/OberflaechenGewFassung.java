@@ -38,6 +38,16 @@ public class OberflaechenGewFassung extends ch.interlis.models.TWVinNotlagen_LV9
     if(value==null){setattrundefined("PrivatNutzer");return;}
     setattrvalue("PrivatNutzer", value);
   }
+  public final static String tag_Betriebsart="Betriebsart";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebsart() {
+    if(getattrvaluecount("Betriebsart")==0)return null;
+    String value=getattrvalue("Betriebsart");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.parseXmlCode(value);
+  }
+  public void setBetriebsart(ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt value) {
+    if(value==null){setattrundefined("Betriebsart");return;}
+    setattrvalue("Betriebsart", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
+  }
   public final static String tag_Tiefe="Tiefe";
   public Integer getTiefe() {
     if(getattrvaluecount("Tiefe")==0)return null;

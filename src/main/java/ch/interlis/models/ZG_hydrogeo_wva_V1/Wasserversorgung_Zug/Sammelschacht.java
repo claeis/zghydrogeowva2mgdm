@@ -16,16 +16,6 @@ public class Sammelschacht extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserv
   public void setLeitungsart(ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt value) {
     setattrvalue("Leitungsart", ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt.toXmlCode(value));
   }
-  public final static String tag_Betriebsart="Betriebsart";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebsart() {
-    if(getattrvaluecount("Betriebsart")==0)return null;
-    String value=getattrvalue("Betriebsart");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.parseXmlCode(value);
-  }
-  public void setBetriebsart(ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt value) {
-    if(value==null){setattrundefined("Betriebsart");return;}
-    setattrvalue("Betriebsart", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
-  }
   public final static String tag_TechData="TechData";
   public String getTechData() {
     if(getattrvaluecount("TechData")==0)return null;
