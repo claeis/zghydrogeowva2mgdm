@@ -22,6 +22,9 @@ public class LegacyUtil {
     }
 
     public static  IomObject mapPolyline(IomObject polylineObj) {
+        if(polylineObj==null) {
+            return null;
+        }
         IomObject destPoly=new ch.interlis.iom_j.Iom_jObject(polylineObj.getobjecttag(), null);
         for(int sequencei=0;sequencei<polylineObj.getattrvaluecount("sequence");sequencei++){
             IomObject sequence=polylineObj.getattrobj("sequence",sequencei);
