@@ -61,25 +61,49 @@ public class Datenbestand extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Darstellungsdienst="Darstellungsdienst";
   public String getDarstellungsdienst() {
     ch.interlis.iom.IomObject value=getattrobj("Darstellungsdienst",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setDarstellungsdienst(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Darstellungsdienst","REF");
+  public String setDarstellungsdienst(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Darstellungsdienst",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Darstellungsdienst","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Darstellungsdienst",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_zustaendigeStelle="zustaendigeStelle";
   public String getzustaendigeStelle() {
     ch.interlis.iom.IomObject value=getattrobj("zustaendigeStelle",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setzustaendigeStelle(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("zustaendigeStelle","REF");
+  public String setzustaendigeStelle(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("zustaendigeStelle",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("zustaendigeStelle","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("zustaendigeStelle",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

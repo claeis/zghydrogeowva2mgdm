@@ -11,13 +11,25 @@ public class AdministrativeUnit extends ch.interlis.models.AdministrativeUnits_V
   public final static String tag_UpperLevelUnit="UpperLevelUnit";
   public String getUpperLevelUnit() {
     ch.interlis.iom.IomObject value=getattrobj("UpperLevelUnit",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setUpperLevelUnit(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("UpperLevelUnit","REF");
+  public String setUpperLevelUnit(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("UpperLevelUnit",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("UpperLevelUnit","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("UpperLevelUnit",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

@@ -11,25 +11,49 @@ public class UnionMembers extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Union="Union";
   public String getUnion() {
     ch.interlis.iom.IomObject value=getattrobj("Union",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setUnion(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Union","REF");
+  public String setUnion(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Union",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Union","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Union",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Member="Member";
   public String getMember() {
     ch.interlis.iom.IomObject value=getattrobj("Member",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setMember(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Member","REF");
+  public String setMember(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Member",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Member","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Member",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

@@ -39,13 +39,25 @@ public class QwFsgEndpktDatei extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_QwFsgEndpunkt="QwFsgEndpunkt";
   public String getQwFsgEndpunkt() {
     ch.interlis.iom.IomObject value=getattrobj("QwFsgEndpunkt",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setQwFsgEndpunkt(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("QwFsgEndpunkt","REF");
+  public String setQwFsgEndpunkt(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("QwFsgEndpunkt",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("QwFsgEndpunkt","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("QwFsgEndpunkt",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

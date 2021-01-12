@@ -108,73 +108,145 @@ public class Quellschacht extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_HydWidder="HydWidder";
   public String getHydWidder() {
     ch.interlis.iom.IomObject value=getattrobj("HydWidder",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setHydWidder(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("HydWidder","REF");
+  public String setHydWidder(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("HydWidder",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("HydWidder","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("HydWidder",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_LaufBrunnen="LaufBrunnen";
   public String getLaufBrunnen() {
     ch.interlis.iom.IomObject value=getattrobj("LaufBrunnen",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setLaufBrunnen(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("LaufBrunnen","REF");
+  public String setLaufBrunnen(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("LaufBrunnen",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("LaufBrunnen","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("LaufBrunnen",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_MutatPerson="MutatPerson";
   public String getMutatPerson() {
     ch.interlis.iom.IomObject value=getattrobj("MutatPerson",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setMutatPerson(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("MutatPerson","REF");
+  public String setMutatPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("MutatPerson",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("MutatPerson","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("MutatPerson",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Pumpwerk="Pumpwerk";
   public String getPumpwerk() {
     ch.interlis.iom.IomObject value=getattrobj("Pumpwerk",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setPumpwerk(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Pumpwerk","REF");
+  public String setPumpwerk(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Pumpwerk",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Pumpwerk","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Pumpwerk",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Reservoir="Reservoir";
   public String getReservoir() {
     ch.interlis.iom.IomObject value=getattrobj("Reservoir",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setReservoir(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Reservoir","REF");
+  public String setReservoir(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Reservoir",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Reservoir","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Reservoir",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Sammelschacht="Sammelschacht";
   public String getSammelschacht() {
     ch.interlis.iom.IomObject value=getattrobj("Sammelschacht",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setSammelschacht(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Sammelschacht","REF");
+  public String setSammelschacht(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Sammelschacht",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Sammelschacht","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Sammelschacht",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

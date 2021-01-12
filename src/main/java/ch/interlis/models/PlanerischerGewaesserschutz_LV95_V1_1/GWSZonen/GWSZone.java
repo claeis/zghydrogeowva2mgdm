@@ -82,13 +82,25 @@ public class GWSZone extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Status="Status";
   public String getStatus() {
     ch.interlis.iom.IomObject value=getattrobj("Status",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setStatus(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Status","REF");
+  public String setStatus(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Status",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Status","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Status",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

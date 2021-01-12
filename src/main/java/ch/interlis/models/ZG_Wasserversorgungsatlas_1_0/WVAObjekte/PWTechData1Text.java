@@ -74,13 +74,25 @@ public class PWTechData1Text extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Pumpwerk="Pumpwerk";
   public String getPumpwerk() {
     ch.interlis.iom.IomObject value=getattrobj("Pumpwerk",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setPumpwerk(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Pumpwerk","REF");
+  public String setPumpwerk(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Pumpwerk",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Pumpwerk","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Pumpwerk",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

@@ -11,25 +11,49 @@ public class SammeleinrichtungQwfQuellschacht extends ch.interlis.iom_j.Iom_jObj
   public final static String tag_SammeleinrichtungQwf="SammeleinrichtungQwf";
   public String getSammeleinrichtungQwf() {
     ch.interlis.iom.IomObject value=getattrobj("SammeleinrichtungQwf",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setSammeleinrichtungQwf(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("SammeleinrichtungQwf","REF");
+  public String setSammeleinrichtungQwf(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("SammeleinrichtungQwf",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("SammeleinrichtungQwf","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("SammeleinrichtungQwf",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Quellschacht="Quellschacht";
   public String getQuellschacht() {
     ch.interlis.iom.IomObject value=getattrobj("Quellschacht",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setQuellschacht(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Quellschacht","REF");
+  public String setQuellschacht(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Quellschacht",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Quellschacht","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Quellschacht",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

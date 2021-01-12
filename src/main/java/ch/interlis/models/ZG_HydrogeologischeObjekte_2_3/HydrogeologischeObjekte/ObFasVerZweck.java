@@ -11,25 +11,49 @@ public class ObFasVerZweck extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_OberflaechenGewFassung="OberflaechenGewFassung";
   public String getOberflaechenGewFassung() {
     ch.interlis.iom.IomObject value=getattrobj("OberflaechenGewFassung",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setOberflaechenGewFassung(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("OberflaechenGewFassung","REF");
+  public String setOberflaechenGewFassung(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("OberflaechenGewFassung",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("OberflaechenGewFassung","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("OberflaechenGewFassung",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Verwendungszweck="Verwendungszweck";
   public String getVerwendungszweck() {
     ch.interlis.iom.IomObject value=getattrobj("Verwendungszweck",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setVerwendungszweck(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Verwendungszweck","REF");
+  public String setVerwendungszweck(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Verwendungszweck",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Verwendungszweck","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Verwendungszweck",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

@@ -160,37 +160,73 @@ public class OberflGewFsgLeitung extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_MutatPerson="MutatPerson";
   public String getMutatPerson() {
     ch.interlis.iom.IomObject value=getattrobj("MutatPerson",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setMutatPerson(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("MutatPerson","REF");
+  public String setMutatPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("MutatPerson",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("MutatPerson","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("MutatPerson",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_OberflGewRohwPW="OberflGewRohwPW";
   public String getOberflGewRohwPW() {
     ch.interlis.iom.IomObject value=getattrobj("OberflGewRohwPW",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setOberflGewRohwPW(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("OberflGewRohwPW","REF");
+  public String setOberflGewRohwPW(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("OberflGewRohwPW",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("OberflGewRohwPW","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("OberflGewRohwPW",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_OberflaechenGewFassung="OberflaechenGewFassung";
   public String getOberflaechenGewFassung() {
     ch.interlis.iom.IomObject value=getattrobj("OberflaechenGewFassung",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setOberflaechenGewFassung(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("OberflaechenGewFassung","REF");
+  public String setOberflaechenGewFassung(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("OberflaechenGewFassung",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("OberflaechenGewFassung","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("OberflaechenGewFassung",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

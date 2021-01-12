@@ -27,13 +27,25 @@ public class SchiSchaDatei extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Schieberschacht="Schieberschacht";
   public String getSchieberschacht() {
     ch.interlis.iom.IomObject value=getattrobj("Schieberschacht",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setSchieberschacht(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Schieberschacht","REF");
+  public String setSchieberschacht(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Schieberschacht",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Schieberschacht","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Schieberschacht",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

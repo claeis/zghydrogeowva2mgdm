@@ -101,13 +101,25 @@ public class Grundlage extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Adresse="Adresse";
   public String getAdresse() {
     ch.interlis.iom.IomObject value=getattrobj("Adresse",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setAdresse(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Adresse","REF");
+  public String setAdresse(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Adresse","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Adresse",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

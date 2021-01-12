@@ -11,25 +11,49 @@ public class FoerderanlageText extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Foerderanlage="Foerderanlage";
   public String getFoerderanlage() {
     ch.interlis.iom.IomObject value=getattrobj("Foerderanlage",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setFoerderanlage(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Foerderanlage","REF");
+  public String setFoerderanlage(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Foerderanlage",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Foerderanlage","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Foerderanlage",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_TextPos="TextPos";
   public String getTextPos() {
     ch.interlis.iom.IomObject value=getattrobj("TextPos",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setTextPos(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("TextPos","REF");
+  public String setTextPos(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("TextPos",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("TextPos","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("TextPos",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

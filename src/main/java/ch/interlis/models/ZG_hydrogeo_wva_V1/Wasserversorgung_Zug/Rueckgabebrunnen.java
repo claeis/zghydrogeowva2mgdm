@@ -290,49 +290,97 @@ public class Rueckgabebrunnen extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Adresse="Adresse";
   public String getAdresse() {
     ch.interlis.iom.IomObject value=getattrobj("Adresse",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setAdresse(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Adresse","REF");
+  public String setAdresse(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Adresse","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Adresse",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Adresse1="Adresse1";
   public String getAdresse1() {
     ch.interlis.iom.IomObject value=getattrobj("Adresse1",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setAdresse1(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Adresse1","REF");
+  public String setAdresse1(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse1",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Adresse1","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Adresse1",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Adresse2="Adresse2";
   public String getAdresse2() {
     ch.interlis.iom.IomObject value=getattrobj("Adresse2",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setAdresse2(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Adresse2","REF");
+  public String setAdresse2(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse2",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Adresse2","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Adresse2",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Person="Person";
   public String getPerson() {
     ch.interlis.iom.IomObject value=getattrobj("Person",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setPerson(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Person","REF");
+  public String setPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Person",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Person","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Person",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

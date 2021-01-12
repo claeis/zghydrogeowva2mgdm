@@ -11,25 +11,49 @@ public class Organisation extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_Orderer="Orderer";
   public String getOrderer() {
     ch.interlis.iom.IomObject value=getattrobj("Orderer",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setOrderer(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Orderer","REF");
+  public String setOrderer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Orderer",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Orderer","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Orderer",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Executor="Executor";
   public String getExecutor() {
     ch.interlis.iom.IomObject value=getattrobj("Executor",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setExecutor(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Executor","REF");
+  public String setExecutor(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Executor",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Executor","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Executor",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

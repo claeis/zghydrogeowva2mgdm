@@ -430,61 +430,121 @@ public class QwFsgEndpunkt extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_FassgEigentuemer="FassgEigentuemer";
   public String getFassgEigentuemer() {
     ch.interlis.iom.IomObject value=getattrobj("FassgEigentuemer",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setFassgEigentuemer(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("FassgEigentuemer","REF");
+  public String setFassgEigentuemer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("FassgEigentuemer",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("FassgEigentuemer","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("FassgEigentuemer",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_GrundEigentuemer="GrundEigentuemer";
   public String getGrundEigentuemer() {
     ch.interlis.iom.IomObject value=getattrobj("GrundEigentuemer",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setGrundEigentuemer(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("GrundEigentuemer","REF");
+  public String setGrundEigentuemer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("GrundEigentuemer",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("GrundEigentuemer","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("GrundEigentuemer",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_KontaktPerson="KontaktPerson";
   public String getKontaktPerson() {
     ch.interlis.iom.IomObject value=getattrobj("KontaktPerson",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setKontaktPerson(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("KontaktPerson","REF");
+  public String setKontaktPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("KontaktPerson",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("KontaktPerson","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("KontaktPerson",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_MutatPerson="MutatPerson";
   public String getMutatPerson() {
     ch.interlis.iom.IomObject value=getattrobj("MutatPerson",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setMutatPerson(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("MutatPerson","REF");
+  public String setMutatPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("MutatPerson",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("MutatPerson","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("MutatPerson",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_Quellschacht="Quellschacht";
   public String getQuellschacht() {
     ch.interlis.iom.IomObject value=getattrobj("Quellschacht",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setQuellschacht(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("Quellschacht","REF");
+  public String setQuellschacht(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Quellschacht",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Quellschacht","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Quellschacht",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }

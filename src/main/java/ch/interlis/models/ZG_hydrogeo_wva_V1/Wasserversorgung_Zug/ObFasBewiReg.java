@@ -11,25 +11,49 @@ public class ObFasBewiReg extends ch.interlis.iom_j.Iom_jObject
   public final static String tag_OberflGewFassung="OberflGewFassung";
   public String getOberflGewFassung() {
     ch.interlis.iom.IomObject value=getattrobj("OberflGewFassung",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setOberflGewFassung(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("OberflGewFassung","REF");
+  public String setOberflGewFassung(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("OberflGewFassung",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("OberflGewFassung","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("OberflGewFassung",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
   public final static String tag_BewiReg="BewiReg";
   public String getBewiReg() {
     ch.interlis.iom.IomObject value=getattrobj("BewiReg",0);
-    if(value==null)throw new IllegalStateException();
+    if(value==null)return null;
     String oid=value.getobjectrefoid();
-    if(oid==null)throw new IllegalStateException();
+    if(oid==null)return null;
     return oid;
   }
-  public void setBewiReg(String oid) {
-    ch.interlis.iom.IomObject structvalue=addattrobj("BewiReg","REF");
+  public String setBewiReg(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("BewiReg",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("BewiReg","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("BewiReg",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
     structvalue.setobjectrefoid(oid);
+    return oldoid;
   }
 }
