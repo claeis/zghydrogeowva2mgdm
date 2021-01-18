@@ -176,7 +176,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                // TODO mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 entnahmebrunnen2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Grundlage) {
@@ -353,7 +353,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
-                // TODO mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 leitungsnetzwv2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.MutatPerson) {
@@ -378,7 +378,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                // TODO mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewfassung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFsgLeitung) {
@@ -395,7 +395,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                // TODO mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewfsgleitung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewRohwaPW) {
@@ -483,7 +483,7 @@ public class LegacyWva2kgdm  {
                 Pumpwerk: OPTIONAL -> Pumpwerk;
                 LaufBrunnen: OPTIONAL -> LaufBrunnen;
                 */
-                mappedObj.setPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 quellschacht2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWFoeMenge) {
@@ -592,7 +592,7 @@ public class LegacyWva2kgdm  {
                 /*
                   Stufenpumpwerk: OPTIONAL -> Pumpwerk;
                  */
-                mappedObj.setGrundlage_(grundlage2oid.get(srcObj.getGrundlage()));
+                mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 reservoir2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
@@ -631,7 +631,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
-                mappedObj.setPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 sammelschacht2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SchiSchaWasservsg) {
@@ -730,7 +730,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                // TODO mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 wvafassungsleitung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj);
             }else {

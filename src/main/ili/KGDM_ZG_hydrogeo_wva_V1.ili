@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2020-12-09"  =
+VERSION "2021-01-15"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -247,6 +247,10 @@ VERSION "2020-12-09"  =
                mittel,         !! <mittel, d3>
                gross,          !! <gross, d4>
                unterdrueckt);  !! <unterdrückt, d5>
+
+    VerbundArt = (fester_Verbund,
+                  anzustrebender_fester_Verbund,
+                  Notverbund);
 
     LiterMinute = 0.00 .. 1000000.00 [lmin];      !! analog MGDM
     KubikmeterTag = 0.00 .. 1440000.00 [m3day];   !! analog MGDM
@@ -884,7 +888,7 @@ VERSION "2020-12-09"  =
 
     ASSOCIATION QwFsgEndpunktMutatPerson =
       QwFsgEndpunkt -- {0..*} QwFsgEndpunkt;
-      Person -- {0..1} MutatPerson;
+      MutatPerson -- {0..1} MutatPerson;
     END QwFsgEndpunktMutatPerson;
 
     ASSOCIATION QwFsgEndpunktAnlageEigentuemer =
@@ -909,7 +913,7 @@ VERSION "2020-12-09"  =
 
     ASSOCIATION QuellSchaSaSchaMutatPerson =
       Quell_Sammelschacht -- {0..*} Quellschacht;
-      Person -- {0..1} MutatPerson;
+      MutatPerson -- {0..1} MutatPerson;
     END QuellSchaSaSchaMutatPerson;
 
     ASSOCIATION QueSchaSaScha =
@@ -918,8 +922,8 @@ VERSION "2020-12-09"  =
     END QueSchaSaScha;
 
     ASSOCIATION QuellSchDatei =
-      Quellschacht -- {0..*} Quellschacht;
-      Datei -- {1} Datei;
+      Quellschacht -- {1} Quellschacht;
+      Datei -- {0..*} Datei;
     END QuellSchDatei;
 
     ASSOCIATION SaSchaGrundlage =
@@ -933,8 +937,8 @@ VERSION "2020-12-09"  =
     END SaSchaWasservsg;
 
     ASSOCIATION EntbruDatei =
-      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
-      Datei -- {1} Datei;
+      Entnahmebrunnen -- {1} Entnahmebrunnen;
+      Datei -- {0..*} Datei;
     END EntbruDatei;
  
    ASSOCIATION EntbruBewiReg =
@@ -943,8 +947,8 @@ VERSION "2020-12-09"  =
     END EntbruBewiReg;
 
     ASSOCIATION EntbruMutatPerson =
-      Entnahmebrunnen -- {0..1} Entnahmebrunnen;
-      MutatPerson -- {0..*} MutatPerson;
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+      MutatPerson -- {0..1} MutatPerson;
     END EntbruMutatPerson;
 
     ASSOCIATION EntbruText =
@@ -973,13 +977,18 @@ VERSION "2020-12-09"  =
     END ObFasBewiReg;
 
     ASSOCIATION ObFasDatei =
-      OberflGewFassung -- {0..*} OberflaechenGewFassung;
-      Datei -- {1} Datei;
+      OberflGewFassung -- {1} OberflaechenGewFassung;
+      Datei -- {0..*} Datei;
     END ObFasDatei;
 
+    ASSOCIATION ObFasMutatPerson =
+      OberflGewFassung -- {0..*} OberflaechenGewFassung;
+      MutatPerson -- {0..1} MutatPerson;
+    END ObFasMutatPerson;
+
     ASSOCIATION FoerderanlageDatei =
-      Foerderanlage -- {0..*} Foerderanlage;
-      Datei -- {1} Datei;
+      Foerderanlage -- {1} Foerderanlage;
+      Datei -- {0..*} Datei;
     END FoerderanlageDatei;
 
     ASSOCIATION FoerderanlageGrundlage =
@@ -1018,13 +1027,13 @@ VERSION "2020-12-09"  =
     END QueSchaRes;
 
     ASSOCIATION ResDatei =
-      Reservoir -- {0..*} Reservoir;
-      Datei -- {1} Datei;
+      Reservoir -- {1} Reservoir;
+      Datei -- {0..*} Datei;
     END ResDatei;
 
     ASSOCIATION ResGrundlage =
-      Reservoir_ -- {0..*} Reservoir;
-      Grundlage_ -- {0..1} Grundlage;
+      Reservoir -- {0..*} Reservoir;
+      Grundlage -- {0..1} Grundlage;
     END ResGrundlage;
 
     ASSOCIATION ResMutatPerson =
@@ -1088,8 +1097,8 @@ VERSION "2020-12-09"  =
     END FoerderanlageAufbereitungswerk;
 
     ASSOCIATION LeitMutatPerson =
-      Leitung -- {0..1} Leitung;
-      MutatPerson -- {0..*} MutatPerson;
+      Leitung -- {0..*} Leitung;
+      MutatPerson -- {0..1} MutatPerson;
     END LeitMutatPerson;
 
     ASSOCIATION LeitText =
@@ -1108,8 +1117,8 @@ VERSION "2020-12-09"  =
     END LeitGrundlage;
 
     ASSOCIATION AnranlDatei =
-      Anreicherungsanlage -- {0..*} Anreicherungsanlage;
-      Datei -- {1} Datei;
+      Anreicherungsanlage -- {1} Anreicherungsanlage;
+      Datei -- {0..*} Datei;
     END AnranlDatei;
 
     ASSOCIATION AnranlWasservsg =
@@ -1119,7 +1128,7 @@ VERSION "2020-12-09"  =
 
     ASSOCIATION AnreicherungsanlageMutatPerson =
       Anreicherungsanlage -- {0..*} Anreicherungsanlage;
-      Person -- {0..1} MutatPerson;
+      MutatPerson -- {0..1} MutatPerson;
     END AnreicherungsanlageMutatPerson;
 
     ASSOCIATION AnrNrAfu =
@@ -1159,7 +1168,7 @@ VERSION "2020-12-09"  =
 
     ASSOCIATION RueBruMutatPerson =
       Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
-      Person -- {0..1} MutatPerson;
+      MutatPerson -- {0..1} MutatPerson;
     END RueBruMutatPerson;
 
     ASSOCIATION SammeleinrichtungEntBru =
@@ -1208,8 +1217,8 @@ VERSION "2020-12-09"  =
     END VersickerungsanlageMutatPerson;
 
     ASSOCIATION VersiDatei =
-      Versickerungsanlage -- {0..*} Versickerungsanlage;
-      Datei -- {1..*} Datei;
+      Versickerungsanlage -- {1} Versickerungsanlage;
+      Datei -- {0..*} Datei;
     END VersiDatei;
 
     ASSOCIATION VersiWasservsg =
@@ -1228,8 +1237,8 @@ VERSION "2020-12-09"  =
     END BautenGWBewiReg;
 
     ASSOCIATION BautenGWDatei =
-      BautenGW -- {0..*} BautenGW;
-      Datei -- {1} Datei;
+      BautenGW -- {1} BautenGW;
+      Datei -- {0..*} Datei;
     END BautenGWDatei;
 
     ASSOCIATION BautenGWGrundEigentuemer =
@@ -1263,8 +1272,8 @@ VERSION "2020-12-09"  =
     END EinleitBewiReg;
 
     ASSOCIATION EinleitDatei =
-      Einleit -- {0..*} Einleit;
-      Datei -- {1} Datei;
+      Einleit -- {1} Einleit;
+      Datei -- {0..*} Datei;
     END EinleitDatei;
 
     ASSOCIATION EinleitGrundEigentuemer =
@@ -1338,6 +1347,112 @@ VERSION "2020-12-09"  =
       GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
     END QuellSchGWSZone;
 
+/*
+!! Objekte der Notversorgung
+    CLASS Hydrant =
+      SymbolGeo: MANDATORY GeometryCHLV95_V1.Coord2;
+      SymbolRot: MANDATORY 0.000 .. 399.999 [Grads];
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      Identifikator : MANDATORY IdentifikatorTyp;
+      Nummer: TEXT*10;		
+      Notversorgung:  Notversorgung;
+      MaxDarst : Darstellung; 
+      MutatDatum : INTERLIS.XMLDate;
+      MutatBemerk: TEXT*254;
+!!      Wasserversorgung: -> Wasserversorgung;
+!!      Grundlage:  -> Grundlage;
+!!      MutatPerson:  -> MutatPerson;
+	  END Hydrant;   
+
+    CLASS Versorgungsperimeter =
+      Geometrie: CHSurface;		
+      Identifikator : MANDATORY IdentifikatorTyp;
+      MaxDarst : Darstellung; 
+      MutatDatum : INTERLIS.XMLDate;
+      MutatBemerk: TEXT*254;
+!!      Wasserversorgung: -> MANDATORY Wasserversorgung;
+!!      Grundlage: OPTIONAL -> Grundlage;
+!!      MutatPerson: OPTIONAL -> MutatPerson;
+    END Versorgungsperimeter;   
+
+    CLASS VerPerNameText =
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      Farbe: Farbe;
+      Ori : 0.000 .. 399.999 [Grads];
+      Hali : HALIGNMENT;
+      Vali : VALIGNMENT;
+      Size : SizeTyp;
+!!      Versorgungsperimeter: -> MANDATORY Versorgungsperimeter;
+    END VerPerNameText;
+
+    CLASS Uebergabestelle =
+      SymbolGeo: MANDATORY GeometryCHLV95_V1.Coord2;
+      SymbolRot: MANDATORY 0.000 .. 399.999 [Grads];
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      Identifikator : MANDATORY IdentifikatorTyp;
+      Name: MANDATORY TEXT*50	;
+      UebergabeOrt: MANDATORY TEXT*50;
+      VerbundNr: MANDATORY 0..99;
+      VerbundArt: MANDATORY VerbundArt;			
+      AusloesungVon: TEXT*255;	
+      PumpeVon: BOOLEAN;
+      VerbindungsleitungVon: 0..9999;
+      AusloesungNach: TEXT*255;		
+      PumpeNach: BOOLEAN;	
+      VerbindungsleitungNach: 0..9999;
+      Bemerkung : TEXT*1000;
+      Objekt: TEXT*38;
+      ObjektArt: (Hydrant);
+      MaxDarst : Darstellung; 
+      MutatDatum : INTERLIS.XMLDate;
+      MutatBemerk: TEXT*254;
+!!      LieferungVon: OPTIONAL -> Versorgungsperimeter;		
+!!      LieferungNach: OPTIONAL -> Versorgungsperimeter;	
+!!      Grundlage: OPTIONAL -> Grundlage;
+!!      MutatPerson: OPTIONAL -> MutatPerson;
+    END Uebergabestelle;   
+
+    CLASS Abgabestelle =
+      SymbolGeo: MANDATORY GeometryCHLV95_V1.Coord2;
+      SymbolRot: MANDATORY 0.000 .. 399.999 [Grads];
+      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
+      Identifikator : MANDATORY IdentifikatorTyp;
+      StrassePlatz: TEXT*100;
+      NaehereBezeichnung: TEXT*100;
+      Schlauchlaenge: 0 .. 9999;
+      MaxDarst : Darstellung; 
+      MutatDatum : INTERLIS.XMLDate;
+      MutatBemerk: TEXT*254;
+!!      Hydrant: OPTIONAL	-> Hydrant;	
+!!     Wasserversorgung: OPTIONAL -> Wasserversorgung;
+!!      Grundlage: OPTIONAL -> Grundlage;	
+!!      MutatPerson: OPTIONAL -> MutatPerson;
+    END Abgabestelle;   
+
+    CLASS NotLeitung =
+      Geometrie: MANDATORY CHLine;	
+      Identifikator : MANDATORY IdentifikatorTyp;
+      Name: TEXT*50	;
+      UebergabeOrt: TEXT*50;
+      VerbundNr: 0..99;	
+      AusloesungVon: TEXT*255;	
+      PumpeVon: BOOLEAN;
+      VerbindungsleitungVon: 0..9999;
+      AusloesungNach: TEXT*255;		
+      PumpeNach: BOOLEAN;	
+      VerbindungsleitungNach: 0..9999;
+      Bemerkung: TEXT*1000;		
+      Objekt: TEXT*38;
+      ObjektArt: (Hydrant);
+      MaxDarst : Darstellung; 
+      MutatDatum : INTERLIS.XMLDate;
+      MutatBemerk: TEXT*254;
+!!      LieferungVon: OPTIONAL -> Versorgungsperimeter;		
+!!      LieferungNach: OPTIONAL -> Versorgungsperimeter;
+!!      Grundlage: OPTIONAL -> Grundlage;
+!!      MutatPerson: OPTIONAL -> MutatPerson;
+    END NotLeitung;
+*/
    END Wasserversorgung_Zug;
    
   /* Transfermetadaten */

@@ -257,47 +257,23 @@ public class Anreicherungsanlage extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("MutatBemerk");return;}
     setattrvalue("MutatBemerk", value);
   }
-  public final static String tag_Datei="Datei";
-  public String getDatei() {
-    ch.interlis.iom.IomObject value=getattrobj("Datei",0);
+  public final static String tag_MutatPerson="MutatPerson";
+  public String getMutatPerson() {
+    ch.interlis.iom.IomObject value=getattrobj("MutatPerson",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setDatei(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("Datei",0);
+  public String setMutatPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("MutatPerson",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("Datei","REF");
+      structvalue=addattrobj("MutatPerson","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("Datei",0);
-        return oldoid;
-      }
-    }
-    String oldoid=structvalue.getobjectrefoid();
-    structvalue.setobjectrefoid(oid);
-    return oldoid;
-  }
-  public final static String tag_Person="Person";
-  public String getPerson() {
-    ch.interlis.iom.IomObject value=getattrobj("Person",0);
-    if(value==null)return null;
-    String oid=value.getobjectrefoid();
-    if(oid==null)return null;
-    return oid;
-  }
-  public String setPerson(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("Person",0);
-    if(structvalue==null){
-      if(oid==null)return null;
-      structvalue=addattrobj("Person","REF");
-    }else{
-      if(oid==null){
-        String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("Person",0);
+        deleteattrobj("MutatPerson",0);
         return oldoid;
       }
     }
