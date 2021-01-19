@@ -51,6 +51,11 @@ public class LegacyHydro2kgdm  {
         EhiLogger.logError(msg);
         errc++;
     }
+    /** report error, but ignore it for now
+     */
+    private void logDelayedError(String msg) {
+        EhiLogger.logAdaption(msg);
+    }
     public void addInput(IoxEvent event) {
         if(event instanceof ObjectEvent) {
             IomObject obj=((ObjectEvent)event).getIomObject();
@@ -81,11 +86,14 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
-                 MutatPerson: OPTIONAL -> MutatPerson;
                  AnlageEigentuemer: OPTIONAL -> Adresse;
                  GrundEigentuemer: OPTIONAL -> Adresse;
                  KontaktPerson: OPTIONAL -> Adresse;
+                mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
+                mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
+                mappedObj.setKontaktPerson(adresse2oid.get(srcObj.getKontaktPerson()));
                  */
                 abwaeinleit2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
@@ -133,7 +141,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 anreicherungsanlage2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.AweNrAfu_Intranet2Pos){
@@ -163,8 +171,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
-                 MutatPerson: OPTIONAL -> MutatPerson;
                  AnlageEigentuemer: OPTIONAL -> Adresse;
                  GrundEigentuemer: OPTIONAL -> Adresse;
                  KontaktPerson: OPTIONAL -> Adresse;
@@ -178,7 +186,11 @@ public class LegacyHydro2kgdm  {
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BgwNrAfu_Intranet5Pos){
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruBewiReg){
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruGSBAoTw){
-                // TODO Beziehung via UUID
+                ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruGSBAoTw srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruGSBAoTw)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.EntbruGSBAoTw_ZsBeZu mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.EntbruGSBAoTw_ZsBeZu(null);
+                mappedObj.setEntbruGUID(srcObj.getEntbruGUID());
+                mappedObj.setGSBAoTw_ZsBeZuGUID(srcObj.getGSBAoTwGUID());
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruGWSZone){
                 // TODO Beziehung via UUID
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruVerZweck){
@@ -194,6 +206,12 @@ public class LegacyHydro2kgdm  {
                 }
                 texte.addTexte(text);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruWasservsg){
+                ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruWasservsg srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruWasservsg)obj;
+                final String mappedObjOid = entnahmebrunnen2oid.get(srcObj.getEntnahmebrunnen());
+                Entnahmebrunnen mappedObj=(Entnahmebrunnen)mappedObjs.get(mappedObjOid);
+                if(assertWasserversorgung(mappedObj,srcObj)){
+                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                 }
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruZsBeZu){
                 // TODO Beziehung via UUID
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Entnahmebrunnen){
@@ -237,9 +255,9 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
                  Pumpenanlage: OPTIONAL -> Pumpenanlage;
-                 MutatPerson: OPTIONAL -> MutatPerson;
                  FassgEigentuemer: OPTIONAL -> Adresse;
                  GrundEigentuemer: OPTIONAL -> Adresse; 
                  KontaktPerson: OPTIONAL -> Adresse;
@@ -259,7 +277,6 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setBewilligungsdatum(LegacyUtil.mapDate(srcObj.getBewilligungsdatum()));
                 mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
-                // TODO Beziehungen
                 fassungseinzugsgebiet2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.GwfNrAfu_Intranet2Pos){
@@ -282,7 +299,7 @@ public class LegacyHydro2kgdm  {
                 String oid=oberflaechengewfassung2oid.get(srcObj.getOberflaechenGewFassung());
                 IomObject destObj=mappedObjs.get(oid);
                 if(!(destObj instanceof OberflaechenGewFassung)) {
-                    logError("unerwartetes Objekt (OberflaechenGewFassung erwartet) "+destObj.toString());
+                    logDelayedError("unerwartetes Objekt (OberflaechenGewFassung erwartet) "+destObj.toString());
                 }else {
                     OberflaechenGewFassung oberflaechengewfassung=(OberflaechenGewFassung)destObj;
                     Texte texte=oberflaechengewfassung.getVerwendungszweck();
@@ -293,6 +310,12 @@ public class LegacyHydro2kgdm  {
                     texte.addTexte(text);
                 }
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasWasservsg){
+                ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasWasservsg srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasWasservsg)obj;
+                final String mappedObjOid = oberflaechengewfassung2oid.get(srcObj.getOberflaechenGewFassung());
+                OberflaechenGewFassung mappedObj=(OberflaechenGewFassung)mappedObjs.get(mappedObjOid);
+                if(assertWasserversorgung(mappedObj,srcObj)){
+                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                 }
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewFsgLeitung){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewFsgLeitung srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewFsgLeitung)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -318,10 +341,10 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
                  OberflGewRohwPW: OPTIONAL -> OberflGewRohwaPW;
                  OberflaechenGewFassung: OPTIONAL -> OberflaechenGewFassung;
-                 MutatPerson: OPTIONAL -> MutatPerson;
                  */
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewRohwaPW){
@@ -350,9 +373,9 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
                  Pumpenanlage: OPTIONAL -> Pumpenanlage;
-                 MutatPerson: OPTIONAL -> MutatPerson;
                  AnlageEigentuemer: OPTIONAL -> Adresse;
                  GrundEigentuemer: OPTIONAL -> Adresse; 
                  KontaktPerson: OPTIONAL -> Adresse;
@@ -400,7 +423,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
                 mappedObj.setGewAbschnittCode(srcObj.getGewAbschnittCode());
                 mappedObj.setGewAbschnittKm(srcObj.getGewAbschnittKm());
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                /*
+                 FassgEigentuemer: OPTIONAL -> Adresse;
+                 GrundEigentuemer: OPTIONAL -> Adresse; 
+                 KontaktPerson: OPTIONAL -> Adresse;
+                 */
                 oberflaechengewfassung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OwfNrAfu_Intranet2Pos){
@@ -442,6 +470,12 @@ public class LegacyHydro2kgdm  {
                 }
                 texte.addTexte(text);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchWasservsg){
+                ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchWasservsg srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchWasservsg)obj;
+                final String mappedObjOid = quellschacht2oid.get(srcObj.getQuellschacht());
+                Quellschacht mappedObj=(Quellschacht)mappedObjs.get(mappedObjOid);
+                if(assertWasserversorgung(mappedObj,srcObj)){
+                    // TODO mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                 }
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchZsBeZu){
                 // TODO Beziehung via UUID
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Quellschacht){
@@ -495,7 +529,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                /*
+                 FassgEigentuemer: OPTIONAL -> Adresse;
+                 GrundEigentuemer: OPTIONAL -> Adresse;
+                 KontaktPerson: OPTIONAL -> Adresse;
+                 */
                 quellschacht2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QwFsgEndpunkt){
@@ -524,7 +563,6 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setSchzGutDatum(LegacyUtil.mapDate(srcObj.getSchzGutDatum()));
                 mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
-                
                 mappedObj.setAuskunftsstelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
@@ -543,9 +581,9 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
                      Quellschacht: OPTIONAL -> Quellschacht;
-                     MutatPerson: OPTIONAL -> MutatPerson;
                      FassgEigentuemer: OPTIONAL -> Adresse;
                      GrundEigentuemer: OPTIONAL -> Adresse;
                      KontaktPerson: OPTIONAL -> Adresse;
@@ -580,7 +618,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Rueckgabebrunnen){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Rueckgabebrunnen srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Rueckgabebrunnen)obj;
@@ -614,7 +652,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                /*
+                 AnlageEigentuemer: OPTIONAL -> Adresse;
+                 GrundEigentuemer: OPTIONAL -> Adresse;
+                 KontaktPerson: OPTIONAL -> Adresse;
+                 */
                 rueckgabebrunnen2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungGwf){
@@ -642,8 +685,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 addMappedObj(mappedObj,srcObj);
+                SammeleinrichtungEntBru sammeleinrichtungEntBru=new SammeleinrichtungEntBru(null);
+                sammeleinrichtungEntBru.setEntnahmebrunnen(entnahmebrunnen2oid.get(srcObj.getEntnahmebrunnen()));
+                sammeleinrichtungEntBru.setSammeleinrichtung(mappedObj.getobjectoid());
+                addCreatedObj(sammeleinrichtungEntBru);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungQwf){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungQwf srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungQwf)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SammeleinrichtungQwf mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SammeleinrichtungQwf(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -676,8 +723,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 addMappedObj(mappedObj,srcObj);
+                SammeleinrichtungQwfQuellschacht sammeleinrichtungQwfQuellschacht=new SammeleinrichtungQwfQuellschacht(null);
+                sammeleinrichtungQwfQuellschacht.setQuellschacht(quellschacht2oid.get(srcObj.getQuellschacht()));
+                sammeleinrichtungQwfQuellschacht.setSammeleinrichtungQwf(mappedObj.getobjectoid());
+                addCreatedObj(sammeleinrichtungQwfQuellschacht);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleit){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleit srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleit)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SaubWaEinleit mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SaubWaEinleit(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -705,8 +756,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
-                 MutatPerson: OPTIONAL -> MutatPerson;
                  AnlageEigentuemer: OPTIONAL -> Adresse;
                  GrundEigentuemer: OPTIONAL -> Adresse;
                  KontaktPerson: OPTIONAL -> Adresse;
@@ -748,7 +799,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
-                // TODO Beziehungen
+                mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                /*
+                     AnlageEigentuemer: OPTIONAL -> Adresse;
+                     GrundEigentuemer: OPTIONAL -> Adresse;
+                     KontaktPerson: OPTIONAL -> Adresse;
+                 */
                 versickerungsanlage2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Verwendungszweck){
@@ -1161,14 +1217,25 @@ public class LegacyHydro2kgdm  {
         }
         throw new IllegalArgumentException("unexpected SammeleinrichtungTyp <"+src+">");
     }
+    private boolean assertWasserversorgung(IomObject mappedObj,IomObject srcObj)
+    {
+        if(mappedObj.getattrvaluecount("Wasserversorgung")>0) {
+            logDelayedError("mehr als eine Wasserversorgung zugeordnet "+mappedObj.getobjectoid()+"; "+srcObj.toString()); 
+            return false;
+        }
+        return true;
+     }
     private void addMappedObj(IomObject mappedObj,IomObject srcObj) {
         String uuid=mappedObj.getobjectoid();
         if(uuid2srcObj.containsKey(uuid)){
-            logError("duplicate UUID "+uuid+"; "+srcObj.toString()+"; "+uuid2srcObj.get(uuid));
+            logDelayedError("duplicate UUID "+uuid+"; "+srcObj.toString()+"; "+uuid2srcObj.get(uuid));
         }else {
             uuid2srcObj.put(uuid, srcObj);
         }
         mappedObjs.put(uuid, mappedObj);
+        events.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
+    }
+    private void addCreatedObj(IomObject mappedObj) {
         events.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
     }
     public IomObject getMappedObject() {
