@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-01-15"  =
+VERSION "2021-01-22"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -44,6 +44,7 @@ VERSION "2021-01-15"  =
                     UebernahmeKoordinaten,        !! <Übernahme Koordinaten, d2>          
                     Planabgriff,                  !! <Planabgriff, d3>
                     konstruktiv,                  !! <konstruktiv, d4>
+                    geschaetzt,
                     unbekannt,                    !! <unbekannt, d5>
                     andere);                      !! <andere, d6>
  
@@ -260,11 +261,11 @@ VERSION "2021-01-15"  =
     CHSurface = SURFACE WITH (STRAIGHTS) VERTEX GeometryCHLV95_V1.Coord2 WITHOUT OVERLAPS > 0.001;  !! analog MGDM
 
 !! Hilfstruktur, um mehrere Texte zu erfassen, z.B. Verwendungszweck. Dateiname kann in QwFsgEndpunkt auch als Assoziation zur Klasse Datei modelliert werden.
-   STRUCTURE HilfsText =
+    STRUCTURE HilfsText =
       Text : TEXT*254;
     END HilfsText;
 
-  STRUCTURE Texte =
+    STRUCTURE Texte =
       Texte: BAG {1..*} OF HilfsText;
     END Texte;
 
@@ -368,7 +369,7 @@ VERSION "2021-01-15"  =
 
 !! Fachobjekte
     CLASS QwFsgEndpunkt EXTENDS Quelle =
-	  ObjektNummer : 1..99999;
+      ObjektNummer : 1..99999;
       PrivatNutzer : TEXT*254;
       ErtragMinAng : ErtragAngaben;
       ErtragMaxAng : ErtragAngaben;
@@ -451,8 +452,9 @@ VERSION "2021-01-15"  =
 
     CLASS Entnahmebrunnen EXTENDS Grundwasserfassung =
       EntnahmebrunnenTyp : MANDATORY EntnahmebrunnenTyp;
-	  TextTyp : TextTyp;
-	  ObjNrAfu : TEXT*50;
+      Notbrunnen : BOOLEAN;
+      TextTyp : TextTyp;
+      ObjNrAfu : TEXT*50;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
       TiefeTerrAbstich: 0.00 .. 999.99;   !! in [m]
@@ -878,12 +880,12 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION KontaktPerson =
       Adresse -- {1} Adresse;
-      Grundlage -- {0..*} Grundlage;
+      KontaktPerson -- {0..*} Grundlage;
     END KontaktPerson;
 
     ASSOCIATION QwFsgEndpunktQuellschacht =
       QwFsgEndpunkt -- {0..*} QwFsgEndpunkt;
-      Quellschacht -- {0..*} Quellschacht;
+      Quellschacht -- {0..1} Quellschacht;
     END QwFsgEndpunktQuellschacht;
 
     ASSOCIATION QwFsgEndpunktMutatPerson =
@@ -893,17 +895,17 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION QwFsgEndpunktAnlageEigentuemer =
       QwFsgEndpunkt1 -- {0..*} QwFsgEndpunkt;
-      Adresse1 -- {0..1} Adresse;
+      FassungsEigentuemer -- {0..1} Adresse;
     END QwFsgEndpunktAnlageEigentuemer;
 
     ASSOCIATION QwFsgEndpunktGrundEigentuemer =
       QwFsgEndpunkt2 -- {0..*} QwFsgEndpunkt;
-      Adresse2 -- {0..1} Adresse;
+      GrundEigentuemer -- {0..1} Adresse;
     END QwFsgEndpunktGrundEigentuemer;
 
     ASSOCIATION QwFsgEndpunktKontaktPerson =
       QwFsgEndpunkt -- {0..*} QwFsgEndpunkt;
-      Adresse -- {0..1} Adresse;
+      KontaktPerson -- {0..1} Adresse;
     END QwFsgEndpunktKontaktPerson;
 
     ASSOCIATION QuellScha_SaSchaText =
@@ -915,6 +917,21 @@ VERSION "2021-01-15"  =
       Quell_Sammelschacht -- {0..*} Quellschacht;
       MutatPerson -- {0..1} MutatPerson;
     END QuellSchaSaSchaMutatPerson;
+
+    ASSOCIATION QuellschachtFassEigentuemer =
+      Quellschacht -- {0..*} Quellschacht;
+      FassungsEigentuemer -- {0..1} Adresse;
+    END QuellschachtFassEigentuemer;
+	
+    ASSOCIATION QuellschachtGrundEigentuemer =
+      Quellschacht1 -- {0..*} Quellschacht;
+      GrundEigentuemer -- {0..1} Adresse;
+    END QuellschachtGrundEigentuemer;
+
+    ASSOCIATION QuellschachtKontaktPerson =
+      Quellschacht2 -- {0..*} Quellschacht;
+      KontaktPerson -- {0..1} Adresse;
+    END QuellschachtKontaktPerson;
 
     ASSOCIATION QueSchaSaScha =
       Sammelschacht -- {0..*} Sammelschacht;
@@ -931,10 +948,10 @@ VERSION "2021-01-15"  =
       Grundlage -- {1} Grundlage;
     END SaSchaGrundlage;
 
-    ASSOCIATION SaSchaWasservsg =
-      Sammelschacht -- {0..*} Sammelschacht;
-      Wasserversorgung -- {1} Wasserversorgung;
-    END SaSchaWasservsg;
+    ASSOCIATION QuellSchaWasservsg =
+      Quellschacht -- {0..*} Quellschacht;
+      Wasserversorgung -- {1..*} Wasserversorgung;
+    END QuellSchaWasservsg;
 
     ASSOCIATION EntbruDatei =
       Entnahmebrunnen -- {1} Entnahmebrunnen;
@@ -956,10 +973,30 @@ VERSION "2021-01-15"  =
       IntranetPos -- {0..*} IntranetPos;
     END EntbruText;
 
+    ASSOCIATION EntbruFassEigentuemer =
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+      FassungsEigentuemer -- {0..1} Adresse;
+    END EntbruFassEigentuemer;
+	
+    ASSOCIATION EntbruGrundEigentuemer =
+      Entnahmebrunnen1 -- {0..*} Entnahmebrunnen;
+      GrundEigentuemer -- {0..1} Adresse;
+    END EntbruGrundEigentuemer;
+
+    ASSOCIATION EntbruKontaktPerson =
+      Entnahmebrunnen2 -- {0..*} Entnahmebrunnen;
+      KontaktPerson -- {0..1} Adresse;
+    END EntbruKontaktPerson;
+
     ASSOCIATION EntbruWasservsg =
       Entnahmebrunnen -- {0..*} Entnahmebrunnen;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END EntbruWasservsg;
+
+    ASSOCIATION OberflGewFassungOberflGewRohwaPW =
+      OberflaechenGewFassung -- {0..*} OberflaechenGewFassung;
+      OberflGewRohwaPW -- {1} OberflGewRohwaPW;
+    END OberflGewFassungOberflGewRohwaPW;
 
     ASSOCIATION OberflGewFassungTiefeText =
       OberflGewFassung -- {0..1} OberflaechenGewFassung;
@@ -968,7 +1005,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION ObFasWasservsg =
       OberflGewFassung -- {0..*} OberflaechenGewFassung;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END ObFasWasservsg;
 
     ASSOCIATION ObFasBewiReg =
@@ -985,6 +1022,21 @@ VERSION "2021-01-15"  =
       OberflGewFassung -- {0..*} OberflaechenGewFassung;
       MutatPerson -- {0..1} MutatPerson;
     END ObFasMutatPerson;
+
+    ASSOCIATION OberflGewFassungFassEigentuemer =
+      OberflaechenGewFassung -- {0..*} OberflaechenGewFassung;
+      FassungsEigentuemer -- {0..1} Adresse;
+    END OberflGewFassungFassEigentuemer;
+	
+    ASSOCIATION OberflGewFassungGrundEigentuemer =
+      OberflaechenGewFassung1 -- {0..*} OberflaechenGewFassung;
+      GrundEigentuemer -- {0..1} Adresse;
+    END OberflGewFassungGrundEigentuemer;
+
+    ASSOCIATION OberflGewFassungKontaktPerson =
+      EOberflaechenGewFassung2 -- {0..*} OberflaechenGewFassung;
+      KontaktPerson -- {0..1} Adresse;
+    END OberflGewFassungKontaktPerson;
 
     ASSOCIATION FoerderanlageDatei =
       Foerderanlage -- {1} Foerderanlage;
@@ -1008,7 +1060,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION FoerderanlageWasservsg =
       Foerderanlage -- {0..*} Foerderanlage;
-      Wasserversorgung -- {0..1} Wasserversorgung;
+      Wasserversorgung -- {0..*} Wasserversorgung;
     END FoerderanlageWasservsg;
 
     ASSOCIATION QueSchaFoerderanlage =
@@ -1048,7 +1100,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION ResWasservsg =
       Reservoir -- {0..*} Reservoir;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END ResWasservsg;
 
     ASSOCIATION Stufenpumpwerk =
@@ -1078,7 +1130,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION WeitereAnlageWasservsg =
       WeitereAnlage -- {0..*} WeitereAnlage;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END WeitereAnlageWasservsg;
 
     ASSOCIATION WeitereAnlageText =
@@ -1096,6 +1148,16 @@ VERSION "2021-01-15"  =
       Aufbereitungswerk -- {0..*} Aufbereitungswerk;
     END FoerderanlageAufbereitungswerk;
 
+    ASSOCIATION LeitOberflGewRohwaPW =
+      Leitung -- {0..*} Leitung;
+      OberflGewRohwaPW -- {1} OberflGewRohwaPW;
+    END LeitOberflGewRohwaPW;
+
+    ASSOCIATION LeitOberflaechenGewFassung =
+      Leitung -- {0..*} Leitung;
+      OberflaechenGewFassung -- {0..*} OberflaechenGewFassung;
+    END LeitOberflaechenGewFassung;
+
     ASSOCIATION LeitMutatPerson =
       Leitung -- {0..*} Leitung;
       MutatPerson -- {0..1} MutatPerson;
@@ -1108,7 +1170,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION LeitWasservsg =
       Leitung -- {0..*} Leitung;
-      Wasserversorgung -- {0..1} Wasserversorgung;
+      Wasserversorgung -- {0..*} Wasserversorgung;
     END LeitWasservsg;
 
     ASSOCIATION LeitGrundlage =
@@ -1122,8 +1184,8 @@ VERSION "2021-01-15"  =
     END AnranlDatei;
 
     ASSOCIATION AnranlWasservsg =
-      Anreicherungsanlage -- {0..*} Anreicherungsanlage;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Anreicherungsanlage -- {1..*} Anreicherungsanlage;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END AnranlWasservsg;
 
     ASSOCIATION AnreicherungsanlageMutatPerson =
@@ -1138,12 +1200,12 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION FassgebWasservsg =
       Fassungseinzugsgebiet -- {0..*} Fassungseinzugsgebiet;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END FassgebWasservsg;
 
     ASSOCIATION RueBruAnlageEigentuemer =
       Rueckgabebrunnen1 -- {0..*} Rueckgabebrunnen;
-      Adresse1 -- {0..1} Adresse;
+      AnlageEigentuemer -- {0..1} Adresse;
     END RueBruAnlageEigentuemer;
 
     ASSOCIATION RueBruBewiReg =
@@ -1158,12 +1220,12 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION RueBruGrundEigentuemer =
       Rueckgabebrunnen2 -- {0..*} Rueckgabebrunnen;
-      Adresse2 -- {0..1} Adresse;
+      GrundEigentuemer -- {0..1} Adresse;
     END RueBruGrundEigentuemer;
 
     ASSOCIATION RueBruKontaktPerson =
       Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
-      Adresse -- {0..1} Adresse;
+      KontaktPerson -- {0..1} Adresse;
     END RueBruKontaktPerson;
 
     ASSOCIATION RueBruMutatPerson =
@@ -1183,7 +1245,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION SammeleinrichtungQwfQuellschacht =
       SammeleinrichtungQwf -- {0..*} SammeleinrichtungQwf;
-      Quellschacht -- {0..*} Quellschacht;
+      Quellschacht -- {0..1} Quellschacht;
     END SammeleinrichtungQwfQuellschacht;
 
     ASSOCIATION VerNrAfuIntranetPos =
@@ -1198,17 +1260,17 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION VersickerungsanlageAnlageEigentuemer =
       Versickerungsanlage1 -- {0..*} Versickerungsanlage;
-      Adresse1 -- {0..1} Adresse;
+      AnlageEigentuemer -- {0..1} Adresse;
     END VersickerungsanlageAnlageEigentuemer;
 
     ASSOCIATION VersickerungsanlageGrundEigentuemer =
       Versickerungsanlage2 -- {0..*} Versickerungsanlage;
-      Adresse2 -- {0..1} Adresse;
+      GrundEigentuemer -- {0..1} Adresse;
     END VersickerungsanlageGrundEigentuemer;
 
     ASSOCIATION VersickerungsanlageKontaktPerson =
       Versickerungsanlage -- {0..*} Versickerungsanlage;
-      Adresse -- {0..1} Adresse;
+      KontaktPerson -- {0..1} Adresse;
     END VersickerungsanlageKontaktPerson;
 
     ASSOCIATION VersickerungsanlageMutatPerson =
@@ -1223,12 +1285,12 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION VersiWasservsg =
       Versickerungsanlage -- {0..*} Versickerungsanlage;
-      Wasserversorgung -- {1} Wasserversorgung;
+      Wasserversorgung -- {1..*} Wasserversorgung;
     END VersiWasservsg;
 
     ASSOCIATION BautenGWAnlageEigentuemer =
       BautenGW1 -- {0..*} BautenGW;
-      Adresse1 -- {0..1} Adresse;
+      AnlageEigentuemer -- {0..1} Adresse;
     END BautenGWAnlageEigentuemer;
 
     ASSOCIATION BautenGWBewiReg =
@@ -1243,12 +1305,12 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION BautenGWGrundEigentuemer =
       BautenGW2 -- {0..*} BautenGW;
-      Adresse2 -- {0..1} Adresse;
+      GrundEigentuemer -- {0..1} Adresse;
     END BautenGWGrundEigentuemer;
 
     ASSOCIATION BautenGWKontakPerson =
       BautenGW -- {0..*} BautenGW;
-      Adresse -- {0..1} Adresse;
+      KontakPerson -- {0..1} Adresse;
     END BautenGWKontakPerson;
 
     ASSOCIATION BautenGWMutatPerson =
@@ -1263,7 +1325,7 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION EinleitAnlageEigentuemer =
       Einleit1 -- {0..*} Einleit;
-      Adresse1 -- {0..1} Adresse;
+      AnlageEigentuemer -- {0..1} Adresse;
     END EinleitAnlageEigentuemer;
 
     ASSOCIATION EinleitBewiReg =
@@ -1278,12 +1340,12 @@ VERSION "2021-01-15"  =
 
     ASSOCIATION EinleitGrundEigentuemer =
       Einleit2 -- {0..*} Einleit;
-      Adresse2 -- {0..1} Adresse;
+      GrundEigentuemer -- {0..1} Adresse;
     END EinleitGrundEigentuemer;
 
     ASSOCIATION EinleitKontaktPerson =
       Einleit -- {0..*} Einleit;
-      Adresse -- {0..1} Adresse;
+      KontaktPerson -- {0..1} Adresse;
     END EinleitKontaktPerson;
 
     ASSOCIATION EinleitMutatPerson =
@@ -1302,77 +1364,70 @@ VERSION "2021-01-15"  =
     END QwfMenge_Karte25;
 
     ASSOCIATION Pumpe_PumpenAnlage =
-      PumpenAnlage -- {0..*} Pumpenanlage;
+      PumpenAnlage -- {1} Pumpenanlage;
       Pumpe -- {1..*} Pumpe;
     END Pumpe_PumpenAnlage;
 
     ASSOCIATION Pumpe_EntBru =
       Pumpe -- {0..*} Pumpe;
-      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
+      Entnahmebrunnen -- {0..1} Entnahmebrunnen;
     END Pumpe_EntBru;
 
     ASSOCIATION Pumpe_OberflGewRohwaPW =
       Pumpe -- {0..*} Pumpe;
-      OberflGewRohwaPW -- {1..*} OberflGewRohwaPW;
+      OberflGewRohwaPW -- {0..1} OberflGewRohwaPW;
     END Pumpe_OberflGewRohwaPW;
 
 !! Assoziationen zu Tabellen in Planerischem Gewässerschutz
     ASSOCIATION EntbruGSBAoTw_ZsBeZu =
-      EntbruGUID -- {0..*} Entnahmebrunnen;
-      GSBAoTw_ZsBeZuGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+      Entbru -- {0..*} Entnahmebrunnen;
+      GSBAoTw_ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
     END EntbruGSBAoTw_ZsBeZu;
 
     ASSOCIATION EntbruGWSZone =
-      EntbruGUID -- {0..*} Entnahmebrunnen;
-      GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
+      Entbru -- {0..*} Entnahmebrunnen;
+      GWSZone (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
     END EntbruGWSZone;
 
     ASSOCIATION ObFasGSBAoTw_ZsBeZu =
-      ObFasGUID -- {0..*} OberflaechenGewFassung;
-      GSBAoTw_ZsBeZuGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+      ObFas -- {0..*} OberflaechenGewFassung;
+      GSBAoTw_ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
     END ObFasGSBAoTw_ZsBeZu;
 
     ASSOCIATION ObFasGWSZone =
-      ObFasGUID -- {0..*} OberflaechenGewFassung;
-      GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
+      ObFas -- {0..*} OberflaechenGewFassung;
+      GWSZone (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
     END ObFasGWSZone;
 
     ASSOCIATION QuellSchGSBAoTw_ZsBeZu =
-      QuellSchGUID -- {0..*} Quellschacht;
-      GSBAoTw_ZsBeZuGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+      QuellSch -- {0..*} Quellschacht;
+      GSBAoTw_ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
     END QuellSchGSBAoTw_ZsBeZu;
 
     ASSOCIATION QuellSchGWSZone =
-      QuellSchGUID -- {0..*} Quellschacht;
-      GWSZoneGUID (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
+      QuellSch -- {0..*} Quellschacht;
+      GWSZone (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
     END QuellSchGWSZone;
 
-/*
 !! Objekte der Notversorgung
     CLASS Hydrant =
       SymbolGeo: MANDATORY GeometryCHLV95_V1.Coord2;
       SymbolRot: MANDATORY 0.000 .. 399.999 [Grads];
       Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
       Identifikator : MANDATORY IdentifikatorTyp;
-      Nummer: TEXT*10;		
+      Nummer: TEXT*10;    
       Notversorgung:  Notversorgung;
       MaxDarst : Darstellung; 
       MutatDatum : INTERLIS.XMLDate;
       MutatBemerk: TEXT*254;
-!!      Wasserversorgung: -> Wasserversorgung;
-!!      Grundlage:  -> Grundlage;
-!!      MutatPerson:  -> MutatPerson;
-	  END Hydrant;   
+    END Hydrant;   
 
     CLASS Versorgungsperimeter =
-      Geometrie: CHSurface;		
+      Geometrie: CHSurface;    
       Identifikator : MANDATORY IdentifikatorTyp;
       MaxDarst : Darstellung; 
       MutatDatum : INTERLIS.XMLDate;
       MutatBemerk: TEXT*254;
-!!      Wasserversorgung: -> MANDATORY Wasserversorgung;
-!!      Grundlage: OPTIONAL -> Grundlage;
-!!      MutatPerson: OPTIONAL -> MutatPerson;
     END Versorgungsperimeter;   
 
     CLASS VerPerNameText =
@@ -1382,7 +1437,6 @@ VERSION "2021-01-15"  =
       Hali : HALIGNMENT;
       Vali : VALIGNMENT;
       Size : SizeTyp;
-!!      Versorgungsperimeter: -> MANDATORY Versorgungsperimeter;
     END VerPerNameText;
 
     CLASS Uebergabestelle =
@@ -1390,15 +1444,15 @@ VERSION "2021-01-15"  =
       SymbolRot: MANDATORY 0.000 .. 399.999 [Grads];
       Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
       Identifikator : MANDATORY IdentifikatorTyp;
-      Name: MANDATORY TEXT*50	;
+      Name: MANDATORY TEXT*50  ;
       UebergabeOrt: MANDATORY TEXT*50;
       VerbundNr: MANDATORY 0..99;
-      VerbundArt: MANDATORY VerbundArt;			
-      AusloesungVon: TEXT*255;	
+      VerbundArt: MANDATORY VerbundArt;      
+      AusloesungVon: TEXT*255;  
       PumpeVon: BOOLEAN;
       VerbindungsleitungVon: 0..9999;
-      AusloesungNach: TEXT*255;		
-      PumpeNach: BOOLEAN;	
+      AusloesungNach: TEXT*255;    
+      PumpeNach: BOOLEAN;  
       VerbindungsleitungNach: 0..9999;
       Bemerkung : TEXT*1000;
       Objekt: TEXT*38;
@@ -1406,10 +1460,6 @@ VERSION "2021-01-15"  =
       MaxDarst : Darstellung; 
       MutatDatum : INTERLIS.XMLDate;
       MutatBemerk: TEXT*254;
-!!      LieferungVon: OPTIONAL -> Versorgungsperimeter;		
-!!      LieferungNach: OPTIONAL -> Versorgungsperimeter;	
-!!      Grundlage: OPTIONAL -> Grundlage;
-!!      MutatPerson: OPTIONAL -> MutatPerson;
     END Uebergabestelle;   
 
     CLASS Abgabestelle =
@@ -1423,36 +1473,123 @@ VERSION "2021-01-15"  =
       MaxDarst : Darstellung; 
       MutatDatum : INTERLIS.XMLDate;
       MutatBemerk: TEXT*254;
-!!      Hydrant: OPTIONAL	-> Hydrant;	
-!!     Wasserversorgung: OPTIONAL -> Wasserversorgung;
-!!      Grundlage: OPTIONAL -> Grundlage;	
-!!      MutatPerson: OPTIONAL -> MutatPerson;
     END Abgabestelle;   
 
     CLASS NotLeitung =
-      Geometrie: MANDATORY CHLine;	
+      Geometrie: MANDATORY CHLine;  
       Identifikator : MANDATORY IdentifikatorTyp;
-      Name: TEXT*50	;
+      Name: TEXT*50  ;
       UebergabeOrt: TEXT*50;
-      VerbundNr: 0..99;	
-      AusloesungVon: TEXT*255;	
+      VerbundNr: 0..99;  
+      AusloesungVon: TEXT*255;  
       PumpeVon: BOOLEAN;
       VerbindungsleitungVon: 0..9999;
-      AusloesungNach: TEXT*255;		
-      PumpeNach: BOOLEAN;	
+      AusloesungNach: TEXT*255;    
+      PumpeNach: BOOLEAN;  
       VerbindungsleitungNach: 0..9999;
-      Bemerkung: TEXT*1000;		
+      Bemerkung: TEXT*1000;    
       Objekt: TEXT*38;
       ObjektArt: (Hydrant);
       MaxDarst : Darstellung; 
       MutatDatum : INTERLIS.XMLDate;
       MutatBemerk: TEXT*254;
-!!      LieferungVon: OPTIONAL -> Versorgungsperimeter;		
-!!      LieferungNach: OPTIONAL -> Versorgungsperimeter;
-!!      Grundlage: OPTIONAL -> Grundlage;
-!!      MutatPerson: OPTIONAL -> MutatPerson;
     END NotLeitung;
-*/
+
+    ASSOCIATION HydrantWasservsg =
+      Hydrant -- {0..*} Hydrant;
+      Wasserversorgung -- {1..*} Wasserversorgung;
+    END HydrantWasservsg;
+
+    ASSOCIATION HydrantGrundlage =
+      Hydrant -- {0..*} Hydrant;
+      Grundlage -- {1} Grundlage;
+    END HydrantGrundlage;
+
+    ASSOCIATION HydrantMutatPerson =
+      Hydrant -- {0..*} Hydrant;
+      MutatPerson -- {0..1} MutatPerson;
+    END HydrantMutatPerson;
+
+    ASSOCIATION VersorgungsperimeterWasservsg =
+      Versorgungsperimeter -- {0..*} Versorgungsperimeter;
+      Wasserversorgung -- {1..*} Wasserversorgung;
+    END VersorgungsperimeterWasservsg;
+
+    ASSOCIATION VersorgungsperimeterGrundlage =
+      Versorgungsperimeter -- {0..*} Versorgungsperimeter;
+      Grundlage -- {1} Grundlage;
+    END VersorgungsperimeterGrundlage;
+
+    ASSOCIATION VersorgungsperimeterMutatPerson =
+      Versorgungsperimeter -- {0..*} Versorgungsperimeter;
+      MutatPerson -- {0..1} MutatPerson;
+    END VersorgungsperimeterMutatPerson;
+
+    ASSOCIATION VersorgungsperimeterVerPerNameText =
+      Versorgungsperimeter -- {1} Versorgungsperimeter;
+      VerPerNameText -- {0..*} VerPerNameText;
+    END VersorgungsperimeterVerPerNameText;
+
+    ASSOCIATION UebergabestelleVonVersPeri =
+      Uebergabestelle -- {0..*} Uebergabestelle;
+      LieferungVon -- {0..*} Versorgungsperimeter;
+    END UebergabestelleVonVersPeri;
+
+    ASSOCIATION UebergabestelleNachVersPeri =
+      Uebergabestelle1 -- {0..*} Uebergabestelle;
+      LieferungNach -- {0..*} Versorgungsperimeter;
+    END UebergabestelleNachVersPeri;
+
+    ASSOCIATION UebergabestelleGrundlage =
+      Uebergabestelle -- {0..*} Uebergabestelle;
+      Grundlage -- {1} Grundlage;
+    END UebergabestelleGrundlage;
+
+    ASSOCIATION UebergabestelleMutatPerson =
+      Uebergabestelle -- {0..*} Uebergabestelle;
+      MutatPerson -- {0..1} MutatPerson;
+    END UebergabestelleMutatPerson;
+
+    ASSOCIATION AbgabestelleHydrant =
+      Abgabestelle -- {0..*} Abgabestelle;
+      Hydrant -- {0..1} Hydrant;
+    END AbgabestelleHydrant;
+
+    ASSOCIATION AbgabestelleWasservsg =
+      Abgabestelle -- {0..*} Abgabestelle;
+      Wasserversorgung -- {0..*} Wasserversorgung;
+    END AbgabestelleWasservsg;
+
+    ASSOCIATION AbgabestelleGrundlage =
+      Abgabestelle -- {0..*} Abgabestelle;
+      Grundlage -- {1} Grundlage;
+    END AbgabestelleGrundlage;
+
+    ASSOCIATION AbgabestelleMutatPerson =
+      Abgabestelle -- {0..*} Abgabestelle;
+      MutatPerson -- {0..1} MutatPerson;
+    END AbgabestelleMutatPerson;
+
+    ASSOCIATION NotLeitungVonVersPeri =
+      NotLeitung -- {0..*} NotLeitung;
+      LieferungVon -- {0..*} Versorgungsperimeter;
+    END NotLeitungVonVersPeri;
+
+    ASSOCIATION NotLeitungNachVersPeri =
+      NotLeitung1 -- {0..*} NotLeitung;
+      LieferungNach -- {0..*} Versorgungsperimeter;
+    END NotLeitungNachVersPeri;
+
+    ASSOCIATION NotLeitungGrundlage =
+      NotLeitung -- {0..*} NotLeitung;
+      Grundlage -- {1} Grundlage;
+    END NotLeitungGrundlage;
+
+    ASSOCIATION NotLeitungMutatPerson =
+      NotLeitung -- {0..*} NotLeitung;
+      MutatPerson -- {0..1} MutatPerson;
+    END NotLeitungMutatPerson;
+
    END Wasserversorgung_Zug;
    
   /* Transfermetadaten */
@@ -1465,7 +1602,7 @@ VERSION "2021-01-15"  =
     
     CLASS Datenbestand =
       BehaelterID : INTERLIS.UUIDOID;
-	  Stand : MANDATORY INTERLIS.XMLDate;
+      Stand : MANDATORY INTERLIS.XMLDate;
       Lieferdatum : MANDATORY INTERLIS.XMLDate;
       Bemerkungen : MTEXT;
     END Datenbestand;
