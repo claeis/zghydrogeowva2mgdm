@@ -1,30 +1,30 @@
 package ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug;
-public class ObFasGWSZone extends ch.interlis.iom_j.Iom_jObject
+public class NotLeitungNachVersPeri extends ch.interlis.iom_j.Iom_jObject
 {
-  public final static String tag= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ObFasGWSZone";
-  public ObFasGWSZone(String oid) {
+  public final static String tag= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.NotLeitungNachVersPeri";
+  public NotLeitungNachVersPeri(String oid) {
     super(tag,oid);
   }
   public String getobjecttag() {
     return tag;
   }
-  public final static String tag_ObFas="ObFas";
-  public String getObFas() {
-    ch.interlis.iom.IomObject value=getattrobj("ObFas",0);
+  public final static String tag_NotLeitung1="NotLeitung1";
+  public String getNotLeitung1() {
+    ch.interlis.iom.IomObject value=getattrobj("NotLeitung1",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setObFas(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("ObFas",0);
+  public String setNotLeitung1(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("NotLeitung1",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("ObFas","REF");
+      structvalue=addattrobj("NotLeitung1","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("ObFas",0);
+        deleteattrobj("NotLeitung1",0);
         return oldoid;
       }
     }
@@ -32,23 +32,23 @@ public class ObFasGWSZone extends ch.interlis.iom_j.Iom_jObject
     structvalue.setobjectrefoid(oid);
     return oldoid;
   }
-  public final static String tag_GWSZone="GWSZone";
-  public String getGWSZone() {
-    ch.interlis.iom.IomObject value=getattrobj("GWSZone",0);
+  public final static String tag_LieferungNach="LieferungNach";
+  public String getLieferungNach() {
+    ch.interlis.iom.IomObject value=getattrobj("LieferungNach",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setGWSZone(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("GWSZone",0);
+  public String setLieferungNach(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("LieferungNach",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("GWSZone","REF");
+      structvalue=addattrobj("LieferungNach","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("GWSZone",0);
+        deleteattrobj("LieferungNach",0);
         return oldoid;
       }
     }

@@ -8,23 +8,23 @@ public class EntbruGWSZone extends ch.interlis.iom_j.Iom_jObject
   public String getobjecttag() {
     return tag;
   }
-  public final static String tag_EntbruGUID="EntbruGUID";
-  public String getEntbruGUID() {
-    ch.interlis.iom.IomObject value=getattrobj("EntbruGUID",0);
+  public final static String tag_Entbru="Entbru";
+  public String getEntbru() {
+    ch.interlis.iom.IomObject value=getattrobj("Entbru",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setEntbruGUID(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("EntbruGUID",0);
+  public String setEntbru(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Entbru",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("EntbruGUID","REF");
+      structvalue=addattrobj("Entbru","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("EntbruGUID",0);
+        deleteattrobj("Entbru",0);
         return oldoid;
       }
     }
@@ -32,23 +32,23 @@ public class EntbruGWSZone extends ch.interlis.iom_j.Iom_jObject
     structvalue.setobjectrefoid(oid);
     return oldoid;
   }
-  public final static String tag_GWSZoneGUID="GWSZoneGUID";
-  public String getGWSZoneGUID() {
-    ch.interlis.iom.IomObject value=getattrobj("GWSZoneGUID",0);
+  public final static String tag_GWSZone="GWSZone";
+  public String getGWSZone() {
+    ch.interlis.iom.IomObject value=getattrobj("GWSZone",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setGWSZoneGUID(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("GWSZoneGUID",0);
+  public String setGWSZone(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("GWSZone",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("GWSZoneGUID","REF");
+      structvalue=addattrobj("GWSZone","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("GWSZoneGUID",0);
+        deleteattrobj("GWSZone",0);
         return oldoid;
       }
     }

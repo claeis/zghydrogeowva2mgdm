@@ -8,23 +8,23 @@ public class QuellSchGSBAoTw_ZsBeZu extends ch.interlis.iom_j.Iom_jObject
   public String getobjecttag() {
     return tag;
   }
-  public final static String tag_QuellSchGUID="QuellSchGUID";
-  public String getQuellSchGUID() {
-    ch.interlis.iom.IomObject value=getattrobj("QuellSchGUID",0);
+  public final static String tag_QuellSch="QuellSch";
+  public String getQuellSch() {
+    ch.interlis.iom.IomObject value=getattrobj("QuellSch",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setQuellSchGUID(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("QuellSchGUID",0);
+  public String setQuellSch(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("QuellSch",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("QuellSchGUID","REF");
+      structvalue=addattrobj("QuellSch","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("QuellSchGUID",0);
+        deleteattrobj("QuellSch",0);
         return oldoid;
       }
     }
@@ -32,23 +32,23 @@ public class QuellSchGSBAoTw_ZsBeZu extends ch.interlis.iom_j.Iom_jObject
     structvalue.setobjectrefoid(oid);
     return oldoid;
   }
-  public final static String tag_GSBAoTw_ZsBeZuGUID="GSBAoTw_ZsBeZuGUID";
-  public String getGSBAoTw_ZsBeZuGUID() {
-    ch.interlis.iom.IomObject value=getattrobj("GSBAoTw_ZsBeZuGUID",0);
+  public final static String tag_GSBAoTw_ZsBeZu="GSBAoTw_ZsBeZu";
+  public String getGSBAoTw_ZsBeZu() {
+    ch.interlis.iom.IomObject value=getattrobj("GSBAoTw_ZsBeZu",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setGSBAoTw_ZsBeZuGUID(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("GSBAoTw_ZsBeZuGUID",0);
+  public String setGSBAoTw_ZsBeZu(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("GSBAoTw_ZsBeZu",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("GSBAoTw_ZsBeZuGUID","REF");
+      structvalue=addattrobj("GSBAoTw_ZsBeZu","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("GSBAoTw_ZsBeZuGUID",0);
+        deleteattrobj("GSBAoTw_ZsBeZu",0);
         return oldoid;
       }
     }

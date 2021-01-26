@@ -90,11 +90,10 @@ public class LegacyWva2kgdm  {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrWasservsg)obj;
-                final String mappedObjOid = aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk());
-                Aufbereitungswerk mappedObj=(Aufbereitungswerk)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(null);
+                mappedObj.setWeitereAnlage(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Aufbereitungswerk) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Aufbereitungswerk srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Aufbereitungswerk)obj;
                 Aufbereitungswerk mappedObj=new Aufbereitungswerk(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -126,11 +125,10 @@ public class LegacyWva2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.DruckreWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.DruckreWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.DruckreWasservsg)obj;
-                final String mappedObjOid = druckreduktion2oid.get(srcObj.getDruckreduktion());
-                Druckreduktion mappedObj=(Druckreduktion)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(null);
+                mappedObj.setWeitereAnlage(druckreduktion2oid.get(srcObj.getDruckreduktion()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Druckreduktion) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Druckreduktion srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Druckreduktion)obj;
                 Druckreduktion mappedObj=new Druckreduktion(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -194,9 +192,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
-                /*
-                    KontaktPerson: OPTIONAL -> Adresse;
-                 */
+                mappedObj.setAdresse(adresse2oid.get(srcObj.getKontaktPerson()));
                 grundlage2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Hilfslinie) {
@@ -232,11 +228,10 @@ public class LegacyWva2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidderWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidderWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidderWasservsg)obj;
-                final String mappedObjOid = hydwidder2oid.get(srcObj.getHydWidder());
-                Foerderanlage mappedObj=(Foerderanlage)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageWasservsg(null);
+                mappedObj.setFoerderanlage(hydwidder2oid.get(srcObj.getHydWidder()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Kaliberwechsel) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Kaliberwechsel srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Kaliberwechsel)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -248,7 +243,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGeometrie(symbolGeo);
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
-                mappedObj.setSymbolTyp(mapKaliberTyp(srcObj.getSymbolTyp()));
+                // TODO mappedObj.setSymbolTyp(mapKaliberTyp(srcObj.getSymbolTyp()));
                 mappedObj.setLeitungsart(mapLeitungsArt(srcObj.getLeitungsart()));
                 final ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung notversorgung = mapNotversorgung(srcObj.getNotversorgung());
                 if(notversorgung!=null)mappedObj.setNotversorgung(notversorgung);
@@ -267,11 +262,10 @@ public class LegacyWva2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.KalweWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.KalweWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.KalweWasservsg)obj;
-                final String mappedObjOid = kaliberwechsel2oid.get(srcObj.getKaliberwechsel());
-                WeitereAnlage mappedObj=(WeitereAnlage)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(null);
+                mappedObj.setWeitereAnlage(kaliberwechsel2oid.get(srcObj.getKaliberwechsel()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBrunnen) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBrunnen srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBrunnen)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -318,11 +312,10 @@ public class LegacyWva2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBruWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBruWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBruWasservsg)obj;
-                final String mappedObjOid = laufbrunnen2oid.get(srcObj.getLaufBrunnen());
-                WeitereAnlage mappedObj=(WeitereAnlage)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(null);
+                mappedObj.setWeitereAnlage(laufbrunnen2oid.get(srcObj.getLaufBrunnen()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LeitungsnetzWV) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LeitungsnetzWV srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LeitungsnetzWV)obj;
                 String guid = srcObj.getGUID();
@@ -415,12 +408,13 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                /*
-                  Aufbereitungswerk: OPTIONAL -> Aufbereitungswerk;
-                 */
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewrohwapw2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
+                FoerderanlageAufbereitungswerk foerderanlageAufbereitungswerk=new FoerderanlageAufbereitungswerk(null);
+                foerderanlageAufbereitungswerk.setAufbereitungswerk(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
+                foerderanlageAufbereitungswerk.setFoerderanlage(mappedObj.getobjectoid());
+                addCreatedObj(foerderanlageAufbereitungswerk);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ObflGewFsgTiefeText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWFoeMenge) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText) {
@@ -429,11 +423,10 @@ public class LegacyWva2kgdm  {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData3Text) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWWasservsg)obj;
-                final String mappedObjOid = pumpwerk2oid.get(srcObj.getPumpwerk());
-                Foerderanlage mappedObj=(Foerderanlage)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageWasservsg(null);
+                mappedObj.setFoerderanlage(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Pumpwerk) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Pumpwerk srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Pumpwerk)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -493,11 +486,10 @@ public class LegacyWva2kgdm  {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData2Text) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWWasservsg)obj;
-                final String mappedObjOid = reinwasserpw2oid.get(srcObj.getReinwasserPW());
-                Foerderanlage mappedObj=(Foerderanlage)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageWasservsg(null);
+                mappedObj.setFoerderanlage(reinwasserpw2oid.get(srcObj.getReinwasserPW()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwasserPW) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwasserPW srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwasserPW)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -523,22 +515,22 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                /*
-                      Aufbereitungswerk: OPTIONAL -> Aufbereitungswerk;
-                 */
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 reinwasserpw2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
+                FoerderanlageAufbereitungswerk foerderanlageAufbereitungswerk=new FoerderanlageAufbereitungswerk(null);
+                foerderanlageAufbereitungswerk.setAufbereitungswerk(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
+                foerderanlageAufbereitungswerk.setFoerderanlage(mappedObj.getobjectoid());
+                addCreatedObj(foerderanlageAufbereitungswerk);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResNameText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResTechDataText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResWasservsg)obj;
-                final String mappedObjOid = reservoir2oid.get(srcObj.getReservoir());
-                Reservoir mappedObj=(Reservoir)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ResWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ResWasservsg(null);
+                mappedObj.setReservoir(reservoir2oid.get(srcObj.getReservoir()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Reservoir) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Reservoir srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Reservoir)obj;
                 String guid = srcObj.getGUID();
@@ -607,11 +599,10 @@ public class LegacyWva2kgdm  {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaNameText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaWasservsg)obj;
-                final String mappedObjOid = sammelschacht2oid.get(srcObj.getSammelschacht());
-                Sammelschacht mappedObj=(Sammelschacht)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchaWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchaWasservsg(null);
+                mappedObj.setQuellschacht(sammelschacht2oid.get(srcObj.getSammelschacht()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Sammelschacht) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Sammelschacht srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Sammelschacht)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammelschacht mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammelschacht(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -638,11 +629,10 @@ public class LegacyWva2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SchiSchaWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SchiSchaWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SchiSchaWasservsg)obj;
-                final String mappedObjOid = schieberschacht2oid.get(srcObj.getSchieberschacht());
-                Schieberschacht mappedObj=(Schieberschacht)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(null);
+                mappedObj.setWeitereAnlage(schieberschacht2oid.get(srcObj.getSchieberschacht()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Schieberschacht) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Schieberschacht srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Schieberschacht)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Schieberschacht mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Schieberschacht(LegacyUtil.stripUUID(srcObj.getGUID()));
@@ -697,20 +687,18 @@ public class LegacyWva2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbineWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbineWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbineWasservsg)obj;
-                final String mappedObjOid = twturbine2oid.get(srcObj.getTWTurbine());
-                TWTurbine mappedObj=(TWTurbine)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                    mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                 }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(null);
+                mappedObj.setWeitereAnlage(twturbine2oid.get(srcObj.getTWTurbine()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbnineNameText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitWasservsg) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitWasservsg)obj;
-                final String mappedObjOid = leitungsnetzwv2oid.get(srcObj.getLeitungsnetzWV());
-                Leitung mappedObj=(Leitung)mappedObjs.get(mappedObjOid);
-                if(assertWasserversorgung(mappedObj,srcObj)){
-                   mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
-                }
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitWasservsg(null);
+                mappedObj.setLeitung(leitungsnetzwv2oid.get(srcObj.getLeitungsnetzWV()));
+                mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Wasserversorgung) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Wasserversorgung srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Wasserversorgung)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Wasserversorgung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Wasserversorgung(java.util.UUID.randomUUID().toString());
@@ -743,23 +731,22 @@ public class LegacyWva2kgdm  {
         }
         
     }
-    private boolean assertWasserversorgung(IomObject mappedObj,IomObject srcObj)
-    {
-        if(mappedObj.getattrvaluecount("Wasserversorgung")>0) {
-            logError("mehr als eine Wasserversorgung zugeordnet "+srcObj.toString()); 
-            return false;
-        }
-        return true;
-     }
+    private void addCreatedObj(IomObject mappedObj) {
+        events.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
+    }
     
     private void addMappedObj(IomObject mappedObj,IomObject srcObj) {
         String uuid=mappedObj.getobjectoid();
-        if(uuid2srcObj.containsKey(uuid)){
-            logError("duplicate UUID "+uuid+"; "+srcObj.toString()+"; "+uuid2srcObj.get(uuid));
+        if(uuid==null) {
+            // link obj
         }else {
-            uuid2srcObj.put(uuid, srcObj);
+            if(uuid2srcObj.containsKey(uuid)){
+                logDelayedError("duplicate UUID "+uuid+"; "+srcObj.toString()+"; "+uuid2srcObj.get(uuid));
+            }else {
+                uuid2srcObj.put(uuid, srcObj);
+            }
+            mappedObjs.put(uuid, mappedObj);
         }
-        mappedObjs.put(uuid, mappedObj);
         events.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
     }
     

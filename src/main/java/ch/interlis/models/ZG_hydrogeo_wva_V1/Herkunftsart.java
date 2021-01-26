@@ -20,6 +20,8 @@ public class Herkunftsart{
   public final static String tag_Planabgriff="Planabgriff";
   static public Herkunftsart konstruktiv=new Herkunftsart("konstruktiv");
   public final static String tag_konstruktiv="konstruktiv";
+  static public Herkunftsart geschaetzt=new Herkunftsart("geschaetzt");
+  public final static String tag_geschaetzt="geschaetzt";
   static public Herkunftsart unbekannt=new Herkunftsart("unbekannt");
   public final static String tag_unbekannt="unbekannt";
   static public Herkunftsart andere=new Herkunftsart("andere");

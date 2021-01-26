@@ -287,23 +287,23 @@ public class Rueckgabebrunnen extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("KontaktDatum");return;}
     setattrvalue("KontaktDatum", value);
   }
-  public final static String tag_Adresse="Adresse";
-  public String getAdresse() {
-    ch.interlis.iom.IomObject value=getattrobj("Adresse",0);
+  public final static String tag_AnlageEigentuemer="AnlageEigentuemer";
+  public String getAnlageEigentuemer() {
+    ch.interlis.iom.IomObject value=getattrobj("AnlageEigentuemer",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setAdresse(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse",0);
+  public String setAnlageEigentuemer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("AnlageEigentuemer",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("Adresse","REF");
+      structvalue=addattrobj("AnlageEigentuemer","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("Adresse",0);
+        deleteattrobj("AnlageEigentuemer",0);
         return oldoid;
       }
     }
@@ -311,23 +311,23 @@ public class Rueckgabebrunnen extends ch.interlis.iom_j.Iom_jObject
     structvalue.setobjectrefoid(oid);
     return oldoid;
   }
-  public final static String tag_Adresse1="Adresse1";
-  public String getAdresse1() {
-    ch.interlis.iom.IomObject value=getattrobj("Adresse1",0);
+  public final static String tag_GrundEigentuemer="GrundEigentuemer";
+  public String getGrundEigentuemer() {
+    ch.interlis.iom.IomObject value=getattrobj("GrundEigentuemer",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setAdresse1(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse1",0);
+  public String setGrundEigentuemer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("GrundEigentuemer",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("Adresse1","REF");
+      structvalue=addattrobj("GrundEigentuemer","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("Adresse1",0);
+        deleteattrobj("GrundEigentuemer",0);
         return oldoid;
       }
     }
@@ -335,23 +335,23 @@ public class Rueckgabebrunnen extends ch.interlis.iom_j.Iom_jObject
     structvalue.setobjectrefoid(oid);
     return oldoid;
   }
-  public final static String tag_Adresse2="Adresse2";
-  public String getAdresse2() {
-    ch.interlis.iom.IomObject value=getattrobj("Adresse2",0);
+  public final static String tag_KontaktPerson="KontaktPerson";
+  public String getKontaktPerson() {
+    ch.interlis.iom.IomObject value=getattrobj("KontaktPerson",0);
     if(value==null)return null;
     String oid=value.getobjectrefoid();
     if(oid==null)return null;
     return oid;
   }
-  public String setAdresse2(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("Adresse2",0);
+  public String setKontaktPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("KontaktPerson",0);
     if(structvalue==null){
       if(oid==null)return null;
-      structvalue=addattrobj("Adresse2","REF");
+      structvalue=addattrobj("KontaktPerson","REF");
     }else{
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("Adresse2",0);
+        deleteattrobj("KontaktPerson",0);
         return oldoid;
       }
     }

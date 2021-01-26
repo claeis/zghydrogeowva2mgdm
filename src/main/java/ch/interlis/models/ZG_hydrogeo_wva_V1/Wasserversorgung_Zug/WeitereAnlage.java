@@ -54,14 +54,14 @@ public class WeitereAnlage extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     setattrvalue("Farbe", ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.toXmlCode(value));
   }
   public final static String tag_SymbolTyp="SymbolTyp";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp getSymbolTyp() {
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.KaliberTyp getSymbolTyp() {
     if(getattrvaluecount("SymbolTyp")==0)return null;
     String value=getattrvalue("SymbolTyp");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp.parseXmlCode(value);
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.KaliberTyp.parseXmlCode(value);
   }
-  public void setSymbolTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp value) {
+  public void setSymbolTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.KaliberTyp value) {
     if(value==null){setattrundefined("SymbolTyp");return;}
-    setattrvalue("SymbolTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.ResSymbTyp.toXmlCode(value));
+    setattrvalue("SymbolTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.KaliberTyp.toXmlCode(value));
   }
   public final static String tag_Leitungsart="Leitungsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt getLeitungsart() {
@@ -204,30 +204,6 @@ public class WeitereAnlage extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
       if(oid==null){
         String oldoid=structvalue.getobjectrefoid();
         deleteattrobj("MutatPerson",0);
-        return oldoid;
-      }
-    }
-    String oldoid=structvalue.getobjectrefoid();
-    structvalue.setobjectrefoid(oid);
-    return oldoid;
-  }
-  public final static String tag_Wasserversorgung="Wasserversorgung";
-  public String getWasserversorgung() {
-    ch.interlis.iom.IomObject value=getattrobj("Wasserversorgung",0);
-    if(value==null)return null;
-    String oid=value.getobjectrefoid();
-    if(oid==null)return null;
-    return oid;
-  }
-  public String setWasserversorgung(String oid) {
-    ch.interlis.iom.IomObject structvalue=getattrobj("Wasserversorgung",0);
-    if(structvalue==null){
-      if(oid==null)return null;
-      structvalue=addattrobj("Wasserversorgung","REF");
-    }else{
-      if(oid==null){
-        String oldoid=structvalue.getobjectrefoid();
-        deleteattrobj("Wasserversorgung",0);
         return oldoid;
       }
     }
