@@ -146,4 +146,76 @@ public class OberflGewRohwaPW extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wass
     if(value==null){setattrundefined("KontaktDatum");return;}
     setattrvalue("KontaktDatum", value);
   }
+  public final static String tag_AnlageEigentuemer="AnlageEigentuemer";
+  public String getAnlageEigentuemer() {
+    ch.interlis.iom.IomObject value=getattrobj("AnlageEigentuemer",0);
+    if(value==null)return null;
+    String oid=value.getobjectrefoid();
+    if(oid==null)return null;
+    return oid;
+  }
+  public String setAnlageEigentuemer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("AnlageEigentuemer",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("AnlageEigentuemer","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("AnlageEigentuemer",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
+    structvalue.setobjectrefoid(oid);
+    return oldoid;
+  }
+  public final static String tag_GrundEigentuemer="GrundEigentuemer";
+  public String getGrundEigentuemer() {
+    ch.interlis.iom.IomObject value=getattrobj("GrundEigentuemer",0);
+    if(value==null)return null;
+    String oid=value.getobjectrefoid();
+    if(oid==null)return null;
+    return oid;
+  }
+  public String setGrundEigentuemer(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("GrundEigentuemer",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("GrundEigentuemer","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("GrundEigentuemer",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
+    structvalue.setobjectrefoid(oid);
+    return oldoid;
+  }
+  public final static String tag_KontaktPerson="KontaktPerson";
+  public String getKontaktPerson() {
+    ch.interlis.iom.IomObject value=getattrobj("KontaktPerson",0);
+    if(value==null)return null;
+    String oid=value.getobjectrefoid();
+    if(oid==null)return null;
+    return oid;
+  }
+  public String setKontaktPerson(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("KontaktPerson",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("KontaktPerson","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("KontaktPerson",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
+    structvalue.setobjectrefoid(oid);
+    return oldoid;
+  }
 }

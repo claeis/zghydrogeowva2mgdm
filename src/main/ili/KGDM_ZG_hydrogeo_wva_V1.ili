@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-01-25"  =
+VERSION "2021-01-26"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -1005,6 +1005,21 @@ VERSION "2021-01-25"  =
       OberflGewRohwaPW -- {1} OberflGewRohwaPW;
     END OberflGewFassungOberflGewRohwaPW;
 
+    ASSOCIATION OberflGewRohwaPWAnlageEigentuemer =
+      OberflGewRohwaPW1 -- {0..*} OberflGewRohwaPW;
+      AnlageEigentuemer -- {0..1} Adresse;
+    END OberflGewRohwaPWAnlageEigentuemer;
+
+    ASSOCIATION OberflGewRohwaPWGrundEigentuemer =
+      OberflGewRohwaPW2 -- {0..*} OberflGewRohwaPW;
+      GrundEigentuemer -- {0..1} Adresse;
+    END OberflGewRohwaPWGrundEigentuemer;
+
+    ASSOCIATION OberflGewRohwaPWKontaktPerson =
+      OberflGewRohwaPW -- {0..*} OberflGewRohwaPW;
+      KontaktPerson -- {0..1} Adresse;
+    END OberflGewRohwaPWKontaktPerson;
+
     ASSOCIATION OberflGewFassungTiefeText =
       OberflGewFassung -- {0..1} OberflaechenGewFassung;
       TextPos -- {0..*} TextPos;
@@ -1315,10 +1330,10 @@ VERSION "2021-01-25"  =
       GrundEigentuemer -- {0..1} Adresse;
     END BautenGWGrundEigentuemer;
 
-    ASSOCIATION BautenGWKontakPerson =
+    ASSOCIATION BautenGWKontaktPerson =
       BautenGW -- {0..*} BautenGW;
       KontakPerson -- {0..1} Adresse;
-    END BautenGWKontakPerson;
+    END BautenGWKontaktPerson;
 
     ASSOCIATION BautenGWMutatPerson =
       BautenGW -- {0..*} BautenGW;
@@ -1375,15 +1390,15 @@ VERSION "2021-01-25"  =
       Pumpe -- {1..*} Pumpe;
     END Pumpe_PumpenAnlage;
 
-    ASSOCIATION Pumpe_EntBru =
-      Pumpe -- {0..*} Pumpe;
+    ASSOCIATION PumpenAnlage_EntBru =
+      PumpenAnlage -- {0..*} Pumpenanlage;
       Entnahmebrunnen -- {0..1} Entnahmebrunnen;
-    END Pumpe_EntBru;
+    END PumpenAnlage_EntBru;
 
-    ASSOCIATION Pumpe_OberflGewRohwaPW =
-      Pumpe -- {0..*} Pumpe;
+    ASSOCIATION PumpenAnlage_OberflGewRohwaPW =
+      PumpenAnlage -- {0..*} Pumpenanlage;
       OberflGewRohwaPW -- {0..1} OberflGewRohwaPW;
-    END Pumpe_OberflGewRohwaPW;
+    END PumpenAnlage_OberflGewRohwaPW;
 
 !! Assoziationen zu Tabellen in Planerischem Gewässerschutz
     ASSOCIATION EntbruGSBAoTw_ZsBeZu =

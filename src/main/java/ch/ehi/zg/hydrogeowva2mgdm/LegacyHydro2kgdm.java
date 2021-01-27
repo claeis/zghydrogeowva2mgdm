@@ -379,13 +379,10 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 /*
                  Pumpenanlage: OPTIONAL -> Pumpenanlage;
-                 AnlageEigentuemer: OPTIONAL -> Adresse;
-                 GrundEigentuemer: OPTIONAL -> Adresse; 
-                 KontaktPerson: OPTIONAL -> Adresse;
+                 */
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
                 mappedObj.setKontaktPerson(adresse2oid.get(srcObj.getKontaktPerson()));
-                 */
                 oberflgewrohwapw2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaechenGewFassung){
@@ -444,9 +441,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setPumpeNummer(srcObj.getPumpeNummer());
                 mappedObj.setFoerdermenge(srcObj.getFoerdermenge());
                 mappedObj.setMotorLeistung(srcObj.getMotorLeistung());
-                /*
-                Pumpenanlage: -> Pumpenanlage;
-                */
+                mappedObj.setPumpenAnlage(pumpanlage2oid.get(srcObj.getPumpenanlage()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Pumpenanlage){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Pumpenanlage srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Pumpenanlage)obj;
@@ -733,11 +728,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
+                mappedObj.setQuellschacht(quellschacht2oid.get(srcObj.getQuellschacht()));
                 addMappedObj(mappedObj,srcObj);
-                SammeleinrichtungQwfQuellschacht sammeleinrichtungQwfQuellschacht=new SammeleinrichtungQwfQuellschacht(null);
-                sammeleinrichtungQwfQuellschacht.setQuellschacht(quellschacht2oid.get(srcObj.getQuellschacht()));
-                sammeleinrichtungQwfQuellschacht.setSammeleinrichtungQwf(mappedObj.getobjectoid());
-                addCreatedObj(sammeleinrichtungQwfQuellschacht);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleit){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleit srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleit)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SaubWaEinleit mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SaubWaEinleit(LegacyUtil.stripUUID(srcObj.getGUID()));
