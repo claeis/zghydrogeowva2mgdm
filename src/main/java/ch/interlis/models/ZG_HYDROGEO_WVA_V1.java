@@ -21,7 +21,6 @@ public class ZG_HYDROGEO_WVA_V1{
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.UebergabestelleNachVersPeri"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.UebergabestelleNachVersPeri(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Hydrant"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Hydrant(oid);
-      if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitOberflaechenGewFassung"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitOberflaechenGewFassung(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageText"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FoerderanlageText(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Wasserversorgung"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Wasserversorgung(oid);
@@ -70,7 +69,6 @@ public class ZG_HYDROGEO_WVA_V1{
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.HilfsText"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.HilfsText();
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ReinwasserPWOberflGewRohwaPW"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ReinwasserPWOberflGewRohwaPW(oid);
-      if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QueSchaLaufbrunnen"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QueSchaLaufbrunnen(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.HydrantWasservsg"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.HydrantWasservsg(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchGWSZone"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchGWSZone(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Versickerungsanlage"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Versickerungsanlage(oid);
@@ -108,7 +106,6 @@ public class ZG_HYDROGEO_WVA_V1{
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.UebergabestelleVonVersPeri"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.UebergabestelleVonVersPeri(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SammeleinrichtungQwf"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.SammeleinrichtungQwf(oid);
       if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Datei"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Datei(oid);
-      if(type.equals("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Stufenpumpwerk"))return new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Stufenpumpwerk(oid);
       return null;
       }
     };
@@ -290,9 +287,7 @@ public class ZG_HYDROGEO_WVA_V1{
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewFassungFassEigentuemer", "OberflGewFassungFassEigentuemer");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewFassungFassEigentuemer", new String[]{  });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitOberflaechenGewFassung", "LeitOberflaechenGewFassung");
-    mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitOberflaechenGewFassung", new String[]{   "Leitung"
-      ,"OberflaechenGewFassung"
-      });
+    mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitOberflaechenGewFassung", new String[]{  });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage", "WeitereAnlage");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage", new String[]{   "Bemerkung"
       ,"Identifikator"
@@ -318,6 +313,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"MutatDatum"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Quellschacht"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitText", "LeitText");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitText", new String[]{  });
@@ -436,6 +432,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"MutatDatum"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Quellschacht"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewFassungKontaktPerson", "OberflGewFassungKontaktPerson");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewFassungKontaktPerson", new String[]{  });
@@ -776,6 +773,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"EinzelFoerdermenge"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Reservoir"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchGSBAoTw_ZsBeZu", "QuellSchGSBAoTw_ZsBeZu");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchGSBAoTw_ZsBeZu", new String[]{   "QuellSch"
@@ -821,6 +819,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Grundlage"
       ,"MutatPerson"
       ,"OberflGewRohwaPW"
+      ,"OberflaechenGewFassung"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitWasservsg", "LeitWasservsg");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitWasservsg", new String[]{   "Leitung"
@@ -887,6 +886,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"EinzelFoerdermenge"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Reservoir"
       ,"EigentumArt"
       ,"Nachfuehrungsstand"
       ,"Auskunftsstelle"
@@ -904,6 +904,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"AnlageEigentuemer"
       ,"GrundEigentuemer"
       ,"KontaktPerson"
+      ,"PumpenAnlage"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.HilfsText", "HilfsText");
     mapping.defineClass("ZG_hydrogeo_wva_V1.HilfsText", new String[]{   "Text"
@@ -919,9 +920,7 @@ public class ZG_HYDROGEO_WVA_V1{
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.EinleitKontaktPerson", "EinleitKontaktPerson");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.EinleitKontaktPerson", new String[]{  });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QueSchaLaufbrunnen", "QueSchaLaufbrunnen");
-    mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QueSchaLaufbrunnen", new String[]{   "Quellschacht"
-      ,"WeitereAnlage"
-      });
+    mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QueSchaLaufbrunnen", new String[]{  });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.HydrantWasservsg", "HydrantWasservsg");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.HydrantWasservsg", new String[]{   "Hydrant"
       ,"Wasserversorgung"
@@ -1005,8 +1004,6 @@ public class ZG_HYDROGEO_WVA_V1{
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Pumpenanlage", new String[]{   "AnzahlPumpen"
       ,"Pumpmenge"
       ,"PumpenBetrieb"
-      ,"Entnahmebrunnen"
-      ,"OberflGewRohwaPW"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.VersorgungsperimeterGrundlage", "VersorgungsperimeterGrundlage");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.VersorgungsperimeterGrundlage", new String[]{  });
@@ -1077,6 +1074,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"GrundEigentuemer"
       ,"KontaktPerson"
       ,"MutatPerson"
+      ,"PumpenAnlage"
       });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflaechenGewFassung", "OberflaechenGewFassung");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflaechenGewFassung", new String[]{   "Bemerkung"
@@ -1260,6 +1258,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"MutatDatum"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Quellschacht"
       ,"Baujahr"
       ,"Turbine"
       ,"Durchfluss"
@@ -1409,6 +1408,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"MutatDatum"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Quellschacht"
       ,"Typ"
       ,"Druckeingang"
       ,"Druckausgang"
@@ -1516,6 +1516,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"MutatDatum"
       ,"Grundlage"
       ,"MutatPerson"
+      ,"Quellschacht"
       ,"FilterLeist"
       ,"TextArt"
       });
@@ -1609,9 +1610,7 @@ public class ZG_HYDROGEO_WVA_V1{
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.UebergabestelleGrundlage", "UebergabestelleGrundlage");
     mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.UebergabestelleGrundlage", new String[]{  });
     nameMap.put("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Stufenpumpwerk", "Stufenpumpwerk");
-    mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Stufenpumpwerk", new String[]{   "Reservoir"
-      ,"Foerderanlage"
-      });
+    mapping.defineClass("ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Stufenpumpwerk", new String[]{  });
     mapping.setXtf24nameMapping(nameMap);
     return mapping;
   }

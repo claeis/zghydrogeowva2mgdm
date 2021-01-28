@@ -266,4 +266,28 @@ public class Foerderanlage extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     structvalue.setobjectrefoid(oid);
     return oldoid;
   }
+  public final static String tag_Reservoir="Reservoir";
+  public String getReservoir() {
+    ch.interlis.iom.IomObject value=getattrobj("Reservoir",0);
+    if(value==null)return null;
+    String oid=value.getobjectrefoid();
+    if(oid==null)return null;
+    return oid;
+  }
+  public String setReservoir(String oid) {
+    ch.interlis.iom.IomObject structvalue=getattrobj("Reservoir",0);
+    if(structvalue==null){
+      if(oid==null)return null;
+      structvalue=addattrobj("Reservoir","REF");
+    }else{
+      if(oid==null){
+        String oldoid=structvalue.getobjectrefoid();
+        deleteattrobj("Reservoir",0);
+        return oldoid;
+      }
+    }
+    String oldoid=structvalue.getobjectrefoid();
+    structvalue.setobjectrefoid(oid);
+    return oldoid;
+  }
 }

@@ -115,10 +115,10 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                /*
-                  Reservoir: OPTIONAL -> Reservoir;
-                  neu n:n
-                 */
+                AufbWrkRes aufbWrkRes=new AufbWrkRes(null);
+                aufbWrkRes.setAufbereitungswerk(mappedObj.getobjectoid());
+                aufbWrkRes.setReservoir(reservoir2oid.get(srcObj.getReservoir()));
+                addCreatedObj(aufbWrkRes);
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 aufbereitungswerk2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -471,11 +471,28 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
+                QueSchaSaScha queSchaSaScha=new QueSchaSaScha(null);
+                queSchaSaScha.setQuellschacht(mappedObj.getobjectoid());
+                queSchaSaScha.setSammelschacht(sammelschacht2oid.get(srcObj.getSammelschacht()));
+                addCreatedObj(queSchaSaScha);
+                QueSchaRes queSchaRes=new QueSchaRes(null);
+                queSchaRes.setQuellschacht(mappedObj.getobjectoid());
+                queSchaRes.setReservoir(reservoir2oid.get(srcObj.getReservoir()));
+                addCreatedObj(queSchaRes);
+                {
+                    QueSchaFoerderanlage queSchaFoerderanlage=new QueSchaFoerderanlage(null);
+                    queSchaFoerderanlage.setQuellschacht(mappedObj.getobjectoid());
+                    queSchaFoerderanlage.setFoerderanlage(hydwidder2oid.get(srcObj.getHydWidder()));
+                    addCreatedObj(queSchaFoerderanlage);
+                }
+                {
+                    QueSchaFoerderanlage queSchaFoerderanlage=new QueSchaFoerderanlage(null);
+                    queSchaFoerderanlage.setQuellschacht(mappedObj.getobjectoid());
+                    queSchaFoerderanlage.setFoerderanlage(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                    addCreatedObj(queSchaFoerderanlage);
+                }
+                
                 /*
-                Sammelschacht: OPTIONAL -> Sammelschacht; 
-                Reservoir: OPTIONAL -> Reservoir;
-                HydWidder: OPTIONAL -> HydWidder;
-                Pumpwerk: OPTIONAL -> Pumpwerk;
                 LaufBrunnen: OPTIONAL -> LaufBrunnen;
                 */
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));

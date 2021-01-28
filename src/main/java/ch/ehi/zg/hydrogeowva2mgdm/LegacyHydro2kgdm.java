@@ -256,9 +256,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
-                /*
-                 Pumpenanlage: OPTIONAL -> Pumpenanlage;
-                 */
+                mappedObj.setPumpenAnlage(pumpanlage2oid.get(srcObj.getPumpenanlage()));
                 mappedObj.setFassungsEigentuemer(adresse2oid.get(srcObj.getFassgEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
                 mappedObj.setKontaktPerson(adresse2oid.get(srcObj.getKontaktPerson()));
@@ -346,9 +344,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setOberflGewRohwaPW(oberflgewrohwapw2oid.get(srcObj.getOberflGewRohwPW()));
-                /*
-                 OberflaechenGewFassung: OPTIONAL -> OberflaechenGewFassung;
-                 */
+                mappedObj.setOberflaechenGewFassung(oberflaechengewfassung2oid.get(srcObj.getOberflaechenGewFassung()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewRohwaPW){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewRohwaPW srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewRohwaPW)obj;
@@ -377,9 +373,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
                 mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
-                /*
-                 Pumpenanlage: OPTIONAL -> Pumpenanlage;
-                 */
+                mappedObj.setPumpenAnlage(pumpanlage2oid.get(srcObj.getPumpenanlage()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
                 mappedObj.setKontaktPerson(adresse2oid.get(srcObj.getKontaktPerson()));

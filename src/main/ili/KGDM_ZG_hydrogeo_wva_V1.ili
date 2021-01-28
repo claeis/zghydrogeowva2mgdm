@@ -1126,12 +1126,12 @@ VERSION "2021-01-26"  =
     END ResWasservsg;
 
     ASSOCIATION Stufenpumpwerk =
-      Reservoir -- {0..*} Reservoir;
+      Reservoir -- {0..1} Reservoir;
       Foerderanlage -- {0..*} Foerderanlage;
     END Stufenpumpwerk;
 
     ASSOCIATION QueSchaLaufbrunnen =
-      Quellschacht -- {0..*} Quellschacht;
+      Quellschacht -- {0..1} Quellschacht;
       WeitereAnlage -- {0..*} WeitereAnlage;
     END QueSchaLaufbrunnen;
 
@@ -1177,7 +1177,7 @@ VERSION "2021-01-26"  =
 
     ASSOCIATION LeitOberflaechenGewFassung =
       Leitung -- {0..*} Leitung;
-      OberflaechenGewFassung -- {0..*} OberflaechenGewFassung;
+      OberflaechenGewFassung -- {0..1} OberflaechenGewFassung;
     END LeitOberflaechenGewFassung;
 
     ASSOCIATION LeitMutatPerson =
@@ -1391,13 +1391,13 @@ VERSION "2021-01-26"  =
     END Pumpe_PumpenAnlage;
 
     ASSOCIATION PumpenAnlage_EntBru =
-      PumpenAnlage -- {0..*} Pumpenanlage;
-      Entnahmebrunnen -- {0..1} Entnahmebrunnen;
+      PumpenAnlage -- {0..1} Pumpenanlage;
+      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
     END PumpenAnlage_EntBru;
 
     ASSOCIATION PumpenAnlage_OberflGewRohwaPW =
-      PumpenAnlage -- {0..*} Pumpenanlage;
-      OberflGewRohwaPW -- {0..1} OberflGewRohwaPW;
+      PumpenAnlage -- {0..1} Pumpenanlage;
+      OberflGewRohwaPW -- {0..*} OberflGewRohwaPW;
     END PumpenAnlage_OberflGewRohwaPW;
 
 !! Assoziationen zu Tabellen in Planerischem Gewässerschutz
