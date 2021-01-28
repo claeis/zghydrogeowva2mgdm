@@ -491,10 +491,14 @@ public class LegacyWva2kgdm  {
                     queSchaFoerderanlage.setFoerderanlage(pumpwerk2oid.get(srcObj.getPumpwerk()));
                     addCreatedObj(queSchaFoerderanlage);
                 }
-                
-                /*
-                LaufBrunnen: OPTIONAL -> LaufBrunnen;
-                */
+                if(srcObj.getLaufBrunnen()!=null) {
+                    WeitereAnlage laufBrunnen=(WeitereAnlage)mappedObjs.get(laufbrunnen2oid.get(srcObj.getLaufBrunnen()));
+                    if(laufBrunnen.getQuellschacht()!=null) {
+                        logError("Quellschacht "+laufBrunnen.getobjectoid()+": mehr als ein Quelleschacht"+mappedObj.getobjectoid()+","+laufBrunnen.getQuellschacht());
+                    }else {
+                        laufBrunnen.setQuellschacht(mappedObj.getobjectoid());
+                    }
+                }
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 quellschacht2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
@@ -600,9 +604,14 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                /*
-                  Stufenpumpwerk: OPTIONAL -> Pumpwerk;
-                 */
+                if(srcObj.getStufenpumpwerk()!=null) {
+                    Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getStufenpumpwerk()));
+                    if(foerderanlage.getReservoir()!=null) {
+                        logError("Pumpwerk "+foerderanlage.getobjectoid()+": mehr als ein Reservoir "+mappedObj.getobjectoid()+","+foerderanlage.getReservoir());
+                    }else {
+                        foerderanlage.setReservoir(mappedObj.getobjectoid());
+                    }
+                }
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 reservoir2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
