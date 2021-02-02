@@ -115,10 +115,13 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                AufbWrkRes aufbWrkRes=new AufbWrkRes(null);
-                aufbWrkRes.setAufbereitungswerk(mappedObj.getobjectoid());
-                aufbWrkRes.setReservoir(reservoir2oid.get(srcObj.getReservoir()));
-                addCreatedObj(aufbWrkRes);
+                final String reservoirTid = srcObj.getReservoir();
+                if(reservoirTid!=null) {
+                    AufbWrkRes aufbWrkRes=new AufbWrkRes(null);
+                    aufbWrkRes.setAufbereitungswerk(mappedObj.getobjectoid());
+                    aufbWrkRes.setReservoir(reservoir2oid.get(reservoirTid));
+                    addCreatedObj(aufbWrkRes);
+                }
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 aufbereitungswerk2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -411,10 +414,13 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewrohwapw2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
-                FoerderanlageAufbereitungswerk foerderanlageAufbereitungswerk=new FoerderanlageAufbereitungswerk(null);
-                foerderanlageAufbereitungswerk.setAufbereitungswerk(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
-                foerderanlageAufbereitungswerk.setFoerderanlage(mappedObj.getobjectoid());
-                addCreatedObj(foerderanlageAufbereitungswerk);
+                final String aufbereitungswerkTid = srcObj.getAufbereitungswerk();
+                if(aufbereitungswerkTid!=null) {
+                    FoerderanlageAufbereitungswerk foerderanlageAufbereitungswerk=new FoerderanlageAufbereitungswerk(null);
+                    foerderanlageAufbereitungswerk.setAufbereitungswerk(aufbereitungswerk2oid.get(aufbereitungswerkTid));
+                    foerderanlageAufbereitungswerk.setFoerderanlage(mappedObj.getobjectoid());
+                    addCreatedObj(foerderanlageAufbereitungswerk);
+                }
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ObflGewFsgTiefeText) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWFoeMenge) {
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText) {
@@ -471,24 +477,32 @@ public class LegacyWva2kgdm  {
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
-                QueSchaSaScha queSchaSaScha=new QueSchaSaScha(null);
-                queSchaSaScha.setQuellschacht(mappedObj.getobjectoid());
-                queSchaSaScha.setSammelschacht(sammelschacht2oid.get(srcObj.getSammelschacht()));
-                addCreatedObj(queSchaSaScha);
-                QueSchaRes queSchaRes=new QueSchaRes(null);
-                queSchaRes.setQuellschacht(mappedObj.getobjectoid());
-                queSchaRes.setReservoir(reservoir2oid.get(srcObj.getReservoir()));
-                addCreatedObj(queSchaRes);
-                {
+                final String sammelschachtTid = srcObj.getSammelschacht();
+                if(sammelschachtTid!=null) {
+                    QueSchaSaScha queSchaSaScha=new QueSchaSaScha(null);
+                    queSchaSaScha.setQuellschacht(mappedObj.getobjectoid());
+                    queSchaSaScha.setSammelschacht(sammelschacht2oid.get(sammelschachtTid));
+                    addCreatedObj(queSchaSaScha);
+                }
+                final String reservoirTid = srcObj.getReservoir();
+                if(reservoirTid!=null) {
+                    QueSchaRes queSchaRes=new QueSchaRes(null);
+                    queSchaRes.setQuellschacht(mappedObj.getobjectoid());
+                    queSchaRes.setReservoir(reservoir2oid.get(reservoirTid));
+                    addCreatedObj(queSchaRes);
+                }
+                final String hydWidderTid = srcObj.getHydWidder();
+                if(hydWidderTid!=null){
                     QueSchaFoerderanlage queSchaFoerderanlage=new QueSchaFoerderanlage(null);
                     queSchaFoerderanlage.setQuellschacht(mappedObj.getobjectoid());
-                    queSchaFoerderanlage.setFoerderanlage(hydwidder2oid.get(srcObj.getHydWidder()));
+                    queSchaFoerderanlage.setFoerderanlage(hydwidder2oid.get(hydWidderTid));
                     addCreatedObj(queSchaFoerderanlage);
                 }
-                {
+                final String pumpwerkTid = srcObj.getPumpwerk();
+                if(pumpwerkTid!=null){
                     QueSchaFoerderanlage queSchaFoerderanlage=new QueSchaFoerderanlage(null);
                     queSchaFoerderanlage.setQuellschacht(mappedObj.getobjectoid());
-                    queSchaFoerderanlage.setFoerderanlage(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                    queSchaFoerderanlage.setFoerderanlage(pumpwerk2oid.get(pumpwerkTid));
                     addCreatedObj(queSchaFoerderanlage);
                 }
                 if(srcObj.getLaufBrunnen()!=null) {

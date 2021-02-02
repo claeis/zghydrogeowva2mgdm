@@ -616,7 +616,10 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
-                mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
+                final ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.Herkunftsart geometrieHerkunft = srcObj.getGeometrieHerkunft();
+                if(geometrieHerkunft!=null) {
+                    mappedObj.setGeometrieHerkunft(mapHerkunftsart(geometrieHerkunft));
+                }
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 addMappedObj(mappedObj,srcObj);
