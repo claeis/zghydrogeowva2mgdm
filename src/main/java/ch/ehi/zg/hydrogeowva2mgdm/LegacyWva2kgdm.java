@@ -1221,5 +1221,25 @@ public class LegacyWva2kgdm  {
         IoxEvent front=events.remove(0);
         return ((ObjectEvent)front).getIomObject();
     }
+    public static boolean isOnlyWvaObj(IomObject obj) {
+        if(obj instanceof AnschriftNummer
+        || obj instanceof WeitereAnlage
+        || obj instanceof WeitereAnlageWasservsg
+        || obj instanceof Aufbereitungswerk
+        || obj instanceof Druckreduktion
+        || obj instanceof Grundlage
+        || obj instanceof Hilfslinie
+        || obj instanceof Foerderanlage
+        || obj instanceof FoerderanlageWasservsg
+        || obj instanceof ResWasservsg
+        || obj instanceof Reservoir
+        || obj instanceof Sammelschacht
+        || obj instanceof Schieberschacht
+        || obj instanceof TWTurbine
+        || obj instanceof LeitWasservsg) {
+            return true;
+        }
+        return false;
+    }
 
 }

@@ -388,6 +388,7 @@ public class Converter {
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
             factories.registerFactory(ZG_WASSERVERSORGUNGSATLAS_1_0.getIoxFactory());
             factories.registerFactory(ZG_HYDROGEOLOGISCHEOBJEKTE_2_3.getIoxFactory());
+            factories.registerFactory(ZG_HYDROGEO_WVA_V1.getIoxFactory());
             
             kgdmWriter = new XtfWriterBase( kgdmFile,  getIoxMapping(),"2.3");
             kgdmWriter.setModels(new XtfModel[]{
