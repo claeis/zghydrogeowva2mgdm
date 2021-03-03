@@ -14,9 +14,9 @@ import ch.interlis.iox_j.filter.ReduceToBaseModel;
 import ch.interlis.models.TWVINNOTLAGEN_LV95_V1;
 import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 
-public class Kgdm2mgdmTwv extends ReduceToBaseModel {
+public class Kgdm2MgdmTwv extends ReduceToBaseModel {
 
-    public Kgdm2mgdmTwv(TransferDescription td, Settings config) {
+    public Kgdm2MgdmTwv(TransferDescription td, Settings config) {
         super();
         List<Model> twvModel=new ArrayList<Model>();
         twvModel.add((Model) td.getElement(TWVINNOTLAGEN_LV95_V1.MODEL));
