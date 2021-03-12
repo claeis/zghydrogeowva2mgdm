@@ -27,10 +27,21 @@ public class LegacyHydro2kgdm  {
     private Map<String,Wasserversorgung> readWasserversorgung=new HashMap<String,Wasserversorgung>();
     private Map<AdressKey,Adresse> readAdresse=new HashMap<AdressKey,Adresse>();
     private Map<String,MutatPerson> readMutatPerson=new HashMap<String,MutatPerson>();
+    private Map<String,FoerderanlageAufbereitungswerk> readFoerderanlageAufbereitungswerk=new HashMap<String,FoerderanlageAufbereitungswerk>();
+    private List<QueSchaFoerderanlage> readQueSchaFoerderanlage=new ArrayList<QueSchaFoerderanlage>();
+    private List<QueSchaRes> readQueSchaRes=new ArrayList<QueSchaRes>();
+    private List<QueSchaSaScha> readQueSchaSaScha=new ArrayList<QueSchaSaScha>();
+
+    private Map<String,Foerderanlage> mappedFoerderanlage=new HashMap<String,Foerderanlage>();
+    private Map<String,Quellschacht> mappedQuellschacht=new HashMap<String,Quellschacht>();
+    private Map<String,Sammelschacht> mappedSammelschacht=new HashMap<String,Sammelschacht>();
+    private Map<String,Reservoir> mappedReservoir=new HashMap<String,Reservoir>();
     
     private Map<String,IomObject> mappedObjs=new HashMap<String,IomObject>();
     private List<IomObject> mappedLinkObjs=new ArrayList<IomObject>();
     private Map<String,IomObject> uuid2srcObj=new HashMap<String,IomObject>();
+    
+    
     private Map<String,String> adresse2oid=new HashMap<String,String>();
     private Map<String,String> abwaeinleit2oid=new HashMap<String,String>();
     private Map<String,String> anreicherungsanlage2oid=new HashMap<String,String>();
@@ -66,7 +77,7 @@ public class LegacyHydro2kgdm  {
             if(obj.getobjecttag().startsWith(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug)) {
                 if(LegacyWva2kgdm.isOnlyWvaObj(obj)) {
                     // "nur WVA"-Objekte merken, damit sie nicht verlorengehen
-                    readOnlyWvaObjs.add(obj);
+                    addWvaObj(obj);
                 }else {
                     String uuid=obj.getobjectoid();
                     if(obj instanceof Wasserversorgung) {
@@ -78,10 +89,18 @@ public class LegacyHydro2kgdm  {
                     }else if(obj instanceof Adresse) {
                         Adresse srcObj=(Adresse)obj;
                         readAdresse.put(new AdressKey(srcObj),srcObj);
+                    }else if(obj instanceof FoerderanlageAufbereitungswerk) {
+                        readFoerderanlageAufbereitungswerk.put(((FoerderanlageAufbereitungswerk) obj).getFoerderanlage(),(FoerderanlageAufbereitungswerk)obj);
+                    }else if(obj instanceof QueSchaFoerderanlage) {
+                        readQueSchaFoerderanlage.add((QueSchaFoerderanlage)obj);
+                    }else if(obj instanceof QueSchaRes) {
+                        readQueSchaRes.add((QueSchaRes)obj);
+                    }else if(obj instanceof QueSchaSaScha) {
+                        readQueSchaSaScha.add((QueSchaSaScha)obj);
                     }else if(uuid!=null) {
                         readObjs.put(uuid, obj);
                     }else {
-                        // Linkobjekte ignorieren
+                        // andere Linkobjekte ignorieren
                         // entweder es gibt die Beziehung noch, dann entsteht sie wieder
                         // oder es gibt sie nicht mehr, dann muss sie geloescht werden und 
                         // kann hier somit ignoriert werden
@@ -462,6 +481,11 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setKontaktPerson(adresse2oid.get(srcObj.getKontaktPerson()));
                 oberflgewrohwapw2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
+                // FoerderanlageAufbereitungswerk in Ausgabe auch uebertragen
+                FoerderanlageAufbereitungswerk f2a=readFoerderanlageAufbereitungswerk.get(mappedObj.getobjectoid());
+                if(f2a!=null) {
+                    addWvaObj(f2a);
+                }
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaechenGewFassung){
                 // Hydro und WVA
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaechenGewFassung srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaechenGewFassung)obj;
@@ -715,6 +739,7 @@ public class LegacyHydro2kgdm  {
                     mappedObj.setGeometrie(geometrie);
                 }
                 mappedObj.setTyp(mapRueckgabeLeitungTyp(srcObj.getTyp()));
+                mappedObj.setLeitArt(Leitung_LeitArt.RueckgabeLeitung);
                 mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
                 final Double ltgDimension = srcObj.getLtgDimension();
                 if(ltgDimension!=null) {
@@ -751,7 +776,9 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                 final ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BetriebArt betriebArt = srcObj.getBetriebArt();
                 mappedObj.setBetriebsArt(mapBetriebArt(betriebArt));
-                if(betriebArt!=null) {
+                if(betriebArt==null) {
+                    mappedObj.setNutzungszustand(Rueckgabebrunnen_Nutzungszustand.unbestimmt);
+                }else {
                     mappedObj.setNutzungszustand(mapBetriebArt2Rueckgabebrunnen_Nutzungszustand(betriebArt));
                 }
                 mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
@@ -1371,6 +1398,24 @@ public class LegacyHydro2kgdm  {
                 uuid2srcObj.put(uuid, srcObj);
             }
             mappedObjs.put(uuid, mappedObj);
+            addAnchorObj(mappedObj);
+        }
+    }
+    private void addAnchorObj(IomObject mappedObj) {
+        String uuid=mappedObj.getobjectoid();
+        if(uuid!=null) {
+            if(mappedObj instanceof Foerderanlage) {
+                mappedFoerderanlage.put(uuid,(Foerderanlage) mappedObj);
+            }
+            if(mappedObj instanceof Quellschacht) {
+                mappedQuellschacht.put(uuid,(Quellschacht) mappedObj);
+            }
+            if(mappedObj instanceof Sammelschacht) {
+                mappedSammelschacht.put(uuid,(Sammelschacht) mappedObj);
+            }
+            if(mappedObj instanceof Reservoir) {
+                mappedReservoir.put(uuid,(Reservoir) mappedObj);
+            }
         }
     }
     private void addCreatedObj(IomObject mappedObj) {
@@ -1380,6 +1425,11 @@ public class LegacyHydro2kgdm  {
         }else {
             mappedObjs.put(uuid, mappedObj);
         }
+        addAnchorObj(mappedObj);
+    }
+    private void addWvaObj(IomObject mappedObj) {
+        addAnchorObj(mappedObj);
+        readOnlyWvaObjs.add(mappedObj);
     }
     public IomObject getMappedObject() {
         if(mappingComplete) {
@@ -1391,6 +1441,24 @@ public class LegacyHydro2kgdm  {
             }
             if(!readOnlyWvaObjs.isEmpty()) {
                 return readOnlyWvaObjs.remove(0);
+            }
+            while(!readQueSchaFoerderanlage.isEmpty()) {
+                QueSchaFoerderanlage qs=readQueSchaFoerderanlage.remove(0);
+                if(mappedFoerderanlage.containsKey(qs.getFoerderanlage()) && mappedQuellschacht.containsKey(qs.getQuellschacht())) {
+                    return qs;
+                }
+            }
+            while(!readQueSchaRes.isEmpty()) {
+                QueSchaRes qs=readQueSchaRes.remove(0);
+                if(mappedReservoir.containsKey(qs.getReservoir()) && mappedQuellschacht.containsKey(qs.getQuellschacht())) {
+                    return qs;
+                }
+            }
+            while(!readQueSchaSaScha.isEmpty()) {
+                QueSchaSaScha qs=readQueSchaSaScha.remove(0);
+                if(mappedSammelschacht.containsKey(qs.getSammelschacht()) && mappedQuellschacht.containsKey(qs.getQuellschacht())) {
+                    return qs;
+                }
             }
         }
         return null;

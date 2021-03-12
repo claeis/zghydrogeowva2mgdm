@@ -238,7 +238,7 @@ public class Converter {
             ioxReader.setFactory(factories);
             readerStat.setFilename(kgdmFile.getPath());
             Kgdm2MgdmGwa gwaFilter=new Kgdm2MgdmGwa(settings);
-            Kgdm2mgdmTwv twvFilter=new Kgdm2mgdmTwv(td,settings);
+            Kgdm2MgdmTwv twvFilter=new Kgdm2MgdmTwv(td,settings);
             
             mgdmTwvWriter = new XtfWriterBase( mgdmTwvFile,  getIoxMapping(),"2.3");
             mgdmTwvWriter.setModels(new XtfModel[]{
