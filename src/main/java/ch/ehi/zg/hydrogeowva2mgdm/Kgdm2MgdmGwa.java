@@ -12,12 +12,15 @@ import ch.interlis.models.Grundwasseraustritte_LV95_V1.JaNein;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Anreicherungsanlage_Typ;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsbrunnen_Brunnenart;
+import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsbrunnen_Foerdermethode;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsstrang_Stollen_Typ;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Nutzungszustand;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Fassungsart;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Grundwasserleiter_Typ;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.HilfsText;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen_Foerdermethode;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen_Oeffentliches_Interesse;
 
 public class Kgdm2MgdmGwa {
 
@@ -101,12 +104,17 @@ public class Kgdm2MgdmGwa {
                     mappedObj.setIdentifikator(srcObj.getIdentifikator());
                     mappedObj.setName(srcObj.getName());
                     mappedObj.setBrunnenart(mapBrunnenart(srcObj.getEntnahmebrunnenTyp()));
-                    // TODO mappedObj.setFoerdermethode(srcObj.getFoerdermethode());
+                    mappedObj.setFoerdermethode(mapEntnahmebrunnen_Foerdermethode(srcObj.getFoerdermethode()));
                     mappedObj.setNutzungszustand(mapNutzungszustand(srcObj.getNutzungszustand()));
                     mappedObj.setTrinkwasser(mapJaNein(srcObj.getTrinkwasser()));
                     mappedObj.setZweck(mapTexte(srcObj.getVerwendungszweck()));
                     mappedObj.setNotwasserversorgung(mapJaNeinUnbestimmt(srcObj.getNotwasserversorgung()));
-                    // TODO mappedObj.setOeffentliches_Interesse(srcObj.get);
+                    final Boolean schzPflicht = srcObj.getSchzPflicht();
+                    if(schzPflicht!=null) {
+                        mappedObj.setOeffentliches_Interesse(mapBoolean(schzPflicht));
+                    }else {
+                        mappedObj.setOeffentliches_Interesse(JaNeinUnbestimmt.unbestimmt);
+                    }
                     final Integer pkonz = srcObj.getPkonz();
                     if(pkonz!=null) {
                         mappedObj.setPkonz(pkonz.doubleValue());
@@ -249,6 +257,33 @@ public class Kgdm2MgdmGwa {
         return;
     }
 
+    private JaNeinUnbestimmt mapBoolean(Boolean src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(Boolean.TRUE)) {
+            return JaNeinUnbestimmt.ja;
+        }else if(src.equals(Boolean.FALSE)) {
+            return JaNeinUnbestimmt.nein;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private Fassungsbrunnen_Foerdermethode mapEntnahmebrunnen_Foerdermethode(
+            Entnahmebrunnen_Foerdermethode src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(Entnahmebrunnen_Foerdermethode.Pumpe)) {
+            return Fassungsbrunnen_Foerdermethode.Pumpe;
+        }else if(src.equals(Entnahmebrunnen_Foerdermethode.Heber)) {
+            return Fassungsbrunnen_Foerdermethode.Heber;
+        }else if(src.equals(Entnahmebrunnen_Foerdermethode.artesisch)) {
+            return Fassungsbrunnen_Foerdermethode.artesisch;
+        }else if(src.equals(Entnahmebrunnen_Foerdermethode.unbestimmt)) {
+            return Fassungsbrunnen_Foerdermethode.unbestimmt;
+        }
+        throw new IllegalArgumentException();
+    }
+
     private String mapTexte(ch.interlis.models.ZG_hydrogeo_wva_V1.Texte src) {
         if(src==null) {
             return null;
@@ -265,7 +300,7 @@ public class Kgdm2MgdmGwa {
                 if(t.length()>0) {
                     ret.append(sep);
                     ret.append(t);
-                    sep=" ";
+                    sep="; ";
                 }
             }
         }

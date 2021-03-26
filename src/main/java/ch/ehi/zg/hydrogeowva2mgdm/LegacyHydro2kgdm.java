@@ -19,7 +19,6 @@ import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Nutzungszustand;
-import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.*;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.*;
 
@@ -304,6 +303,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setEntnahmebrunnenTyp(mapEntnahmebrunnenTyp(srcObj.getTyp()));
+                mappedObj.setFoerdermethode(Entnahmebrunnen_Foerdermethode.unbestimmt);
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
@@ -621,9 +621,10 @@ public class LegacyHydro2kgdm  {
                 if(typ!=null) {
                     mappedObj.setTyp(mapQWFSchachtTyp(typ));
                 }
-                final QWFassungsArt fassungsart = srcObj.getFassungsart();
+                final ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt fassungsart = srcObj.getFassungsart();
                 if(fassungsart!=null) {
                     mappedObj.setFassungsart(mapQWFassungsArt2Brunnenstube_Fassungsart(fassungsart));
+                    mappedObj.setQWFassungsArt(mapQWFassungsArt(fassungsart));
                 }
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
@@ -685,7 +686,7 @@ public class LegacyHydro2kgdm  {
                 }
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
-                mappedObj.setFassungsart(mapQWFassungsArt(srcObj.getFassungsart()));
+                mappedObj.setFassungsart(mapQWFassungsArt2Quelle_Fassungsart(srcObj.getFassungsart()));
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjektNummer(srcObj.getObjektNummer());
                 mappedObj.setPrivatNutzer(srcObj.getPrivaterNutzer());
@@ -827,7 +828,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setArtSammeleinrichtung(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_ArtSammeleinrichtung.Gwf);
                 IomObject geom=srcObj.getGeometrie();
                 mappedObj.setGeometrie(geom);
-                mappedObj.setTyp(mapSammeleinrichtungTyp(srcObj.getTyp()));
+                mappedObj.setTyp(mapSammeleinrichtungTyp2mapSammeleinrichtung_Typ(srcObj.getTyp()));
+                mappedObj.setSammeleinrichtungTyp(mapSammeleinrichtungTyp(srcObj.getTyp()));
                 mappedObj.setFsgHorizont(srcObj.getFsgHorizont());
                 mappedObj.setFsgStrangNr(srcObj.getFsgStrangNr());
                 mappedObj.setFsgHorizontKote(srcObj.getFsgHorizontKote());
@@ -863,7 +865,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setArtSammeleinrichtung(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_ArtSammeleinrichtung.Qwf);
                 IomObject geom=srcObj.getGeometrie();
                 mappedObj.setGeometrie(geom);
-                mappedObj.setTyp(mapSammeleinrichtungTyp(srcObj.getTyp()));
+                mappedObj.setTyp(mapSammeleinrichtungTyp2mapSammeleinrichtung_Typ(srcObj.getTyp()));
+                mappedObj.setSammeleinrichtungTyp(mapSammeleinrichtungTyp(srcObj.getTyp()));
                 mappedObj.setFsgHorizont(srcObj.getFsgHorizont());
                 mappedObj.setFsgStrangNr(srcObj.getFsgStrangNr());
                 mappedObj.setFsgHorizontKote(srcObj.getFsgHorizontKote());
@@ -1014,7 +1017,7 @@ public class LegacyHydro2kgdm  {
         }
         throw new IllegalArgumentException();
     }
-    private Brunnenstube_Fassungsart mapQWFassungsArt2Brunnenstube_Fassungsart(QWFassungsArt src) {
+    private Brunnenstube_Fassungsart mapQWFassungsArt2Brunnenstube_Fassungsart(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt src) {
         if(src==null) {
             return null;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Schacht)) {
@@ -1032,7 +1035,7 @@ public class LegacyHydro2kgdm  {
         }
         throw new IllegalArgumentException();
     }
-    private Quelle_Fassungsart mapQWFassungsArt(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt src) {
+    private Quelle_Fassungsart mapQWFassungsArt2Quelle_Fassungsart(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt src) {
         if(src==null) {
             return Quelle_Fassungsart.ungefasst;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Schacht)) {
@@ -1047,6 +1050,25 @@ public class LegacyHydro2kgdm  {
             return Quelle_Fassungsart.gefasst_unbestimmt;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.andere)){
             return Quelle_Fassungsart.ungefasst;
+        }
+        throw new IllegalArgumentException();
+    }
+    private QWFassungsArt mapQWFassungsArt(
+            ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Schacht)) {
+            return QWFassungsArt.Schacht;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Sickerleitung)){
+            return QWFassungsArt.Sickerleitung;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Stollen)){
+            return QWFassungsArt.Stollen;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Felsspalt)){
+            return QWFassungsArt.Felsspalt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.unbekannt)){
+            return QWFassungsArt.unbekannt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.andere)){
+            return QWFassungsArt.andere;
         }
         throw new IllegalArgumentException();
     }
@@ -1397,7 +1419,7 @@ public class LegacyHydro2kgdm  {
         // Werteliste ist identisch
         return ch.interlis.models.ZG_hydrogeo_wva_V1.Kanton.parseXmlCode(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.Kanton.toXmlCode(kanton));
     }
-    private ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_Typ mapSammeleinrichtungTyp(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp src) {
+    private ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_Typ mapSammeleinrichtungTyp2mapSammeleinrichtung_Typ(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp src) {
         
         //Typ Sickerleitung, Horizontal_Filterstrecke = Typ Fassungsstrang;
         //Typ Sickerleitung, Sammelstollen, Fassungsleitung_Allgemein, Fassungsleitung_Vollrohr = Typ Fassungsstollen; 
@@ -1422,6 +1444,31 @@ public class LegacyHydro2kgdm  {
             return ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_Typ.unbestimmt;
         }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Horizontal_Filterstrecke.equals(src)) {
             return ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_Typ.Fassungsstrang;
+        }
+        throw new IllegalArgumentException("unexpected SammeleinrichtungTyp <"+src+">");
+    }
+    private SammeleinrichtungTyp mapSammeleinrichtungTyp(
+            ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp src) {
+        if(src==null) {
+            return null;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Sickerleitung.equals(src)) {
+            return SammeleinrichtungTyp.Sickerleitung;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Sammelstollen.equals(src)) {
+            return SammeleinrichtungTyp.Sammelstollen;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Fassungsleitung_Allgemein.equals(src)) {
+            return SammeleinrichtungTyp.Fassungsleitung_Allgemein;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Fassungsleitung_Vollrohr.equals(src)) {
+            return SammeleinrichtungTyp.Fassungsleitung_Vollrohr;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Punktfassung.equals(src)) {
+            return SammeleinrichtungTyp.Punktfassung;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Bohrung.equals(src)) {
+            return SammeleinrichtungTyp.Bohrung;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.andere.equals(src)) {
+            return SammeleinrichtungTyp.andere;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.unbekannt.equals(src)) {
+            return SammeleinrichtungTyp.unbekannt;
+        }else if(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp.Horizontal_Filterstrecke.equals(src)) {
+            return SammeleinrichtungTyp.andere;
         }
         throw new IllegalArgumentException("unexpected SammeleinrichtungTyp <"+src+">");
     }

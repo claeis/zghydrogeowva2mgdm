@@ -47,6 +47,14 @@ public class Sammeleinrichtung extends ch.interlis.iom_j.Iom_jObject
   public void setArtSammeleinrichtung(Sammeleinrichtung_ArtSammeleinrichtung value) {
     setattrvalue("ArtSammeleinrichtung", Sammeleinrichtung_ArtSammeleinrichtung.toXmlCode(value));
   }
+  public final static String tag_SammeleinrichtungTyp="SammeleinrichtungTyp";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp getSammeleinrichtungTyp() {
+    String value=getattrvalue("SammeleinrichtungTyp");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.parseXmlCode(value);
+  }
+  public void setSammeleinrichtungTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp value) {
+    setattrvalue("SammeleinrichtungTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.toXmlCode(value));
+  }
   public final static String tag_FsgHorizont="FsgHorizont";
   public String getFsgHorizont() {
     if(getattrvaluecount("FsgHorizont")==0)return null;

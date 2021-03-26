@@ -26,6 +26,22 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
     if(value==null){setattrundefined("Notbrunnen");return;}
     setattrvalue("Notbrunnen", value?"true":"false");
   }
+  public final static String tag_Oeffentliches_Interesse="Oeffentliches_Interesse";
+  public Entnahmebrunnen_Oeffentliches_Interesse getOeffentliches_Interesse() {
+    String value=getattrvalue("Oeffentliches_Interesse");
+    return Entnahmebrunnen_Oeffentliches_Interesse.parseXmlCode(value);
+  }
+  public void setOeffentliches_Interesse(Entnahmebrunnen_Oeffentliches_Interesse value) {
+    setattrvalue("Oeffentliches_Interesse", Entnahmebrunnen_Oeffentliches_Interesse.toXmlCode(value));
+  }
+  public final static String tag_Foerdermethode="Foerdermethode";
+  public Entnahmebrunnen_Foerdermethode getFoerdermethode() {
+    String value=getattrvalue("Foerdermethode");
+    return Entnahmebrunnen_Foerdermethode.parseXmlCode(value);
+  }
+  public void setFoerdermethode(Entnahmebrunnen_Foerdermethode value) {
+    setattrvalue("Foerdermethode", Entnahmebrunnen_Foerdermethode.toXmlCode(value));
+  }
   public final static String tag_TextTyp="TextTyp";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp getTextTyp() {
     if(getattrvaluecount("TextTyp")==0)return null;

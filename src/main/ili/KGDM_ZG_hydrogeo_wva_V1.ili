@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-01-26"  =
+VERSION "2021-03-23"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -93,6 +93,22 @@ VERSION "2021-01-26"  =
                      Laufender_Brunnen,     !! <Laufender Brunnen, d5>
                      Hyraulischer_Widder,   !! <Hydraulischer Widder, d6>
                      kein_Schacht);         !! <kein Schacht, d7>
+
+    QWFassungsArt = (Schacht,		!! <Schacht, d1>
+                     Sickerleitung,	!! <Sickerleitung, d2>
+                     Stollen,		!! <Stollen, d3>
+                     Felsspalt,		!! <Felsspalt, d4>
+                     unbekannt,		!! <unbekannt, d5>
+                     andere);		!! <andere, d6>
+
+    SammeleinrichtungTyp = (Sickerleitung,		!! <Sickerleitung, d1>
+                            Sammelstollen,		!! <Sammelstollen, d2>
+                            Fassungsleitung_Allgemein,	!! <Fassungsleitung allgemein, d3>
+                            Fassungsleitung_Vollrohr,	!! <Fassungsleitung Vollrohr, d4>
+                            Punktfassung,		!! <Punktfassung, d5>
+                            Bohrung,			!! <Bohrung, d6>
+                            andere,			!! <andere, d7>
+                            unbekannt);			!! <unbekannt, d8>
 
     BautenGWTyp = (Bauten,                 !!<Bauten, d1>
                    Bohrung,                !!<Bohrung, d2>
@@ -410,6 +426,7 @@ VERSION "2021-01-26"  =
 
     CLASS Quellschacht EXTENDS Brunnenstube =
       Typ : MANDATORY QWFSchachtTyp;
+      QWFassungsArt : QWFassungsArt;
       ObjNrAfu : TEXT*15;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
@@ -460,6 +477,8 @@ VERSION "2021-01-26"  =
     CLASS Entnahmebrunnen EXTENDS Grundwasserfassung =
       EntnahmebrunnenTyp : MANDATORY EntnahmebrunnenTyp;
       Notbrunnen : BOOLEAN;
+      Oeffentliches_Interesse : MANDATORY (ja, nein, unbestimmt);
+      Foerdermethode : MANDATORY (Pumpe, Heber, artesisch, unbestimmt);
       TextTyp : TextTyp;
       ObjNrAfu : TEXT*50;
       EigentumArt : EigentumArt;
@@ -748,6 +767,7 @@ VERSION "2021-01-26"  =
       Typ : MANDATORY (Fassungsstrang, Fassungsstollen, unbestimmt);
       Geometrie : MANDATORY CHLine;
       ArtSammeleinrichtung : MANDATORY (Qwf, Gwf);         !! Ergänzungen ZG
+      SammeleinrichtungTyp : MANDATORY SammeleinrichtungTyp; !! Ergänzung ZG
       FsgHorizont : TEXT*10;
       FsgStrangNr : TEXT*10;
       FsgHorizontKote : 0.00 .. 9999.99;

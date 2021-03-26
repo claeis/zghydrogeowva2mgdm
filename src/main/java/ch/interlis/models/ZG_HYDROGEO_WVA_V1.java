@@ -4,7 +4,7 @@ public class ZG_HYDROGEO_WVA_V1{
   public final static String MODEL= "ZG_hydrogeo_wva_V1";
   public final static String Wasserversorgung_Zug= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug";
   public final static String TransferMetadaten= "ZG_hydrogeo_wva_V1.TransferMetadaten";
-  public static ch.interlis.iom_j.xtf.XtfModel getXtfModel(){ return new ch.interlis.iom_j.xtf.XtfModel("ZG_hydrogeo_wva_V1","http://models.geo.zg.ch","2021-01-26"); }
+  public static ch.interlis.iom_j.xtf.XtfModel getXtfModel(){ return new ch.interlis.iom_j.xtf.XtfModel("ZG_hydrogeo_wva_V1","http://models.geo.zg.ch","2021-03-23"); }
   static public ch.interlis.iox.IoxFactory getIoxFactory()
   {
     return new ch.interlis.iox.IoxFactory(){
@@ -365,6 +365,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Typ"
       ,"Geometrie"
       ,"ArtSammeleinrichtung"
+      ,"SammeleinrichtungTyp"
       ,"FsgHorizont"
       ,"FsgStrangNr"
       ,"FsgHorizontKote"
@@ -683,6 +684,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Ertrag_maximal"
       ,"Fassungsart"
       ,"Typ"
+      ,"QWFassungsArt"
       ,"ObjNrAfu"
       ,"EigentumArt"
       ,"PrivatNutzer"
@@ -1030,6 +1032,8 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Pkonz"
       ,"EntnahmebrunnenTyp"
       ,"Notbrunnen"
+      ,"Oeffentliches_Interesse"
+      ,"Foerdermethode"
       ,"TextTyp"
       ,"ObjNrAfu"
       ,"EigentumArt"
@@ -1332,6 +1336,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Ertrag_maximal"
       ,"Fassungsart"
       ,"Typ"
+      ,"QWFassungsArt"
       ,"ObjNrAfu"
       ,"EigentumArt"
       ,"PrivatNutzer"
@@ -1564,6 +1569,7 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Typ"
       ,"Geometrie"
       ,"ArtSammeleinrichtung"
+      ,"SammeleinrichtungTyp"
       ,"FsgHorizont"
       ,"FsgStrangNr"
       ,"FsgHorizontKote"
