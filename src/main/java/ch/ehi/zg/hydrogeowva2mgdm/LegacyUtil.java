@@ -7,6 +7,8 @@ import ch.interlis.iom_j.Iom_jObject;
 
 public class LegacyUtil {
 
+    public static final String ZG_PREFIX = "ZG-";
+
     private LegacyUtil() {
     }
 
@@ -59,9 +61,15 @@ public class LegacyUtil {
         return coord;
     }
 
-    public static String mapDate(String datum) {
+    public static String mapDateFromITF(String datum) {
         if(datum!=null) {
             return datum.substring(0,4)+"-"+datum.substring(4,6)+"-"+datum.substring(6,8);
+        }
+        return null;
+    }
+    public static String mapDateToITF(String datum) {
+        if(datum!=null) {
+            return datum.substring(0,4)+datum.substring(5,7)+datum.substring(8,10);
         }
         return null;
     }

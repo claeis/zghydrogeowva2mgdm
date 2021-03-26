@@ -367,7 +367,7 @@ public class Converter {
         }finally{
             if(hydroWriter!=null){
                 try {
-                    hydroWriter.close();
+                    if(false)hydroWriter.close();
                 } catch (IoxException e) {
                     EhiLogger.logError(e);
                 }

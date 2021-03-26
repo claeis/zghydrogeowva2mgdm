@@ -6,9 +6,10 @@ public class AdressKey {
 
     private String name;
     private String vorname;
+    private String adresse;
     private Integer plz;
 
-    public AdressKey(String name, String vorname, Integer plz) {
+    public AdressKey(String name, String vorname, String adresse, Integer plz) {
         super();
         this.name = name;
         this.vorname = vorname;
@@ -17,6 +18,7 @@ public class AdressKey {
     public AdressKey(Adresse src) {
         name=src.getName();
         vorname=src.getVorname();
+        adresse=src.getAdresse();
         plz=src.getPLZ();
     }
 
@@ -27,6 +29,7 @@ public class AdressKey {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((plz == null) ? 0 : plz.hashCode());
         result = prime * result + ((vorname == null) ? 0 : vorname.hashCode());
+        result = prime * result + ((adresse == null) ? 0 : adresse.hashCode());
         return result;
     }
 
@@ -53,6 +56,11 @@ public class AdressKey {
             if (other.vorname != null)
                 return false;
         } else if (!vorname.equals(other.vorname))
+            return false;
+        if (adresse == null) {
+            if (other.adresse != null)
+                return false;
+        } else if (!adresse.equals(other.adresse))
             return false;
         return true;
     }

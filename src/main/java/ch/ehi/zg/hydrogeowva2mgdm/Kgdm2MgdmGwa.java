@@ -11,11 +11,13 @@ import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.JaNein;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Anreicherungsanlage_Typ;
+import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsbrunnen_Brunnenart;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsstrang_Stollen_Typ;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Nutzungszustand;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Fassungsart;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Grundwasserleiter_Typ;
-import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Rueckgabebrunnen_Nutzungszustand;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.HilfsText;
 
 public class Kgdm2MgdmGwa {
 
@@ -94,7 +96,23 @@ public class Kgdm2MgdmGwa {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.EntbruGSBAoTw_ZsBeZu) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.EntbruGWSZone) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen) {
-                    // TODO Entnahmebrunnen: es gibt im MGDM keine  Klasse Grundwasserfassung
+                    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen srcObj=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen)iomObj;
+                    ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsbrunnen mappedObj=new ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsbrunnen(srcObj.getobjectoid());
+                    mappedObj.setIdentifikator(srcObj.getIdentifikator());
+                    mappedObj.setName(srcObj.getName());
+                    mappedObj.setBrunnenart(mapBrunnenart(srcObj.getEntnahmebrunnenTyp()));
+                    // TODO mappedObj.setFoerdermethode(srcObj.getFoerdermethode());
+                    mappedObj.setNutzungszustand(mapNutzungszustand(srcObj.getNutzungszustand()));
+                    mappedObj.setTrinkwasser(mapJaNein(srcObj.getTrinkwasser()));
+                    mappedObj.setZweck(mapTexte(srcObj.getVerwendungszweck()));
+                    mappedObj.setNotwasserversorgung(mapJaNeinUnbestimmt(srcObj.getNotwasserversorgung()));
+                    // TODO mappedObj.setOeffentliches_Interesse(srcObj.get);
+                    final Integer pkonz = srcObj.getPkonz();
+                    if(pkonz!=null) {
+                        mappedObj.setPkonz(pkonz.doubleValue());
+                    }
+                    mappedObj.setGeometrie(srcObj.getGeometrie());
+                    pendingEvents.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
 
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FassgebWasservsg) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Fassungseinzugsgebiet) {
@@ -139,8 +157,7 @@ public class Kgdm2MgdmGwa {
                     // gibt es nicht im MGDM
                     
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Quellschacht) {
-                    // TODO Brunnenstube; aber gibt es nicht im MGDM. Offene Frage an Dominik 20210304
-                    
+                    // gibt es nicht im MGDM
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellScha_SaSchaText) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchaWasservsg) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchGSBAoTw_ZsBeZu) {
@@ -232,6 +249,50 @@ public class Kgdm2MgdmGwa {
         return;
     }
 
+    private String mapTexte(ch.interlis.models.ZG_hydrogeo_wva_V1.Texte src) {
+        if(src==null) {
+            return null;
+        }
+        if(src.sizeTexte()==0) {
+            return null;
+        }
+        StringBuffer ret=new StringBuffer();
+        String sep="";
+        for(HilfsText txt:src.getTexte()){
+            String t=txt.getText();
+            if(t!=null) {
+                t=t.trim();
+                if(t.length()>0) {
+                    ret.append(sep);
+                    ret.append(t);
+                    sep=" ";
+                }
+            }
+        }
+        return ret.toString();
+    }
+
+    private Fassungsbrunnen_Brunnenart mapBrunnenart(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.einfacheGWFassung)) {
+            return Fassungsbrunnen_Brunnenart.Vertikalfilterbrunnen;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.HorizontalfilterBrunnen)) {
+            return Fassungsbrunnen_Brunnenart.Horizontalfilterbrunnen;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.VertikalfilterBrunnen)) {
+            return Fassungsbrunnen_Brunnenart.Vertikalfilterbrunnen;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.Sodbrunnen)) {
+            return Fassungsbrunnen_Brunnenart.Sod_Schachtbrunnen;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.Rohr)) {
+            return Fassungsbrunnen_Brunnenart.Vertikalfilterbrunnen;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.andere)) {
+            return Fassungsbrunnen_Brunnenart.andere;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.EntnahmebrunnenTyp.unbekannt)) {
+            return Fassungsbrunnen_Brunnenart.andere;
+        }
+        throw new IllegalArgumentException();
+    }
+
     private Anreicherungsanlage_Typ mapAnreicherungsanlage_Typ(
             ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Anreicherungsanlage_Typ src) {
         if(src==null) {
@@ -308,7 +369,20 @@ public class Kgdm2MgdmGwa {
         }
         throw new IllegalArgumentException();
     }
-
+    private Nutzungszustand mapNutzungszustand(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.genutzt)) {
+            return Nutzungszustand.genutzt;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.ungenutzt)) {
+            return Nutzungszustand.ungenutzt;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.aufgehoben)) {
+            return Nutzungszustand.aufgehoben;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.unbestimmt)) {
+            return Nutzungszustand.unbestimmt;
+        }
+        throw new IllegalArgumentException();
+    }
     private Quelle_Fassungsart mapQuelle_Fassungsart(
             ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart src) {
         if(src==null) {

@@ -14,9 +14,12 @@ import ch.interlis.iox.StartBasketEvent;
 import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Nutzungszustand;
+import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.*;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.*;
 
@@ -120,7 +123,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setBetriebArt(mapBetriebArt(srcObj.getBetriebArt()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsStelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -128,7 +131,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -137,7 +140,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
@@ -147,7 +150,7 @@ public class LegacyHydro2kgdm  {
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.AbWaEinleitBewiReg){
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Adresse){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Adresse srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Adresse)obj;
-                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Adresse mappedObj=readAdresse.get(new AdressKey(srcObj.getName(),srcObj.getVorname(),srcObj.getPLZ()));
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Adresse mappedObj=readAdresse.get(new AdressKey(srcObj.getName(),srcObj.getVorname(),srcObj.getAdresse(),srcObj.getPLZ()));
                 if(mappedObj==null) {
                     String uuid=LegacyUtil.newUUID();
                     mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Adresse(uuid);
@@ -176,18 +179,18 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Anreicherungsanlage(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 IomObject lage=srcObj.getLage();
                 mappedObj.setGeometriePunkt(lage);
                 // TODO mappedObj.setTyp(mapAnreicherungsanlageTyp(srcObj.getTyp());
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
-                mappedObj.setBewilligungsdatum(LegacyUtil.mapDate(srcObj.getBewilligungsdatum()));
+                mappedObj.setBewilligungsdatum(LegacyUtil.mapDateFromITF(srcObj.getBewilligungsdatum()));
                 mappedObj.setBetriebsart(mapBetriebArt(srcObj.getBetriebArt()));
                 if(srcObj.getattrvaluecount(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Anreicherungsanlage.tag_Anreicherungsmenge)>0) {
                     mappedObj.setMax_Versickerung(srcObj.getAnreicherungsmenge()/1000.0);
                 }
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setTyp_Bemerkung(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsStelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -195,7 +198,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -220,7 +223,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setTyp(mapBauenGWTyp(srcObj.getTyp()));
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsStelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -228,7 +231,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -236,7 +239,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
@@ -298,12 +301,13 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Entnahmebrunnen(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setEntnahmebrunnenTyp(mapEntnahmebrunnenTyp(srcObj.getTyp()));
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
+                mappedObj.setPrivatNutzer(srcObj.getPrivaterNutzer());
                 mappedObj.setNutzungszustand(mapBetriebArt2Grundwasserfassung_Nutzungszustand(srcObj.getBetriebArt()));
                 mappedObj.setNotwasserversorgung(mapNotversorgung(srcObj.getNotversorgung()));
                 final Integer filterrohrDimension = srcObj.getFilterrohrDimension();
@@ -316,8 +320,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                 mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
                 mappedObj.setSchzGutAutor(srcObj.getSchzGutAutor());
-                mappedObj.setSchzGutDatum(LegacyUtil.mapDate(srcObj.getSchzGutDatum()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setSchzGutDatum(LegacyUtil.mapDateFromITF(srcObj.getSchzGutDatum()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsstelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -326,7 +330,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setHoeheTerrAbstich(srcObj.getHoeheTerrAbstich());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -335,7 +339,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setPumpenAnlage(pumpanlage2oid.get(srcObj.getPumpenanlage()));
                 mappedObj.setFassungsEigentuemer(adresse2oid.get(srcObj.getFassgEigentuemer()));
@@ -358,8 +362,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
-                mappedObj.setBewilligungsdatum(LegacyUtil.mapDate(srcObj.getBewilligungsdatum()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setBewilligungsdatum(LegacyUtil.mapDateFromITF(srcObj.getBewilligungsdatum()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 fassungseinzugsgebiet2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
@@ -417,14 +421,14 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Leitung(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 final IomObject geometrie = srcObj.getGeometrie();
                 if(geometrie!=null) {
                     mappedObj.setGeometrie(geometrie);
                 }
                 mappedObj.setTyp(LeitungsArt.Versorgungsleitung);
                 mappedObj.setLeitArt(Leitung_LeitArt.OberflGewFsgLeitung);
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 final Double ltgDimension = srcObj.getLtgDimension();
                 if(ltgDimension!=null) {
                     mappedObj.setNennweite(ltgDimension);
@@ -432,7 +436,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -451,12 +455,12 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new OberflGewRohwaPW(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                 mappedObj.setBetriebsart(mapBetriebArt(srcObj.getBetriebArt()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsstelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -464,7 +468,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -473,7 +477,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setPumpenAnlage(pumpanlage2oid.get(srcObj.getPumpenanlage()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
@@ -494,14 +498,14 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new OberflaechenGewFassung(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
-                // TODO srcObj.getTyp();
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
+                mappedObj.setFassungsart(mapOberflaeGewFassungTyp(srcObj.getTyp()));
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                 mappedObj.setPrivatNutzer(srcObj.getPrivaterNutzer());
-                // TODO srcObj.getBetriebArt();
+                mappedObj.setBetriebsart(mapBetriebArt(srcObj.getBetriebArt()));
                 final ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Notversorgung notversorgung = srcObj.getNotversorgung();
                 if(notversorgung!=null) {
                     mappedObj.setNotwasserversorgung(mapNotversorgung(notversorgung));
@@ -511,8 +515,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                 mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
                 mappedObj.setSchzGutAutor(srcObj.getSchzGutAutor());
-                mappedObj.setSchzGutDatum(LegacyUtil.mapDate(srcObj.getSchzGutDatum()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setSchzGutDatum(LegacyUtil.mapDateFromITF(srcObj.getSchzGutDatum()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsstelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -520,7 +524,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -529,7 +533,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setGewAbschnittCode(srcObj.getGewAbschnittCode());
                 mappedObj.setGewAbschnittKm(srcObj.getGewAbschnittKm());
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -611,35 +615,41 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Quellschacht(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
                 final ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFSchachtTyp typ = srcObj.getTyp();
                 if(typ!=null) {
                     mappedObj.setTyp(mapQWFSchachtTyp(typ));
                 }
-                // TODO srcObj.getFassungsart();
+                final QWFassungsArt fassungsart = srcObj.getFassungsart();
+                if(fassungsart!=null) {
+                    mappedObj.setFassungsart(mapQWFassungsArt2Brunnenstube_Fassungsart(fassungsart));
+                }
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                 mappedObj.setPrivatNutzer(srcObj.getPrivaterNutzer());
-                // TODO srcObj.getBetriebArt();
+                mappedObj.setBetriebsart(mapBetriebArt(srcObj.getBetriebArt()));
                 final ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Notversorgung notversorgung = srcObj.getNotversorgung();
                 if(notversorgung!=null) {
                     mappedObj.setNotwasserversorgung(mapNotversorgung(notversorgung));
                 }
-                // TODO srcObj.getSchuettmengeMin());
+                final Integer schuettmengeMin = srcObj.getSchuettmengeMin();
+                if(schuettmengeMin!=null) {
+                    mappedObj.setErtrag_minimal(schuettmengeMin);
+                }
                 mappedObj.setErtragMinAng(mapErtragAngaben(srcObj.getErtragMinAng()));
-                // TODO srcObj.getSchuettmengeMax());
+                mappedObj.setErtrag_maximal(srcObj.getSchuettmengeMax());
                 mappedObj.setErtragMaxAng(mapErtragAngaben(srcObj.getErtragMaxAng()));
-                // TODO srcObj.getSchuettmengeMittl());
+                mappedObj.setErtrag_mittel(srcObj.getSchuettmengeMittl());
                 mappedObj.setErtragMittlAng(mapErtragAngaben(srcObj.getErtragMittlAng()));
-                // TODO mappedObj.setTrinkwasser(mapWasserQualitaet(srcObj.getWqualiBemerkung()));
+                mappedObj.setTrinkwasser(mapWasserQualitaet(srcObj.getWqualiBemerkung()));
                 mappedObj.setSchzNr(srcObj.getSchzNr());
                 mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                 mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
                 mappedObj.setSchzGutAutor(srcObj.getSchzGutAutor());
-                mappedObj.setSchzGutDatum(LegacyUtil.mapDate(srcObj.getSchzGutDatum()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setSchzGutDatum(LegacyUtil.mapDateFromITF(srcObj.getSchzGutDatum()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsstelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -649,7 +659,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setHoeheAuslauf(srcObj.getHoeheAuslauf());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -658,7 +668,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setFassungsEigentuemer(adresse2oid.get(srcObj.getFassgEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
@@ -673,7 +683,7 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new QwFsgEndpunkt(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setFassungsart(mapQWFassungsArt(srcObj.getFassungsart()));
                 mappedObj.setName(srcObj.getName());
@@ -693,8 +703,8 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                 mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
                 mappedObj.setSchzGutAutor(srcObj.getSchzGutAutor());
-                mappedObj.setSchzGutDatum(LegacyUtil.mapDate(srcObj.getSchzGutDatum()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setSchzGutDatum(LegacyUtil.mapDateFromITF(srcObj.getSchzGutDatum()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsstelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -704,7 +714,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setHoeheAuslauf(srcObj.getHoeheAuslauf()); 
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -713,7 +723,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setQuellschacht(quellschacht2oid.get(srcObj.getQuellschacht()));
                 mappedObj.setFassungsEigentuemer(adresse2oid.get(srcObj.getFassgEigentuemer()));
@@ -733,14 +743,14 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Leitung(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 final IomObject geometrie = srcObj.getGeometrie();
                 if(geometrie!=null) {
                     mappedObj.setGeometrie(geometrie);
                 }
                 mappedObj.setTyp(mapRueckgabeLeitungTyp(srcObj.getTyp()));
                 mappedObj.setLeitArt(Leitung_LeitArt.RueckgabeLeitung);
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 final Double ltgDimension = srcObj.getLtgDimension();
                 if(ltgDimension!=null) {
                     mappedObj.setNennweite(ltgDimension);
@@ -748,7 +758,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -768,7 +778,7 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Rueckgabebrunnen(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setTyp(mapVersickerungTyp(srcObj.getTyp()));
                 mappedObj.setName(srcObj.getName());
@@ -781,7 +791,7 @@ public class LegacyHydro2kgdm  {
                 }else {
                     mappedObj.setNutzungszustand(mapBetriebArt2Rueckgabebrunnen_Nutzungszustand(betriebArt));
                 }
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsStelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -789,7 +799,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -798,7 +808,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
@@ -813,7 +823,7 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new Sammeleinrichtung(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArtSammeleinrichtung(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_ArtSammeleinrichtung.Gwf);
                 IomObject geom=srcObj.getGeometrie();
                 mappedObj.setGeometrie(geom);
@@ -824,11 +834,11 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLtgDimension(srcObj.getLtgDimension());
                 mappedObj.setFsgLeitungRichtung(mapFsgLtgRichtung(srcObj.getFsgLeitungRichtung()));
                 mappedObj.setFsgLeitungLaenge(mapFsgLtgLaenge(srcObj.getFsgLeitungLaenge()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -849,7 +859,7 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj==null) {
                     mappedObj=new SammeleinrichtungQwf(uuid);
                 }
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArtSammeleinrichtung(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammeleinrichtung_ArtSammeleinrichtung.Qwf);
                 IomObject geom=srcObj.getGeometrie();
                 mappedObj.setGeometrie(geom);
@@ -867,11 +877,11 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErtragMaxAng(mapErtragAngaben(srcObj.getErtragMaxAng()));
                 mappedObj.setSchuettmengeMittl(srcObj.getSchuettmengeMittl());
                 mappedObj.setErtragMittlAng(mapErtragAngaben(srcObj.getErtragMittlAng()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -895,7 +905,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setBetriebArt(mapBetriebArt(srcObj.getBetriebArt()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsStelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -903,7 +913,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -912,7 +922,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
@@ -941,7 +951,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setBetriebsArt(mapBetriebArt(srcObj.getBetriebArt()));
                 mappedObj.setQualitaet(mapVersickerungsanlage_Qualitaet(srcObj.getQualitaet()));
-                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDate(srcObj.getNachfuehrungsstand()));
+                mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateFromITF(srcObj.getNachfuehrungsstand()));
                 mappedObj.setBemerkungen(srcObj.getBemerkungen());
                 mappedObj.setAuskunftsStelle(srcObj.getAuskunftsStelle());
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
@@ -949,7 +959,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanNr(srcObj.getDetailplanNr());
@@ -958,7 +968,7 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
                 mappedObj.setQkatPlanNr(srcObj.getQkatPlanNr());
                 mappedObj.setGrundstNr(srcObj.getGrundstNr());
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setAnlageEigentuemer(adresse2oid.get(srcObj.getAnlageEigentuemer()));
                 mappedObj.setGrundEigentuemer(adresse2oid.get(srcObj.getGrundEigentuemer()));
@@ -991,6 +1001,36 @@ public class LegacyHydro2kgdm  {
             }
         }
         
+    }
+    private Oberflaechengewaesserfassung_Fassungsart mapOberflaeGewFassungTyp(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaeGewFassungTyp src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaeGewFassungTyp.Seewasserfassung)) {
+            return Oberflaechengewaesserfassung_Fassungsart.Seewasserfassung;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaeGewFassungTyp.Fliessgewaesserfassung)){
+            return Oberflaechengewaesserfassung_Fassungsart.Fliessgewaesserfassung;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaeGewFassungTyp.andere)){
+            return null;
+        }
+        throw new IllegalArgumentException();
+    }
+    private Brunnenstube_Fassungsart mapQWFassungsArt2Brunnenstube_Fassungsart(QWFassungsArt src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Schacht)) {
+            return Brunnenstube_Fassungsart.unbestimmt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Sickerleitung)){
+            return Brunnenstube_Fassungsart.unbestimmt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Stollen)){
+            return Brunnenstube_Fassungsart.unbestimmt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.Felsspalt)){
+            return Brunnenstube_Fassungsart.unbestimmt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.unbekannt)){
+            return Brunnenstube_Fassungsart.unbestimmt;
+        }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt.andere)){
+            return Brunnenstube_Fassungsart.unbestimmt;
+        }
+        throw new IllegalArgumentException();
     }
     private Quelle_Fassungsart mapQWFassungsArt(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt src) {
         if(src==null) {
@@ -1083,7 +1123,6 @@ public class LegacyHydro2kgdm  {
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntnahmebrunnenTyp.unbekannt)){
             return EntnahmebrunnenTyp.unbekannt;
         }
-        
         throw new IllegalArgumentException();
     }
     private BautenGWTyp mapBauenGWTyp(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BauenGWTyp src) {
@@ -1311,13 +1350,13 @@ public class LegacyHydro2kgdm  {
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BetriebArt.stillgelegt)) {
             return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.stillgelegt;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BetriebArt.ungenutzt)) {
-            return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.unbekannt;
+            return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.ungenutzt;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BetriebArt.zerstoert)) {
-            return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.unbekannt;
+            return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.zerstoert;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BetriebArt.unbekannt)) {
             return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.unbekannt;
         }else if(src.equals(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BetriebArt.im_Verwurf)) {
-            return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.unbekannt;
+            return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.im_Verwurf;
         }
         throw new IllegalArgumentException();
     }

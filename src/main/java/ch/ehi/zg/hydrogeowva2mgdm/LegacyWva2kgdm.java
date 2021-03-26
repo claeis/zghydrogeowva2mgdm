@@ -100,7 +100,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Aufbereitungswerk srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Aufbereitungswerk)obj;
                 Aufbereitungswerk mappedObj=new Aufbereitungswerk(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(WeitereAnlage_Art.Brunnen_unabh_TWQualitaet_unbest);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -116,7 +116,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 final String reservoirTid = srcObj.getReservoir();
                 if(reservoirTid!=null) {
@@ -140,7 +140,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Druckreduktion srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Druckreduktion)obj;
                 Druckreduktion mappedObj=new Druckreduktion(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(WeitereAnlage_Art.Brunnen_unabh_TWQualitaet_unbest);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -158,7 +158,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -171,7 +171,7 @@ public class LegacyWva2kgdm  {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Entnahmebrunnen srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Entnahmebrunnen)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setEntnahmebrunnenTyp(mapEntnahmebrunnenTyp(srcObj.getTyp()));
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -183,7 +183,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setTechdata3(srcObj.getTechdata3());
                 mappedObj.setTechdata4(srcObj.getTechdata4());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 entnahmebrunnen2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -194,14 +194,14 @@ public class LegacyWva2kgdm  {
                 String uuid=LegacyUtil.newUUID();
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Grundlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Grundlage(uuid);
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt())); 
-                mappedObj.setDetailplanDatum(LegacyUtil.mapDate(srcObj.getDetailplanDatum()));
+                mappedObj.setDetailplanDatum(LegacyUtil.mapDateFromITF(srcObj.getDetailplanDatum()));
                 mappedObj.setDetailplanMstab(mapDetailplanMstab(srcObj.getDetailplanMstab()));
                 mappedObj.setDetailplanHerkunft(mapErfVorlHerkunft(srcObj.getDetailplanHerkunft()));
                 mappedObj.setDetailplanBz(srcObj.getDetailplanBz());
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
-                mappedObj.setKontaktDatum(LegacyUtil.mapDate(srcObj.getKontaktDatum()));
+                mappedObj.setKontaktDatum(LegacyUtil.mapDateFromITF(srcObj.getKontaktDatum()));
                 mappedObj.setAdresse(adresse2oid.get(srcObj.getKontaktPerson()));
                 grundlage2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
@@ -217,7 +217,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidder srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidder)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.HydWidder);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -232,7 +232,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -249,7 +249,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Kaliberwechsel srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Kaliberwechsel)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.WeitereAnlage_Art.Brunnen_unabh_TWQualitaet_unbest);
                 mappedObj.setWeitereAnlageArt(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage_WeitereAnlageArt.Kaliberwechsel);
                 IomObject symbolGeo=LegacyUtil.mapCoord(srcObj.getattrobj(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBrunnen.tag_SymbolGeo, 0));
@@ -268,7 +268,7 @@ public class LegacyWva2kgdm  {
                 }
                 final ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung maxDarst = mapDarstellung(srcObj.getMaxDarst());
                 if(maxDarst!=null)mappedObj.setMaxDarst(maxDarst);
-                final String mutatDatum = LegacyUtil.mapDate(srcObj.getMutatDatum());
+                final String mutatDatum = LegacyUtil.mapDateFromITF(srcObj.getMutatDatum());
                 if(mutatDatum!=null)mappedObj.setMutatDatum(mutatDatum);
                 final String mutatBemerk = srcObj.getMutatBemerk();
                 if(mutatBemerk!=null)mappedObj.setMutatBemerk(mutatBemerk);
@@ -285,7 +285,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBrunnen srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.LaufBrunnen)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 final ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Nutzungsart nutzungsart = srcObj.getNutzungsart();
                 if(nutzungsart!=null && nutzungsart.equals(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Nutzungsart.Trinkwasser)) {
                     mappedObj.setArt(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.WeitereAnlage_Art.Trinkwasserbrunnen_unabhaengig);
@@ -318,7 +318,7 @@ public class LegacyWva2kgdm  {
                 if(lokalitaet!=null)mappedObj.setLokalitaet(lokalitaet);
                 final ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung maxDarst = mapDarstellung(srcObj.getMaxDarst());
                 if(maxDarst!=null)mappedObj.setMaxDarst(maxDarst);
-                final String mutatDatum = LegacyUtil.mapDate(srcObj.getMutatDatum());
+                final String mutatDatum = LegacyUtil.mapDateFromITF(srcObj.getMutatDatum());
                 if(mutatDatum!=null)mappedObj.setMutatDatum(mutatDatum);
                 final String mutatBemerk = srcObj.getMutatBemerk();
                 if(mutatBemerk!=null)mappedObj.setMutatBemerk(mutatBemerk);
@@ -341,7 +341,7 @@ public class LegacyWva2kgdm  {
                     guid=LegacyUtil.newUUID();
                 }
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung(LegacyUtil.stripUUID(guid));
-                mappedObj.setIdentifikator("ZG-"+guid);
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+guid);
                 IomObject geom = srcObj.getGeometrie();
                 if(geom!=null) {
                     mappedObj.setGeometrie(LegacyUtil.mapPolyline(geom));
@@ -363,7 +363,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -383,14 +383,14 @@ public class LegacyWva2kgdm  {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFassung srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFassung)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflaechenGewFassung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflaechenGewFassung(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setFassungsart(mapOberflaeGewFassungTyp2Fassungsart(srcObj.getTyp()));
                 mappedObj.setTiefe(srcObj.getTiefe());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewfassung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -400,7 +400,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFsgLeitung srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFsgLeitung)obj;
                 String guid = srcObj.getGUID();
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung(LegacyUtil.stripUUID(guid));
-                mappedObj.setIdentifikator("ZG-"+guid);
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+guid);
                 final IomObject geom = LegacyUtil.mapPolyline(srcObj.getSymbolGeo());
                 mappedObj.setSymbolGeo(geom);
                 mappedObj.setGeometrie(geom);
@@ -408,7 +408,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setLeitArt(Leitung_LeitArt.OberflGewFsgLeitung);
                 mappedObj.setLeitText(srcObj.getLeitText());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewfsgleitung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -417,7 +417,7 @@ public class LegacyWva2kgdm  {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewRohwaPW srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewRohwaPW)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(Foerderanlage_Art.hydraulischer_Widder);
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.OberflGewRohwaPW);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
@@ -427,7 +427,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setTechdata(srcObj.getTechData());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 oberflgewrohwapw2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -456,7 +456,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Pumpwerk srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Pumpwerk)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.Pumpwerk);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -476,7 +476,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -488,7 +488,7 @@ public class LegacyWva2kgdm  {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Quellschacht srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Quellschacht)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Quellschacht mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Quellschacht(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
@@ -496,7 +496,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setErtragBrst(srcObj.getEtragBrst());
                 mappedObj.setErtragGrp(srcObj.getErtragGrp());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 final String sammelschachtTid = srcObj.getSammelschacht();
                 if(sammelschachtTid!=null) {
@@ -551,7 +551,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwasserPW srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwasserPW)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.ReinwasserPW);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -571,7 +571,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -598,7 +598,7 @@ public class LegacyWva2kgdm  {
                     guid=LegacyUtil.newUUID();
                 }
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Reservoir mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Reservoir(LegacyUtil.stripUUID(guid));
-                mappedObj.setIdentifikator("ZG-"+guid);
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+guid);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getRealY(),srcObj.getRealX()));
@@ -641,7 +641,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 if(srcObj.getStufenpumpwerk()!=null) {
                     Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getStufenpumpwerk()));
@@ -659,7 +659,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.RWZisterne srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.RWZisterne)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 rwzisterne2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaNameText) {
@@ -674,7 +674,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Sammelschacht srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Sammelschacht)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammelschacht mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Sammelschacht(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getRealY(),srcObj.getRealX()));
@@ -689,7 +689,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -706,7 +706,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Schieberschacht srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Schieberschacht)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Schieberschacht mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Schieberschacht(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(WeitereAnlage_Art.Brunnen_unabh_TWQualitaet_unbest);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -721,7 +721,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -731,7 +731,7 @@ public class LegacyWva2kgdm  {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbine srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbine)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TWTurbine mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TWTurbine(LegacyUtil.stripUUID(srcObj.getGUID()));
-                mappedObj.setIdentifikator("ZG-"+srcObj.getGUID());
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(WeitereAnlage_Art.Brunnen_unabh_TWQualitaet_unbest);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
@@ -750,7 +750,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setGrundlage(grundlage2oid.get(srcObj.getGrundlage()));
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -786,14 +786,14 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.WVAFassungsleitung srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.WVAFassungsleitung)obj;
                 String guid = srcObj.getGUID();
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung(LegacyUtil.stripUUID(guid));
-                mappedObj.setIdentifikator("ZG-"+guid);
+                mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+guid);
                 mappedObj.setGeometrie(LegacyUtil.mapPolyline(srcObj.getSymbolGeo()));
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setLeitArt(Leitung_LeitArt.WVAFassungsleitung);
                 mappedObj.setLeitText(srcObj.getLeitText());
                 mappedObj.setErfGenauigkeit(mapWVAFassungsleitung_Genauigkeit(srcObj.getGenauigkeit()));
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
-                mappedObj.setMutatDatum(LegacyUtil.mapDate(srcObj.getMutatDatum()));
+                mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 wvafassungsleitung2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
@@ -1238,6 +1238,13 @@ public class LegacyWva2kgdm  {
         || obj instanceof TWTurbine
         || obj instanceof LeitWasservsg) {
             return true;
+        }
+        if(obj instanceof Leitung) {
+            Leitung leitung=(Leitung)obj;
+            Leitung_LeitArt leitArt = leitung.getLeitArt();
+            if(Leitung_LeitArt.LeitungsnetzWV.equals(leitArt) || Leitung_LeitArt.WVAFassungsleitung.equals(leitArt)) {
+                return true;
+            }
         }
         return false;
     }
