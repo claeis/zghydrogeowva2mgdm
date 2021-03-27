@@ -7,6 +7,7 @@ import java.util.Map;
 
 import ch.ehi.basics.logging.EhiLogger;
 import ch.interlis.iom.IomObject;
+import ch.interlis.iom_j.Iom_jObject;
 import ch.interlis.iox.EndTransferEvent;
 import ch.interlis.iox.IoxEvent;
 import ch.interlis.iox.ObjectEvent;
@@ -247,7 +248,12 @@ public class LegacyHydro2kgdm  {
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWBewiReg){
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWFlaeche){
-                // TODO change BautenGW_Punkt to BautenGW_Flaeche
+                ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWFlaeche srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWFlaeche)obj;
+                // change BautenGW_Punkt to BautenGW_Flaeche
+                IomObject mappedObj=new Iom_jObject(mappedObjs.get(bautengw2oid.get(srcObj.getBautenGW())));
+                mappedObj.setobjecttag(BautenGW_Flaeche.tag);
+                mappedObj.changeattrobj(BautenGW_Flaeche.tag_Lage, 0, srcObj.getGeometrie());
+                mappedObjs.put(mappedObj.getobjectoid(), mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BgwNrAfu_Intranet2Pos){
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BgwNrAfu_Intranet5Pos){
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruBewiReg){
