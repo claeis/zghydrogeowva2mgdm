@@ -8,6 +8,16 @@ public class QwFsgEndpunkt extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
   public String getobjecttag() {
     return tag;
   }
+  public final static String tag_QWFassungsArt="QWFassungsArt";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt getQWFassungsArt() {
+    if(getattrvaluecount("QWFassungsArt")==0)return null;
+    String value=getattrvalue("QWFassungsArt");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.parseXmlCode(value);
+  }
+  public void setQWFassungsArt(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt value) {
+    if(value==null){setattrundefined("QWFassungsArt");return;}
+    setattrvalue("QWFassungsArt", ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.toXmlCode(value));
+  }
   public final static String tag_ObjektNummer="ObjektNummer";
   public Integer getObjektNummer() {
     if(getattrvaluecount("ObjektNummer")==0)return null;
@@ -17,6 +27,16 @@ public class QwFsgEndpunkt extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
   public void setObjektNummer(Integer value) {
     if(value==null){setattrundefined("ObjektNummer");return;}
     setattrvalue("ObjektNummer", Integer.toString(value));
+  }
+  public final static String tag_EigentumArt="EigentumArt";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt getEigentumArt() {
+    if(getattrvaluecount("EigentumArt")==0)return null;
+    String value=getattrvalue("EigentumArt");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt.parseXmlCode(value);
+  }
+  public void setEigentumArt(ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt value) {
+    if(value==null){setattrundefined("EigentumArt");return;}
+    setattrvalue("EigentumArt", ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt.toXmlCode(value));
   }
   public final static String tag_PrivatNutzer="PrivatNutzer";
   public String getPrivatNutzer() {

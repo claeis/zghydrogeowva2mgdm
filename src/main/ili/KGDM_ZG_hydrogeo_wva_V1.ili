@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-03-23"  =
+VERSION "2021-03-29"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -81,6 +81,12 @@ VERSION "2021-03-23"  =
                           Rohr,                     !! <Rohr, d5>
                           andere,                   !! <andere, d6>
                           unbekannt);               !! <unbekannt, d7>
+
+    WasserQualitaet = (ohne_Aufbereitung_als_Trinkwasser_nutzbar,	!! <ohne Aufbereitung als Trinkwasser nutzbar, d1>
+                       kein_Trinkwasser,	 			!! <kein Trinkwasser, d2>
+                       Aufbereitung_vorhanden,	 		!! <Aufbereitung vorhanden, d3>
+                       unbekannt);					!! <unbekannt, d4>
+
 
     FassungsTyp = (Entnahmebrunnen,               !! <Entnahmebrunnen, d1>
                    Quellwasserfassung,            !! <Quellwasserfassung, d2>
@@ -392,7 +398,9 @@ VERSION "2021-03-23"  =
 
 !! Fachobjekte
     CLASS QwFsgEndpunkt EXTENDS Quelle =
+	  QWFassungsArt : QWFassungsArt;
       ObjektNummer : 1..99999;
+      EigentumArt : EigentumArt;      
       PrivatNutzer : TEXT*254;
       ErtragMinAng : ErtragAngaben;
       ErtragMaxAng : ErtragAngaben;
@@ -477,16 +485,19 @@ VERSION "2021-03-23"  =
     CLASS Entnahmebrunnen EXTENDS Grundwasserfassung =
       EntnahmebrunnenTyp : MANDATORY EntnahmebrunnenTyp;
       Notbrunnen : BOOLEAN;
-      Oeffentliches_Interesse : MANDATORY (ja, nein, unbestimmt);
+      Notversorgung : Notversorgung;
+      Oeffentliches_Interesse : MANDATORY TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
       Foerdermethode : MANDATORY (Pumpe, Heber, artesisch, unbestimmt);
       TextTyp : TextTyp;
       ObjNrAfu : TEXT*50;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
+      BetriebArt: BetriebsArt;
       TiefeTerrAbstich: 0.00 .. 999.99;   !! in [m]
       HoeheTerrAbstich : 0.00 .. 999.99;  !! in [m]
       WspHoeheTiefst: 0.00 .. 9999.99;    !! Höhe m ü.M. 
       K_Wert: 0.000 .. 99.999;            !! [10^-3 m/s]
+      WqualiBemerkung : WasserQualitaet;
       SchzNr : 0 .. 99999;
       SchzPflicht : BOOLEAN;
       SchzGutachten: BOOLEAN;
@@ -663,7 +674,7 @@ VERSION "2021-03-23"  =
     END TWTurbine;
 
     CLASS Leitung (EXTENDED) =             !! OberflGewFsgLeitung und RueckgabeLeitung aus Hydrogeo-Obj, LeitungsnetzWV, WVAFassungsleitung, OberflGewFsgLeitung aus WVA
-      LeitArt : (OberflGewFsgLeitung, RueckgabeLeitung, LeitungsnetzWV, WVAFassungsleitung);
+      LeitArt : MANDATORY (OberflGewFsgLeitung, RueckgabeLeitung, LeitungsnetzWV, WVAFassungsleitung);
       Nachfuehrungsstand : INTERLIS.XMLDate;
       Typ : MANDATORY LeitungsArt;         !! OberflGewFsgLeitung = Versorgungsleitung; RueckgabeLeitung = Rueckgabeleitung
       SymbolGeo: CHLine;

@@ -26,13 +26,23 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
     if(value==null){setattrundefined("Notbrunnen");return;}
     setattrvalue("Notbrunnen", value?"true":"false");
   }
-  public final static String tag_Oeffentliches_Interesse="Oeffentliches_Interesse";
-  public Entnahmebrunnen_Oeffentliches_Interesse getOeffentliches_Interesse() {
-    String value=getattrvalue("Oeffentliches_Interesse");
-    return Entnahmebrunnen_Oeffentliches_Interesse.parseXmlCode(value);
+  public final static String tag_Notversorgung="Notversorgung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung getNotversorgung() {
+    if(getattrvaluecount("Notversorgung")==0)return null;
+    String value=getattrvalue("Notversorgung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.parseXmlCode(value);
   }
-  public void setOeffentliches_Interesse(Entnahmebrunnen_Oeffentliches_Interesse value) {
-    setattrvalue("Oeffentliches_Interesse", Entnahmebrunnen_Oeffentliches_Interesse.toXmlCode(value));
+  public void setNotversorgung(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung value) {
+    if(value==null){setattrundefined("Notversorgung");return;}
+    setattrvalue("Notversorgung", ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.toXmlCode(value));
+  }
+  public final static String tag_Oeffentliches_Interesse="Oeffentliches_Interesse";
+  public ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt getOeffentliches_Interesse() {
+    String value=getattrvalue("Oeffentliches_Interesse");
+    return ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt.parseXmlCode(value);
+  }
+  public void setOeffentliches_Interesse(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt value) {
+    setattrvalue("Oeffentliches_Interesse", ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt.toXmlCode(value));
   }
   public final static String tag_Foerdermethode="Foerdermethode";
   public Entnahmebrunnen_Foerdermethode getFoerdermethode() {
@@ -82,6 +92,16 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
     if(value==null){setattrundefined("PrivatNutzer");return;}
     setattrvalue("PrivatNutzer", value);
   }
+  public final static String tag_BetriebArt="BetriebArt";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebArt() {
+    if(getattrvaluecount("BetriebArt")==0)return null;
+    String value=getattrvalue("BetriebArt");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.parseXmlCode(value);
+  }
+  public void setBetriebArt(ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt value) {
+    if(value==null){setattrundefined("BetriebArt");return;}
+    setattrvalue("BetriebArt", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
+  }
   public final static String tag_TiefeTerrAbstich="TiefeTerrAbstich";
   public Double getTiefeTerrAbstich() {
     if(getattrvaluecount("TiefeTerrAbstich")==0)return null;
@@ -121,6 +141,16 @@ public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TW
   public void setK_Wert(Double value) {
     if(value==null){setattrundefined("K_Wert");return;}
     setattrvalue("K_Wert", Double.toString(value));
+  }
+  public final static String tag_WqualiBemerkung="WqualiBemerkung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet getWqualiBemerkung() {
+    if(getattrvaluecount("WqualiBemerkung")==0)return null;
+    String value=getattrvalue("WqualiBemerkung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.parseXmlCode(value);
+  }
+  public void setWqualiBemerkung(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet value) {
+    if(value==null){setattrundefined("WqualiBemerkung");return;}
+    setattrvalue("WqualiBemerkung", ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.toXmlCode(value));
   }
   public final static String tag_SchzNr="SchzNr";
   public Integer getSchzNr() {

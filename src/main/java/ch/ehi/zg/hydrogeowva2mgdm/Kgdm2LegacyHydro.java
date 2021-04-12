@@ -15,6 +15,7 @@ import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fass
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung_Fassungsart;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Nutzungszustand;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.BOOLEAN_Typ;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.DetailplanArt;
@@ -36,6 +37,7 @@ import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaeGewFassungTyp;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFSchachtTyp;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QWFassungsArt;
+import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellenTyp;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SammeleinrichtungTyp;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.SaubWaEinleitTyp;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.VersickerungArt;
@@ -262,14 +264,15 @@ public class Kgdm2LegacyHydro {
                     mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                     mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                     mappedObj.setPrivaterNutzer(srcObj.getPrivatNutzer());
-                    mappedObj.setBetriebArt(mapGrundwasserfassung_Nutzungszustand2BetriebArt(srcObj.getNutzungszustand()));
-                    mappedObj.setNotversorgung(mapNotversorgung(srcObj.getNotwasserversorgung()));
+                    mappedObj.setBetriebArt(mapBetriebsArt(srcObj.getBetriebArt()));
+                    mappedObj.setNotversorgung(mapNotwasserversorgung2Notversorgung(srcObj.getNotwasserversorgung()));
+                    mappedObj.setNotversorgung(mapNotversorgung(srcObj.getNotversorgung()));
                     final Double filterrohrDimension = srcObj.getDurchmesser();
                     mappedObj.setFilterrohrDimension(filterrohrDimension==null ? null : new Integer(filterrohrDimension.intValue()));
                     mappedObj.setTiefeTerrAbstich(srcObj.getTiefeTerrAbstich());
                     mappedObj.setWspHoeheTiefst(srcObj.getWspHoeheTiefst());
                     mappedObj.setK_Wert(srcObj.getK_Wert());
-                    mappedObj.setWqualiBemerkung(mapWasserQualitaet(srcObj.getTrinkwasser()));
+                    mappedObj.setWqualiBemerkung(mapWasserQualitaet(srcObj.getWqualiBemerkung()));
                     mappedObj.setSchzNr(srcObj.getSchzNr());
                     mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                     mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
@@ -407,7 +410,7 @@ public class Kgdm2LegacyHydro {
                     mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                     mappedObj.setPrivaterNutzer(srcObj.getPrivatNutzer());
                     mappedObj.setBetriebArt(mapBetriebsArt(srcObj.getBetriebsart()));
-                    mappedObj.setNotversorgung(mapNotversorgung(srcObj.getNotwasserversorgung()));
+                    mappedObj.setNotversorgung(mapNotwasserversorgung2Notversorgung(srcObj.getNotwasserversorgung()));
                     mappedObj.setTiefe(srcObj.getTiefe());
                     mappedObj.setSchzNr(srcObj.getSchzNr());
                     mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
@@ -515,7 +518,7 @@ public class Kgdm2LegacyHydro {
                     mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                     mappedObj.setPrivaterNutzer(srcObj.getPrivatNutzer());
                     mappedObj.setBetriebArt(mapBetriebsArt(srcObj.getBetriebsart()));
-                    mappedObj.setNotversorgung(mapNotversorgung(srcObj.getNotwasserversorgung()));
+                    mappedObj.setNotversorgung(mapNotwasserversorgung2Notversorgung(srcObj.getNotwasserversorgung()));
                     if(srcObj.getattrvaluecount(srcObj.tag_Ertrag_minimal)>0) {
                         mappedObj.setSchuettmengeMin(srcObj.getErtrag_minimal());
                     }
@@ -524,7 +527,7 @@ public class Kgdm2LegacyHydro {
                     mappedObj.setErtragMaxAng(mapErtragAngaben(srcObj.getErtragMaxAng()));
                     mappedObj.setSchuettmengeMittl(srcObj.getErtrag_mittel());
                     mappedObj.setErtragMittlAng(mapErtragAngaben(srcObj.getErtragMittlAng()));
-                    mappedObj.setWqualiBemerkung(mapWasserQualitaet(srcObj.getTrinkwasser()));
+                    mappedObj.setWqualiBemerkung(mapTrinkwasser2WasserQualitaet(srcObj.getTrinkwasser()));
                     mappedObj.setSchzNr(srcObj.getSchzNr());
                     mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                     mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
@@ -574,19 +577,21 @@ public class Kgdm2LegacyHydro {
                     ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QwFsgEndpunkt mappedObj=new ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QwFsgEndpunkt(newTid());
                     mappedObj.setGUID(stripZG(srcObj.getIdentifikator()));
                     mappedObj.setLage(srcObj.getGeometrie());
-                    // TODO mappedObj.setFassungsart(mapQWFassungsArt(srcObj.getQWFassungsart()));
+                    mappedObj.setTyp(mapQuelle_Fassungsart(srcObj.getFassungsart()));
+                    mappedObj.setFassungsart(mapQWFassungsArt(srcObj.getQWFassungsArt()));
                     mappedObj.setName(srcObj.getName());
                     mappedObj.setObjektNummer(srcObj.getObjektNummer());
+                    mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                     mappedObj.setPrivaterNutzer(srcObj.getPrivatNutzer());
                     mappedObj.setBetriebArt(mapQuelle_Nutzungszustand2BetriebArt(srcObj.getNutzungszustand()));
-                    mappedObj.setNotversorgung(mapNotversorgung(srcObj.getNotwasserversorgung()));
+                    mappedObj.setNotversorgung(mapNotwasserversorgung2Notversorgung(srcObj.getNotwasserversorgung()));
                     mappedObj.setSchuettmengeMin(srcObj.getSchuettung_minimal());
                     mappedObj.setErtragMinAng(mapErtragAngaben(srcObj.getErtragMinAng()));
                     mappedObj.setSchuettmengeMax(srcObj.getSchuettung_maximal());
                     mappedObj.setErtragMaxAng(mapErtragAngaben(srcObj.getErtragMaxAng()));
                     mappedObj.setSchuettmengeMittl(srcObj.getSchuettung_mittel());
                     mappedObj.setErtragMittlAng(mapErtragAngaben(srcObj.getErtragMittlAng()));
-                    mappedObj.setWqualiBemerkung(mapWasserQualitaet(srcObj.getTrinkwasser()));
+                    mappedObj.setWqualiBemerkung(mapTrinkwasser2WasserQualitaet(srcObj.getTrinkwasser()));
                     mappedObj.setSchzNr(srcObj.getSchzNr());
                     mappedObj.setSchzPflicht(mapBOOLEAN_Typ(srcObj.getSchzPflicht()));
                     mappedObj.setSchzGutachten(mapBOOLEAN_Typ(srcObj.getSchzGutachten()));
@@ -898,6 +903,73 @@ public class Kgdm2LegacyHydro {
         return;
     }
 
+    private QuellenTyp mapQuelle_Fassungsart(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart.ungefasst)) {
+            return QuellenTyp.ungefasst;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart.gefasst_direkt)) {
+            return QuellenTyp.gefasst;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart.gefasst_Fassungsstrang)) {
+            return QuellenTyp.gefasst;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart.gefasst_Fassungsstollen)) {
+            return QuellenTyp.gefasst;
+        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart.gefasst_unbestimmt)) {
+            return QuellenTyp.gefasst;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private WasserQualitaet mapWasserQualitaet(
+            ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.ohne_Aufbereitung_als_Trinkwasser_nutzbar)) {
+            return WasserQualitaet.ohne_Aufbereitung_als_Trinkwasser_nutzbar;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.kein_Trinkwasser)){
+            return WasserQualitaet.kein_Trinkwasser;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.Aufbereitung_vorhanden)){
+            return WasserQualitaet.Aufbereitung_vorhanden;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.unbekannt)){
+            return WasserQualitaet.unbekannt;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private Notversorgung mapNotversorgung(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.nicht_geeignet)) {
+            return Notversorgung.nicht_geeignet;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.nur_Notversorgung)) {
+            return Notversorgung.nur_Notversorgung;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.Not_und_Normalversorgung)) {
+            return Notversorgung.Not_und_Normalversorgung;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.unbekannt)) {
+            return Notversorgung.unbekannt;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private QWFassungsArt mapQWFassungsArt(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt src) {
+        if(src==null) {
+            return null;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.Schacht)) {
+            return QWFassungsArt.Schacht;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.Sickerleitung)){
+            return QWFassungsArt.Sickerleitung;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.Stollen)){
+            return QWFassungsArt.Stollen;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.Felsspalt)){
+            return QWFassungsArt.Felsspalt;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.unbekannt)){
+            return QWFassungsArt.unbekannt;
+        }else if(src.equals(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFassungsArt.andere)){
+            return QWFassungsArt.andere;
+        }
+        throw new IllegalArgumentException();
+    }
+
     private SaubWaEinleitTyp mapSaubWaEinleitTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.SaubWaEinleitTyp src) {
         if(src==null) {
             return null;
@@ -1002,8 +1074,6 @@ public class Kgdm2LegacyHydro {
             return SammeleinrichtungTyp.andere;
         }else if(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.unbekannt.equals(src)) {
             return SammeleinrichtungTyp.unbekannt;
-        // }else if(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.Horizontal_Filterstrecke.equals(src)) {
-        //    return SammeleinrichtungTyp.Horizontal_Filterstrecke;
         }
         throw new IllegalArgumentException("unexpected SammeleinrichtungTyp <"+src+">");
     }
@@ -1052,21 +1122,6 @@ public class Kgdm2LegacyHydro {
         throw new IllegalArgumentException();
     }
 
-    private BetriebArt mapGrundwasserfassung_Nutzungszustand2BetriebArt(
-            ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand src) {
-        if(src==null) {
-            return null;
-        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.genutzt)) {
-            return BetriebArt.in_Betrieb;
-        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.aufgehoben)) {
-            return BetriebArt.stillgelegt;
-        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.ungenutzt)) {
-            return BetriebArt.ungenutzt;
-        }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand.unbestimmt)) {
-            return BetriebArt.unbekannt;
-        }
-        throw new IllegalArgumentException();
-    }
     private BetriebArt mapQuelle_Nutzungszustand2BetriebArt(ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Nutzungszustand src) {
         if(src==null) {
             return null;
@@ -1082,7 +1137,7 @@ public class Kgdm2LegacyHydro {
         throw new IllegalArgumentException();
     }
 
-    private Notversorgung mapNotversorgung(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt src) {
+    private Notversorgung mapNotwasserversorgung2Notversorgung(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt src) {
         if(src==null) {
             return null;
         }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt.nein)) {
@@ -1106,7 +1161,7 @@ public class Kgdm2LegacyHydro {
         throw new IllegalArgumentException();
     }
 
-    private WasserQualitaet mapWasserQualitaet(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein src) {
+    private WasserQualitaet mapTrinkwasser2WasserQualitaet(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein src) {
         if(src==null) {
             return null;
         }else if(src.equals(ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein.ja)) {
@@ -1261,11 +1316,6 @@ public class Kgdm2LegacyHydro {
         }
         throw new IllegalArgumentException();
     }
-    private Fassungsstrang_Stollen_Typ mapSammeleinrichtung_Typ(Sammeleinrichtung_Typ typ) {
-        // Werteliste ist identisch
-        return Fassungsstrang_Stollen_Typ.parseXmlCode(Sammeleinrichtung_Typ.toXmlCode(typ));
-    }
-
     private String stripZG(String src) {
         if(src.startsWith(LegacyUtil.ZG_PREFIX)) {
             return src.substring(LegacyUtil.ZG_PREFIX.length());

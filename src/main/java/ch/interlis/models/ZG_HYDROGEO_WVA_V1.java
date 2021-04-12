@@ -4,7 +4,7 @@ public class ZG_HYDROGEO_WVA_V1{
   public final static String MODEL= "ZG_hydrogeo_wva_V1";
   public final static String Wasserversorgung_Zug= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug";
   public final static String TransferMetadaten= "ZG_hydrogeo_wva_V1.TransferMetadaten";
-  public static ch.interlis.iom_j.xtf.XtfModel getXtfModel(){ return new ch.interlis.iom_j.xtf.XtfModel("ZG_hydrogeo_wva_V1","http://models.geo.zg.ch","2021-03-23"); }
+  public static ch.interlis.iom_j.xtf.XtfModel getXtfModel(){ return new ch.interlis.iom_j.xtf.XtfModel("ZG_hydrogeo_wva_V1","http://models.geo.zg.ch","2021-03-29"); }
   static public ch.interlis.iox.IoxFactory getIoxFactory()
   {
     return new ch.interlis.iox.IoxFactory(){
@@ -220,7 +220,9 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Schuettung_maximal"
       ,"Trinkwasser"
       ,"Zweck"
+      ,"QWFassungsArt"
       ,"ObjektNummer"
+      ,"EigentumArt"
       ,"PrivatNutzer"
       ,"ErtragMinAng"
       ,"ErtragMaxAng"
@@ -1032,16 +1034,19 @@ public class ZG_HYDROGEO_WVA_V1{
       ,"Pkonz"
       ,"EntnahmebrunnenTyp"
       ,"Notbrunnen"
+      ,"Notversorgung"
       ,"Oeffentliches_Interesse"
       ,"Foerdermethode"
       ,"TextTyp"
       ,"ObjNrAfu"
       ,"EigentumArt"
       ,"PrivatNutzer"
+      ,"BetriebArt"
       ,"TiefeTerrAbstich"
       ,"HoeheTerrAbstich"
       ,"WspHoeheTiefst"
       ,"K_Wert"
+      ,"WqualiBemerkung"
       ,"SchzNr"
       ,"SchzPflicht"
       ,"SchzGutachten"

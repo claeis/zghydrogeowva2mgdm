@@ -10,12 +10,10 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
   }
   public final static String tag_LeitArt="LeitArt";
   public Leitung_LeitArt getLeitArt() {
-    if(getattrvaluecount("LeitArt")==0)return null;
     String value=getattrvalue("LeitArt");
     return Leitung_LeitArt.parseXmlCode(value);
   }
   public void setLeitArt(Leitung_LeitArt value) {
-    if(value==null){setattrundefined("LeitArt");return;}
     setattrvalue("LeitArt", Leitung_LeitArt.toXmlCode(value));
   }
   public final static String tag_Nachfuehrungsstand="Nachfuehrungsstand";

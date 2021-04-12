@@ -17,10 +17,8 @@ import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fass
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Nutzungszustand;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Fassungsart;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Grundwasserleiter_Typ;
-import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.HilfsText;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen_Foerdermethode;
-import ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen_Oeffentliches_Interesse;
 
 public class Kgdm2MgdmGwa {
 
@@ -109,12 +107,7 @@ public class Kgdm2MgdmGwa {
                     mappedObj.setTrinkwasser(mapJaNein(srcObj.getTrinkwasser()));
                     mappedObj.setZweck(mapTexte(srcObj.getVerwendungszweck()));
                     mappedObj.setNotwasserversorgung(mapJaNeinUnbestimmt(srcObj.getNotwasserversorgung()));
-                    final Boolean schzPflicht = srcObj.getSchzPflicht();
-                    if(schzPflicht!=null) {
-                        mappedObj.setOeffentliches_Interesse(mapBoolean(schzPflicht));
-                    }else {
-                        mappedObj.setOeffentliches_Interesse(JaNeinUnbestimmt.unbestimmt);
-                    }
+                    mappedObj.setOeffentliches_Interesse(mapJaNeinUnbestimmt(srcObj.getOeffentliches_Interesse()));
                     final Integer pkonz = srcObj.getPkonz();
                     if(pkonz!=null) {
                         mappedObj.setPkonz(pkonz.doubleValue());
