@@ -17,6 +17,7 @@ import ch.interlis.models.TWVinNotlagen_LV03_V1.TWVinNotlagen.Brunnenstube;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung_Nutzungszustand;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung_Fassungsart;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Quelle_Fassungsart;
@@ -313,6 +314,12 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setEntnahmebrunnenTyp(mapEntnahmebrunnenTyp(srcObj.getTyp()));
                 mappedObj.setFoerdermethode(Entnahmebrunnen_Foerdermethode.unbestimmt);
+                if(mappedObj.getattrvaluecount(Entnahmebrunnen.tag_Fassungsart)==0) {
+                    mappedObj.setFassungsart(Grundwasserfassung_Fassungsart.andere);
+                }
+                if(mappedObj.getattrvaluecount(Entnahmebrunnen.tag_Aufbereitung)==0) {
+                    mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
+                }
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));

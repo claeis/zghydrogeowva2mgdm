@@ -184,6 +184,10 @@ public class LegacyWva2kgdm  {
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setFassungsart(mapEntnahmebrunnenTyp2Fassungsart(srcObj.getTyp()));
+                if(mappedObj.getattrvaluecount(Entnahmebrunnen.tag_Fassungsart)==0) {
+                    mappedObj.setFassungsart(Grundwasserfassung_Fassungsart.andere);
+                }
+                mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setTechdata1(srcObj.getTechdata1());
                 mappedObj.setTechdata2(srcObj.getTechdata2());
