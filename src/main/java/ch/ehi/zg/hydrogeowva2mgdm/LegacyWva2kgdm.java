@@ -235,6 +235,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.HydWidder);
+                mappedObj.setFoerdermenge(-1);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getRealY(),srcObj.getRealX()));
@@ -449,6 +450,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setArt(Foerderanlage_Art.hydraulischer_Widder);
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.OberflGewRohwaPW);
+                mappedObj.setFoerdermenge(-1);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
@@ -495,7 +497,13 @@ public class LegacyWva2kgdm  {
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setBetriebsart(mapBetriebsArt(srcObj.getBetriebsart()));;
                 mappedObj.setNutzungsart(mapNutzungsart(srcObj.getNutzungsart()));
-                mappedObj.setTotFoerdermenge(srcObj.getTotFoerdermenge());
+                final Integer totFoerdermenge = srcObj.getTotFoerdermenge();
+                mappedObj.setTotFoerdermenge(totFoerdermenge);
+                if(totFoerdermenge!=null) {
+                    mappedObj.setFoerdermenge(totFoerdermenge);
+                }else {
+                    mappedObj.setFoerdermenge(-1);
+                }
                 mappedObj.setTechdata1(srcObj.getTechdata1());
                 mappedObj.setTechdata2(srcObj.getTechdata2());
                 mappedObj.setTechdata3(srcObj.getTechdata3());
@@ -585,6 +593,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Foerderanlage(LegacyUtil.stripUUID(srcObj.getGUID()));
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setFoerderanlageArt(Foerderanlage_FoerderanlageArt.ReinwasserPW);
+                mappedObj.setFoerdermenge(-1);
                 mappedObj.setSymbolGeo(LegacyUtil.mapCoord(srcObj.getSymbolGeo()));
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getRealY(),srcObj.getRealX()));

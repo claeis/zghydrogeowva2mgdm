@@ -480,6 +480,9 @@ public class LegacyHydro2kgdm  {
                 }
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setGeometrie(srcObj.getLage());
+                if(mappedObj.getattrvaluecount(OberflGewRohwaPW.tag_Foerdermenge)==0) {
+                    mappedObj.setFoerdermenge(-1);
+                }
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setEigentumArt(mapEigentumArt(srcObj.getEigentumArt()));
                 mappedObj.setBetriebsart(mapBetriebArt(srcObj.getBetriebArt()));
