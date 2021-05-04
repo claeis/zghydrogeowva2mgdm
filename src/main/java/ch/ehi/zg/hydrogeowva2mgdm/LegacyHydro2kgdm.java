@@ -520,6 +520,12 @@ public class LegacyHydro2kgdm  {
                 }
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+srcObj.getGUID());
                 mappedObj.setFassungsart(mapOberflaeGewFassungTyp(srcObj.getTyp()));
+                if(mappedObj.getattrvaluecount(OberflaechenGewFassung.tag_Aufbereitung)==0) {
+                    mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
+                }
+                if(mappedObj.getattrvaluecount(OberflaechenGewFassung.tag_Notwasserversorgung)==0) {
+                    mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
+                }
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());

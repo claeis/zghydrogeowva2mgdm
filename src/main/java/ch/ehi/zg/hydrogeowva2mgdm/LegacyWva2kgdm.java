@@ -409,6 +409,8 @@ public class LegacyWva2kgdm  {
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setFassungsart(mapOberflaeGewFassungTyp2Fassungsart(srcObj.getTyp()));
+                mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
+                mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
                 mappedObj.setTiefe(srcObj.getTiefe());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
