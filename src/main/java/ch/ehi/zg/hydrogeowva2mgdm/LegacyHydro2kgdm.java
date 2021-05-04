@@ -13,6 +13,7 @@ import ch.interlis.iox.IoxEvent;
 import ch.interlis.iox.ObjectEvent;
 import ch.interlis.iox.StartBasketEvent;
 import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
+import ch.interlis.models.TWVinNotlagen_LV03_V1.TWVinNotlagen.Brunnenstube;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
@@ -648,10 +649,19 @@ public class LegacyHydro2kgdm  {
                 if(notversorgung!=null) {
                     mappedObj.setNotwasserversorgung(mapNotversorgung2Notwasserversorgung(notversorgung));
                 }
+                if(mappedObj.getattrvaluecount(Brunnenstube.tag_Notwasserversorgung)==0) {
+                    mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
+                }
                 //mappedObj.setNotversorgung(mapNotversorgung(srcObj.getNotversorgung()));
                 final Integer schuettmengeMin = srcObj.getSchuettmengeMin();
                 if(schuettmengeMin!=null) {
                     mappedObj.setErtrag_minimal(schuettmengeMin);
+                }
+                if(mappedObj.getattrvaluecount(Brunnenstube.tag_Ertrag_minimal)==0) {
+                    mappedObj.setErtrag_minimal(-1);
+                }
+                if(mappedObj.getattrvaluecount(Brunnenstube.tag_Aufbereitung)==0) {
+                    mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
                 }
                 mappedObj.setErtragMinAng(mapErtragAngaben(srcObj.getErtragMinAng()));
                 mappedObj.setErtrag_maximal(srcObj.getSchuettmengeMax());

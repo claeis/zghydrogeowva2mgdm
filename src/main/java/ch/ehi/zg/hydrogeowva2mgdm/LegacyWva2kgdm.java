@@ -9,6 +9,7 @@ import ch.interlis.iom.IomObject;
 import ch.interlis.iox.EndTransferEvent;
 import ch.interlis.iox.IoxEvent;
 import ch.interlis.iox.ObjectEvent;
+import ch.interlis.models.TWVinNotlagen_LV03_V1.TWVinNotlagen.Brunnenstube;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
@@ -509,6 +510,9 @@ public class LegacyWva2kgdm  {
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setFassungsart(mapQWFSchachtTyp(srcObj.getTyp()));
+                mappedObj.setErtrag_minimal(-1);
+                mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
+                mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
                 mappedObj.setErtragBrst(srcObj.getEtragBrst());
                 mappedObj.setErtragGrp(srcObj.getErtragGrp());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
@@ -699,8 +703,13 @@ public class LegacyWva2kgdm  {
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setBetriebsart(mapBetriebsArt(srcObj.getBetriebsart()));
                 mappedObj.setTrinkwasser(mapNutzungsart2Trinkwasser(srcObj.getNutzungsart()));
+                mappedObj.setErtrag_minimal(-1);
+                mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
                 mappedObj.setTechData(srcObj.getTechData());
                 mappedObj.setNotwasserversorgung(mapNotversorgung2Notwasserversorgung(srcObj.getNotversorgung()));
+                if(mappedObj.getattrvaluecount(Sammelschacht.tag_Notwasserversorgung)==0) {
+                    mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
+                }
                 mappedObj.setKanton(mapKanton(srcObj.getKanton()));
                 mappedObj.setGdeNrBFS(srcObj.getGdeNrBFS());
                 mappedObj.setLokalitaet(srcObj.getLokalitaet());
