@@ -372,6 +372,9 @@ public class LegacyWva2kgdm  {
                 if(dimension!=null) {
                     mappedObj.setNennweite(dimension);
                 }
+                if(mappedObj.getattrvaluecount(Leitung.tag_Nennweite)==0) {
+                    mappedObj.setNennweite(-1.0);
+                }
                 mappedObj.setLeitArt(Leitung_LeitArt.LeitungsnetzWV);
                 mappedObj.setLeitText(srcObj.getLeitText());
                 mappedObj.setBetriebsart(mapBetriebsArt(srcObj.getBetriebsart()));;
@@ -425,6 +428,9 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung(LegacyUtil.stripUUID(guid));
                 mappedObj.setIdentifikator(LegacyUtil.ZG_PREFIX+guid);
                 final IomObject geom = LegacyUtil.mapPolyline(srcObj.getSymbolGeo());
+                if(mappedObj.getattrvaluecount(Leitung.tag_Nennweite)==0) {
+                    mappedObj.setNennweite(-1.0);
+                }
                 mappedObj.setSymbolGeo(geom);
                 mappedObj.setGeometrie(geom);
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));

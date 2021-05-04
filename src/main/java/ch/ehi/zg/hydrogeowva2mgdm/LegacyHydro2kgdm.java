@@ -453,6 +453,9 @@ public class LegacyHydro2kgdm  {
                 if(ltgDimension!=null) {
                     mappedObj.setNennweite(ltgDimension);
                 }
+                if(mappedObj.getattrvaluecount(Leitung.tag_Nennweite)==0) {
+                    mappedObj.setNennweite(-1.0);
+                }
                 mappedObj.setBemerkung(srcObj.getBemerkungen());
                 mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
                 mappedObj.setDetailplanArt(mapDetailplanArt(srcObj.getDetailplanArt()));
