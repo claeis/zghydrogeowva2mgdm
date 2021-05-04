@@ -49,9 +49,6 @@ public class Kgdm2MgdmGwa {
             if(collectObjects) {
                 IomObject iomObj=((ObjectEvent) event).getIomObject();
                 if(false) {
-                }else if(iomObj instanceof ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube) {
-                }else if(iomObj instanceof ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung) {
-                }else if(iomObj instanceof ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung) {
                     
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Abgabestelle) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.AbgabestelleWasservsg) {
@@ -237,6 +234,9 @@ public class Kgdm2MgdmGwa {
                     // gibt es nicht im MGDM
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlage) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.WeitereAnlageWasservsg) {
+                }else if(iomObj instanceof ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube) {
+                }else if(iomObj instanceof ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung) {
+                }else if(iomObj instanceof ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung) {
                 }
             }
         }else if(event instanceof EndBasketEvent) {
