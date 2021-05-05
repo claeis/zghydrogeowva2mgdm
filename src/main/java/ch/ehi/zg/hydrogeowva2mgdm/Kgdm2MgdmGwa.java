@@ -15,6 +15,7 @@ import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fass
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsbrunnen_Foerdermethode;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Fassungsstrang_Stollen_Typ;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Nutzungszustand;
+import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Fassungsart;
 import ch.interlis.models.Grundwasseraustritte_LV95_V1.Grundwasseraustritte.Quelle_Grundwasserleiter_Typ;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.HilfsText;
@@ -105,10 +106,7 @@ public class Kgdm2MgdmGwa {
                     mappedObj.setZweck(mapTexte(srcObj.getVerwendungszweck()));
                     mappedObj.setNotwasserversorgung(mapJaNeinUnbestimmt(srcObj.getNotwasserversorgung()));
                     mappedObj.setOeffentliches_Interesse(mapJaNeinUnbestimmt(srcObj.getOeffentliches_Interesse()));
-                    final Integer pkonz = srcObj.getPkonz();
-                    if(pkonz!=null) {
-                        mappedObj.setPkonz(pkonz.doubleValue());
-                    }
+                    mappedObj.setPkonz(mapLiterMinute(srcObj.getPkonz()));
                     mappedObj.setGeometrie(srcObj.getGeometrie());
                     pendingEvents.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
 
@@ -184,6 +182,25 @@ public class Kgdm2MgdmGwa {
                     mappedObj.setSchuettung_mittel(mapLiterMinute(srcObj.getSchuettung_mittel()));
                     mappedObj.setSchuettung_maximal(mapLiterMinute(srcObj.getSchuettung_maximal()));
                     mappedObj.setGeometrie(srcObj.getGeometrie());
+                    if(Quelle_Fassungsart.ungefasst.equals(mappedObj.getFassungsart())) {
+                        // Bei ungefassten Quellen (Fassungsart=ungefasst) muessen folgende Attribute undefiniert sein:
+                        // Nutzungszustand, Trinkwasser, Zweck, Notwasserversorgung, Oeffentliches_Interesse
+                        mappedObj.setNutzungszustand(null);
+                        mappedObj.setTrinkwasser(null);
+                        mappedObj.setZweck(null);
+                        mappedObj.setNotwasserversorgung(null);
+                        mappedObj.setOeffentliches_Interesse(null);
+                    }else {
+                        if(mappedObj.getattrvaluecount(Quelle.tag_Nutzungszustand)==0) {
+                            mappedObj.setNutzungszustand(Nutzungszustand.unbestimmt);
+                        }
+                        if(mappedObj.getattrvaluecount(Quelle.tag_Oeffentliches_Interesse)==0) {
+                            mappedObj.setOeffentliches_Interesse(JaNeinUnbestimmt.unbestimmt);
+                        }
+                        if(mappedObj.getattrvaluecount(Quelle.tag_Notwasserversorgung)==0) {
+                            mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
+                        }
+                    }
                     pendingEvents.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ReinwasserPWOberflGewRohwaPW) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Reservoir) {
@@ -339,6 +356,9 @@ public class Kgdm2MgdmGwa {
 
     private Double mapLiterMinute(Integer src) {
         if(src==null) {
+            return null;
+        }
+        if(src<0) {
             return null;
         }
         return new Double(src);
