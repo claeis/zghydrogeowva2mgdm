@@ -66,6 +66,16 @@ public class Quellschacht extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVin
     if(value==null){setattrundefined("Betriebsart");return;}
     setattrvalue("Betriebsart", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
   }
+  public final static String tag_Notversorgung="Notversorgung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung getNotversorgung() {
+    if(getattrvaluecount("Notversorgung")==0)return null;
+    String value=getattrvalue("Notversorgung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.parseXmlCode(value);
+  }
+  public void setNotversorgung(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung value) {
+    if(value==null){setattrundefined("Notversorgung");return;}
+    setattrvalue("Notversorgung", ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.toXmlCode(value));
+  }
   public final static String tag_ErtragMinAng="ErtragMinAng";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.ErtragAngaben getErtragMinAng() {
     if(getattrvaluecount("ErtragMinAng")==0)return null;
@@ -95,6 +105,16 @@ public class Quellschacht extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVin
   public void setErtragMittlAng(ch.interlis.models.ZG_hydrogeo_wva_V1.ErtragAngaben value) {
     if(value==null){setattrundefined("ErtragMittlAng");return;}
     setattrvalue("ErtragMittlAng", ch.interlis.models.ZG_hydrogeo_wva_V1.ErtragAngaben.toXmlCode(value));
+  }
+  public final static String tag_WqualiBemerkung="WqualiBemerkung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet getWqualiBemerkung() {
+    if(getattrvaluecount("WqualiBemerkung")==0)return null;
+    String value=getattrvalue("WqualiBemerkung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.parseXmlCode(value);
+  }
+  public void setWqualiBemerkung(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet value) {
+    if(value==null){setattrundefined("WqualiBemerkung");return;}
+    setattrvalue("WqualiBemerkung", ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.toXmlCode(value));
   }
   public final static String tag_SchzNr="SchzNr";
   public Integer getSchzNr() {

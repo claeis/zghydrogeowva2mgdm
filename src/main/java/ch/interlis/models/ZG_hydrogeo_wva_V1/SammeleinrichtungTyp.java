@@ -28,4 +28,6 @@ public class SammeleinrichtungTyp{
   public final static String tag_andere="andere";
   static public SammeleinrichtungTyp unbekannt=new SammeleinrichtungTyp("unbekannt");
   public final static String tag_unbekannt="unbekannt";
+  static public SammeleinrichtungTyp Horizontal_Filterstrecke=new SammeleinrichtungTyp("Horizontal_Filterstrecke");
+  public final static String tag_Horizontal_Filterstrecke="Horizontal_Filterstrecke";
 }

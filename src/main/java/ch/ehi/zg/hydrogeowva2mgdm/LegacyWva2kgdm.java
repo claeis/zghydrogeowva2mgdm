@@ -415,6 +415,7 @@ public class LegacyWva2kgdm  {
                 mappedObj.setFassungsart(mapOberflaeGewFassungTyp2Fassungsart(srcObj.getTyp()));
                 mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
                 mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
+                mappedObj.setTrinkwasser(JaNein.nein);
                 mappedObj.setTiefe(srcObj.getTiefe());
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
                 mappedObj.setMutatDatum(LegacyUtil.mapDateFromITF(srcObj.getMutatDatum()));
@@ -530,6 +531,9 @@ public class LegacyWva2kgdm  {
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setFassungsart(mapQWFSchachtTyp(srcObj.getTyp()));
+                if(mappedObj.getattrvaluecount(mappedObj.tag_Fassungsart)==0) {
+                    mappedObj.setFassungsart(Brunnenstube_Fassungsart.unbestimmt);
+                }
                 mappedObj.setErtrag_minimal(-1);
                 mappedObj.setAufbereitung(JaNeinUnbestimmt.unbestimmt);
                 mappedObj.setNotwasserversorgung(JaNeinUnbestimmt.unbestimmt);
@@ -630,6 +634,9 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ResWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.ResWasservsg(null);
                 mappedObj.setReservoir(reservoir2oid.get(srcObj.getReservoir()));
                 mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                final Reservoir reservoir = (Reservoir) mappedObjs.get(reservoir2oid.get(srcObj.getReservoir()));
+                final Wasserversorgung wasserversorgung = (Wasserversorgung) mappedObjs.get(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                reservoir.setNetzteilident(mapNetzteilident(wasserversorgung.getWVName(),reservoir.getFarbe().toString()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Reservoir) {
                 // nur WVA
@@ -721,6 +728,9 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getRealY(),srcObj.getRealX()));
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setLeitungsart(mapLeitungsArt(srcObj.getLeitungsart()));
+                if(mappedObj.getattrvaluecount(mappedObj.tag_Fassungsart)==0) {
+                    mappedObj.setFassungsart(Brunnenstube_Fassungsart.unbestimmt);
+                }
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setBetriebsart(mapBetriebsArt(srcObj.getBetriebsart()));
                 mappedObj.setTrinkwasser(mapNutzungsart2Trinkwasser(srcObj.getNutzungsart()));
@@ -822,6 +832,9 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitWasservsg mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.LeitWasservsg(null);
                 mappedObj.setLeitung(leitungsnetzwv2oid.get(srcObj.getLeitungsnetzWV()));
                 mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                final Leitung leitung = (Leitung) mappedObjs.get(leitungsnetzwv2oid.get(srcObj.getLeitungsnetzWV()));
+                final Wasserversorgung wasserversorgung = (Wasserversorgung) mappedObjs.get(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
+                leitung.setNetzteilident(mapNetzteilident(wasserversorgung.getWVName(),leitung.getFarbe().toString()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Wasserversorgung) {
                 // Hydro und WVA
@@ -841,6 +854,9 @@ public class LegacyWva2kgdm  {
                 mappedObj.setGeometrie(LegacyUtil.mapPolyline(srcObj.getSymbolGeo()));
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setLeitArt(Leitung_LeitArt.WVAFassungsleitung);
+                if(mappedObj.getattrvaluecount(Leitung.tag_Nennweite)==0) {
+                    mappedObj.setNennweite(-1.0);
+                }
                 mappedObj.setLeitText(srcObj.getLeitText());
                 mappedObj.setErfGenauigkeit(mapWVAFassungsleitung_Genauigkeit(srcObj.getGenauigkeit()));
                 mappedObj.setMaxDarst(mapDarstellung(srcObj.getMaxDarst()));
@@ -856,6 +872,9 @@ public class LegacyWva2kgdm  {
             mappingComplete=true;
         }
         
+    }
+    private String mapNetzteilident(String wvName, String farbe) {
+        return "ZG_"+wvName+"-"+farbe;
     }
     private void addCreatedObj(IomObject mappedObj) {
         events.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));

@@ -1,5 +1,5 @@
 package ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug;
-public class Entnahmebrunnen extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Grundwasserfassung
+public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Grundwasserfassung
 {
   public final static String tag= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Entnahmebrunnen";
   public Entnahmebrunnen(String oid) {

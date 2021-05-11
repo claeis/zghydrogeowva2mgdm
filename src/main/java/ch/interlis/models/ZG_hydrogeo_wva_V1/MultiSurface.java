@@ -1,0 +1,28 @@
+package ch.interlis.models.ZG_hydrogeo_wva_V1;
+public class MultiSurface extends ch.interlis.iom_j.Iom_jObject
+{
+  public final static String tag= "ZG_hydrogeo_wva_V1.MultiSurface";
+  public MultiSurface() {
+    super(tag,null);
+  }
+  protected MultiSurface(String oid) {
+    super(tag,oid);
+  }
+  public String getobjecttag() {
+    return tag;
+  }
+  public final static String tag_Surfaces="Surfaces";
+  public int sizeSurfaces() {return getattrvaluecount("Surfaces");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.SurfaceStructure[] getSurfaces() {
+    int size=getattrvaluecount("Surfaces");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.SurfaceStructure value[]=new ch.interlis.models.ZG_hydrogeo_wva_V1.SurfaceStructure[size];
+    for(int i=0;i<size;i++){
+      value[i]=(ch.interlis.models.ZG_hydrogeo_wva_V1.SurfaceStructure)getattrobj("Surfaces",i);
+    }
+    return value;
+  }
+  public void addSurfaces(ch.interlis.models.ZG_hydrogeo_wva_V1.SurfaceStructure value) {
+    addattrobj("Surfaces", value);
+  }
+}

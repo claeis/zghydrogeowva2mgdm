@@ -1,5 +1,5 @@
 package ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug;
-public class OberflaechenGewFassung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Oberflaechengewaesserfassung
+public class OberflaechenGewFassung extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Oberflaechengewaesserfassung
 {
   public final static String tag= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflaechenGewFassung";
   public OberflaechenGewFassung(String oid) {
@@ -47,6 +47,16 @@ public class OberflaechenGewFassung extends ch.interlis.models.TWVinNotlagen_LV9
   public void setBetriebsart(ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt value) {
     if(value==null){setattrundefined("Betriebsart");return;}
     setattrvalue("Betriebsart", ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt.toXmlCode(value));
+  }
+  public final static String tag_Notversorgung="Notversorgung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung getNotversorgung() {
+    if(getattrvaluecount("Notversorgung")==0)return null;
+    String value=getattrvalue("Notversorgung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.parseXmlCode(value);
+  }
+  public void setNotversorgung(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung value) {
+    if(value==null){setattrundefined("Notversorgung");return;}
+    setattrvalue("Notversorgung", ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.toXmlCode(value));
   }
   public final static String tag_Tiefe="Tiefe";
   public Integer getTiefe() {

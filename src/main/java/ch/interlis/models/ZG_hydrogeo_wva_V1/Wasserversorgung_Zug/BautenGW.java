@@ -8,6 +8,36 @@ public class BautenGW extends ch.interlis.iom_j.Iom_jObject
   public String getobjecttag() {
     return tag;
   }
+  public final static String tag_Lage_Punkt="Lage_Punkt";
+  public int sizeLage_Punkt() {return getattrvaluecount("Lage_Punkt");}
+  public ch.interlis.iom.IomObject getLage_Punkt() {
+    int size=getattrvaluecount("Lage_Punkt");
+    if(size==0)return null;
+    ch.interlis.iom.IomObject value=(ch.interlis.iom.IomObject)getattrobj("Lage_Punkt",0);
+    return value;
+  }
+  public void setLage_Punkt(ch.interlis.iom.IomObject value) {
+    if(getattrvaluecount("Lage_Punkt")>0){
+      changeattrobj("Lage_Punkt",0, value);
+    }else{
+      addattrobj("Lage_Punkt", value);
+    }
+  }
+  public final static String tag_Lage_Flaeche="Lage_Flaeche";
+  public int sizeLage_Flaeche() {return getattrvaluecount("Lage_Flaeche");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.MultiSurface getLage_Flaeche() {
+    int size=getattrvaluecount("Lage_Flaeche");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.MultiSurface value=(ch.interlis.models.ZG_hydrogeo_wva_V1.MultiSurface)getattrobj("Lage_Flaeche",0);
+    return value;
+  }
+  public void setLage_Flaeche(ch.interlis.models.ZG_hydrogeo_wva_V1.MultiSurface value) {
+    if(getattrvaluecount("Lage_Flaeche")>0){
+      changeattrobj("Lage_Flaeche",0, value);
+    }else{
+      addattrobj("Lage_Flaeche", value);
+    }
+  }
   public final static String tag_Typ="Typ";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.BautenGWTyp getTyp() {
     String value=getattrvalue("Typ");

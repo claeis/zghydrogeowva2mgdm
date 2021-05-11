@@ -38,6 +38,16 @@ public class QwFsgEndpunkt extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     if(value==null){setattrundefined("EigentumArt");return;}
     setattrvalue("EigentumArt", ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt.toXmlCode(value));
   }
+  public final static String tag_Notversorgung="Notversorgung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung getNotversorgung() {
+    if(getattrvaluecount("Notversorgung")==0)return null;
+    String value=getattrvalue("Notversorgung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.parseXmlCode(value);
+  }
+  public void setNotversorgung(ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung value) {
+    if(value==null){setattrundefined("Notversorgung");return;}
+    setattrvalue("Notversorgung", ch.interlis.models.ZG_hydrogeo_wva_V1.Notversorgung.toXmlCode(value));
+  }
   public final static String tag_PrivatNutzer="PrivatNutzer";
   public String getPrivatNutzer() {
     if(getattrvaluecount("PrivatNutzer")==0)return null;
@@ -77,6 +87,16 @@ public class QwFsgEndpunkt extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
   public void setErtragMittlAng(ch.interlis.models.ZG_hydrogeo_wva_V1.ErtragAngaben value) {
     if(value==null){setattrundefined("ErtragMittlAng");return;}
     setattrvalue("ErtragMittlAng", ch.interlis.models.ZG_hydrogeo_wva_V1.ErtragAngaben.toXmlCode(value));
+  }
+  public final static String tag_WqualiBemerkung="WqualiBemerkung";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet getWqualiBemerkung() {
+    if(getattrvaluecount("WqualiBemerkung")==0)return null;
+    String value=getattrvalue("WqualiBemerkung");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.parseXmlCode(value);
+  }
+  public void setWqualiBemerkung(ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet value) {
+    if(value==null){setattrundefined("WqualiBemerkung");return;}
+    setattrvalue("WqualiBemerkung", ch.interlis.models.ZG_hydrogeo_wva_V1.WasserQualitaet.toXmlCode(value));
   }
   public final static String tag_SchzNr="SchzNr";
   public Integer getSchzNr() {
