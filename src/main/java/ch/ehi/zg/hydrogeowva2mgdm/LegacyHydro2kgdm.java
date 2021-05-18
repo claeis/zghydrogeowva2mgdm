@@ -475,6 +475,13 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
+                if(mappedObj.getattrvaluecount(Leitung.tag_Netzteilident)==0) {
+                    if(mappedObj.getattrvaluecount(Leitung.tag_Farbe)==0) {
+                        logError("keine Farbe bei Leitung "+mappedObj.getobjectoid());
+                    }else {
+                        mappedObj.setNetzteilident(LegacyUtil.mapNetzteilident(mappedObj.getFarbe().toString()));
+                    }
+                }
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 mappedObj.setOberflGewRohwaPW(oberflgewrohwapw2oid.get(srcObj.getOberflGewRohwPW()));
                 mappedObj.setOberflaechenGewFassung(oberflaechengewfassung2oid.get(srcObj.getOberflaechenGewFassung()));
@@ -860,6 +867,13 @@ public class LegacyHydro2kgdm  {
                     mappedObj.setGeometrieHerkunft(mapHerkunftsart(geometrieHerkunft));
                 }
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
+                if(mappedObj.getattrvaluecount(Leitung.tag_Netzteilident)==0) {
+                    if(mappedObj.getattrvaluecount(Leitung.tag_Farbe)==0) {
+                        logError("keine Farbe bei Leitung "+mappedObj.getobjectoid());
+                    }else {
+                        mappedObj.setNetzteilident(LegacyUtil.mapNetzteilident(mappedObj.getFarbe().toString()));
+                    }
+                }
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Rueckgabebrunnen){

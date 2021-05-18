@@ -78,4 +78,12 @@ public class LegacyUtil {
         return UUID.randomUUID().toString();
     }
 
+    static public String mapNetzteilident(int wvNr, String farbe) {
+        return "ZG_"+wvNr+"-"+farbe;
+    }
+
+    static public String mapNetzteilident(String farbe) {
+        return "ZG_"+farbe;
+    }
+
 }
