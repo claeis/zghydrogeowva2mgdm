@@ -8,6 +8,7 @@ import ch.interlis.iom.IomObject;
 import ch.interlis.iox.*;
 import ch.interlis.models.ZG_HYDROGEOLOGISCHEOBJEKTE_2_3;
 import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.BOOLEAN_Typ;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.DetailplanArt;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.DetailplanMstab;
@@ -296,6 +297,7 @@ public class Kgdm2LegacyHydro {
                 
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung) {
                     ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung srcObj=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung)iomObj;
+                    final double nennweite = srcObj.getNennweite();
                     if(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Leitung_LeitArt.OberflGewFsgLeitung.equals(srcObj.getLeitArt())){
                         ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewFsgLeitung mappedObj=new ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewFsgLeitung(newTid());
                         mappedObj.setGUID(stripZG(srcObj.getIdentifikator()));
@@ -305,8 +307,8 @@ public class Kgdm2LegacyHydro {
                         }
                         mappedObj.setTyp(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewFsgLeitung_Typ.Fassungsleitung);
                         mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateToITF(srcObj.getNachfuehrungsstand()));
-                        if(srcObj.getattrvaluecount(srcObj.tag_Nennweite)>0) {
-                            mappedObj.setLtgDimension(srcObj.getNennweite());
+                        if(nennweite>=0.0) {
+                            mappedObj.setLtgDimension(nennweite);
                         }
                         mappedObj.setBemerkungen(srcObj.getBemerkung());
                         mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
@@ -331,8 +333,8 @@ public class Kgdm2LegacyHydro {
                         }
                         mappedObj.setTyp(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.RueckgabeLeitung_Typ.Rueckgabe_Leitung);
                         mappedObj.setNachfuehrungsstand(LegacyUtil.mapDateToITF(srcObj.getNachfuehrungsstand()));
-                        if(srcObj.getattrvaluecount(srcObj.tag_Nennweite)>0) {
-                            mappedObj.setLtgDimension(srcObj.getNennweite());
+                        if(nennweite>=0.0) {
+                            mappedObj.setLtgDimension(nennweite);
                         }
                         mappedObj.setBemerkungen(srcObj.getBemerkung());
                         mappedObj.setMutatBemerk(srcObj.getMutatBemerk());
@@ -481,7 +483,7 @@ public class Kgdm2LegacyHydro {
                     mappedObj.setPrivaterNutzer(srcObj.getPrivatNutzer());
                     mappedObj.setBetriebArt(mapBetriebsArt(srcObj.getBetriebsart()));
                     mappedObj.setNotversorgung(mapNotwasserversorgung2Notversorgung(srcObj.getNotwasserversorgung()));
-                    if(srcObj.getattrvaluecount(srcObj.tag_Ertrag_minimal)>0) {
+                    if(srcObj.getattrvaluecount(srcObj.tag_Ertrag_minimal)>0 && srcObj.getErtrag_minimal()>=0.0) {
                         mappedObj.setSchuettmengeMin(srcObj.getErtrag_minimal());
                     }
                     mappedObj.setErtragMinAng(mapErtragAngaben(srcObj.getErtragMinAng()));
@@ -547,7 +549,10 @@ public class Kgdm2LegacyHydro {
                     mappedObj.setPrivaterNutzer(srcObj.getPrivatNutzer());
                     mappedObj.setBetriebArt(mapQuelle_Nutzungszustand2BetriebArt(srcObj.getNutzungszustand()));
                     mappedObj.setNotversorgung(mapNotwasserversorgung2Notversorgung(srcObj.getNotwasserversorgung()));
-                    mappedObj.setSchuettmengeMin(srcObj.getSchuettung_minimal());
+                    final int schuettung_minimal = srcObj.getSchuettung_minimal();
+                    if(schuettung_minimal>=0) {
+                        mappedObj.setSchuettmengeMin(schuettung_minimal);
+                    }
                     mappedObj.setErtragMinAng(mapErtragAngaben(srcObj.getErtragMinAng()));
                     mappedObj.setSchuettmengeMax(srcObj.getSchuettung_maximal());
                     mappedObj.setErtragMaxAng(mapErtragAngaben(srcObj.getErtragMaxAng()));
@@ -1032,12 +1037,14 @@ public class Kgdm2LegacyHydro {
             return SammeleinrichtungTyp.Punktfassung;
         }else if(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.Bohrung.equals(src)) {
             return SammeleinrichtungTyp.Bohrung;
+        }else if(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.Horizontal_Filterstrecke.equals(src)) {
+            return SammeleinrichtungTyp.Horizontal_Filterstrecke;
         }else if(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.andere.equals(src)) {
             return SammeleinrichtungTyp.andere;
         }else if(ch.interlis.models.ZG_hydrogeo_wva_V1.SammeleinrichtungTyp.unbekannt.equals(src)) {
             return SammeleinrichtungTyp.unbekannt;
         }
-        throw new IllegalArgumentException("unexpected SammeleinrichtungTyp <"+src+">");
+        throw new IllegalArgumentException("unexpected SammeleinrichtungTyp <"+src.toXmlCode(src)+">");
     }
 
     private VersickerungTyp mapVersickerungTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.VersickerungTyp src) {
@@ -1066,7 +1073,6 @@ public class Kgdm2LegacyHydro {
         // Werteliste ist identisch
         return QWFSchachtTyp.parseXmlCode(ch.interlis.models.ZG_hydrogeo_wva_V1.QWFSchachtTyp.toXmlCode(src));
     }
-
     private ErtragAngaben mapErtragAngaben(ch.interlis.models.ZG_hydrogeo_wva_V1.ErtragAngaben src) {
         if(src==null)return null;
         // Werteliste ist identisch

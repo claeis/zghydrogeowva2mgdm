@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import ch.interlis.iom.IomObject;
 import ch.interlis.iom_j.Iom_jObject;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe;
 
 public class LegacyUtil {
 
@@ -78,12 +79,12 @@ public class LegacyUtil {
         return UUID.randomUUID().toString();
     }
 
-    static public String mapNetzteilident(int wvNr, String farbe) {
-        return "ZG_"+wvNr+"-"+farbe;
+    static public String mapNetzteilident(int wvNr, Farbe farbe) {
+        return "ZG_"+wvNr+"-"+Farbe.toXmlCode(farbe);
     }
 
-    static public String mapNetzteilident(String farbe) {
-        return "ZG_"+farbe;
+    static public String mapNetzteilident(Farbe farbe) {
+        return "ZG_"+Farbe.toXmlCode(farbe);
     }
 
 }

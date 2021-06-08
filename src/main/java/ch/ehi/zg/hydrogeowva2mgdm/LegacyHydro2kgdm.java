@@ -19,7 +19,7 @@ import ch.interlis.iox_j.jts.Iox2jts;
 import ch.interlis.iox_j.jts.Iox2jtsException;
 import ch.interlis.iox_j.jts.Jts2iox;
 import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
-import ch.interlis.models.TWVinNotlagen_LV03_V1.TWVinNotlagen.Brunnenstube;
+import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNein;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
 import ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotlagen.Brunnenstube_Fassungsart;
@@ -475,11 +475,14 @@ public class LegacyHydro2kgdm  {
                 mappedObj.setErfGenauigkeit(mapErfGenauigkeit(srcObj.getErfGenauigkeit()));
                 mappedObj.setGeometrieHerkunft(mapHerkunftsart(srcObj.getGeometrieHerkunft()));
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
+                if(mappedObj.getattrvaluecount(Leitung.tag_Farbe)==0) {
+                    mappedObj.setFarbe(Farbe.keine);
+                }
                 if(mappedObj.getattrvaluecount(Leitung.tag_Netzteilident)==0) {
                     if(mappedObj.getattrvaluecount(Leitung.tag_Farbe)==0) {
                         logError("keine Farbe bei Leitung "+mappedObj.getobjectoid());
                     }else {
-                        mappedObj.setNetzteilident(LegacyUtil.mapNetzteilident(mappedObj.getFarbe().toString()));
+                        mappedObj.setNetzteilident(LegacyUtil.mapNetzteilident(mappedObj.getFarbe()));
                     }
                 }
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
@@ -547,6 +550,9 @@ public class LegacyHydro2kgdm  {
                 }
                 if(mappedObj.getattrvaluecount(OberflaechenGewFassung.tag_Trinkwasser)==0) {
                     mappedObj.setTrinkwasser(JaNein.nein);
+                }
+                if(mappedObj.getattrvaluecount(OberflaechenGewFassung.tag_Nutzung)==0) {
+                    if(false)mappedObj.setNutzung(LegacyWva2kgdm.DEFAULT_OBERFLAECHENGEWFASSUNG_NUTZUNG);
                 }
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setName(srcObj.getName());
@@ -867,11 +873,14 @@ public class LegacyHydro2kgdm  {
                     mappedObj.setGeometrieHerkunft(mapHerkunftsart(geometrieHerkunft));
                 }
                 mappedObj.setErfVorlBemerk(mapErfVorlBemerk(srcObj.getErfVorlBemerk()));
+                if(mappedObj.getattrvaluecount(Leitung.tag_Farbe)==0) {
+                    mappedObj.setFarbe(Farbe.keine);
+                }
                 if(mappedObj.getattrvaluecount(Leitung.tag_Netzteilident)==0) {
                     if(mappedObj.getattrvaluecount(Leitung.tag_Farbe)==0) {
                         logError("keine Farbe bei Leitung "+mappedObj.getobjectoid());
                     }else {
-                        mappedObj.setNetzteilident(LegacyUtil.mapNetzteilident(mappedObj.getFarbe().toString()));
+                        mappedObj.setNetzteilident(LegacyUtil.mapNetzteilident(mappedObj.getFarbe()));
                     }
                 }
                 mappedObj.setMutatPerson(mutatperson2oid.get(srcObj.getMutatPerson()));
