@@ -551,9 +551,6 @@ public class LegacyHydro2kgdm  {
                 if(mappedObj.getattrvaluecount(OberflaechenGewFassung.tag_Trinkwasser)==0) {
                     mappedObj.setTrinkwasser(JaNein.nein);
                 }
-                if(mappedObj.getattrvaluecount(OberflaechenGewFassung.tag_Nutzung)==0) {
-                    if(false)mappedObj.setNutzung(LegacyWva2kgdm.DEFAULT_OBERFLAECHENGEWFASSUNG_NUTZUNG);
-                }
                 mappedObj.setGeometrie(srcObj.getLage());
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setObjNrAfu(srcObj.getObjNrAfu());

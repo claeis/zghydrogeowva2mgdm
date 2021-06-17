@@ -88,14 +88,6 @@ public class OberflaechenGewFassung extends ch.interlis.models.ZG_hydrogeo_wva_V
     if(value==null){setattrundefined("GewAbschnittKm");return;}
     setattrvalue("GewAbschnittKm", Integer.toString(value));
   }
-  public final static String tag_Nutzung="Nutzung";
-  public OberflaechenGewFassung_Nutzung getNutzung() {
-    String value=getattrvalue("Nutzung");
-    return OberflaechenGewFassung_Nutzung.parseXmlCode(value);
-  }
-  public void setNutzung(OberflaechenGewFassung_Nutzung value) {
-    setattrvalue("Nutzung", OberflaechenGewFassung_Nutzung.toXmlCode(value));
-  }
   public final static String tag_SchzNr="SchzNr";
   public Integer getSchzNr() {
     if(getattrvaluecount("SchzNr")==0)return null;
