@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-06-15"  =
+VERSION "2021-06-18"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -562,7 +562,6 @@ VERSION "2021-06-15"  =
       Tiefe: 0 .. 999;     !! in [m]
       GewAbschnittCode : 1000 .. 9999;
       GewAbschnittKm : 0 .. 1000;
-      !!Trinkwasser : MANDATORY TWVinNotlagen_LV95_V1.JaNein;
       SchzNr : 0 .. 99999;
       SchzPflicht : BOOLEAN;
       SchzGutachten: BOOLEAN;
