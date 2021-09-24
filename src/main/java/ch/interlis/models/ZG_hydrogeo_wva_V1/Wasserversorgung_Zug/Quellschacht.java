@@ -36,6 +36,51 @@ public class Quellschacht extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVin
     if(value==null){setattrundefined("ObjNrAfu");return;}
     setattrvalue("ObjNrAfu", value);
   }
+  public final static String tag_QwfNrAfu_Intranet2Pos="QwfNrAfu_Intranet2Pos";
+  public int sizeQwfNrAfu_Intranet2Pos() {return getattrvaluecount("QwfNrAfu_Intranet2Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getQwfNrAfu_Intranet2Pos() {
+    int size=getattrvaluecount("QwfNrAfu_Intranet2Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("QwfNrAfu_Intranet2Pos",0);
+    return value;
+  }
+  public void setQwfNrAfu_Intranet2Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("QwfNrAfu_Intranet2Pos")>0){
+      changeattrobj("QwfNrAfu_Intranet2Pos",0, value);
+    }else{
+      addattrobj("QwfNrAfu_Intranet2Pos", value);
+    }
+  }
+  public final static String tag_QwfNrAfu_Intranet5Pos="QwfNrAfu_Intranet5Pos";
+  public int sizeQwfNrAfu_Intranet5Pos() {return getattrvaluecount("QwfNrAfu_Intranet5Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getQwfNrAfu_Intranet5Pos() {
+    int size=getattrvaluecount("QwfNrAfu_Intranet5Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("QwfNrAfu_Intranet5Pos",0);
+    return value;
+  }
+  public void setQwfNrAfu_Intranet5Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("QwfNrAfu_Intranet5Pos")>0){
+      changeattrobj("QwfNrAfu_Intranet5Pos",0, value);
+    }else{
+      addattrobj("QwfNrAfu_Intranet5Pos", value);
+    }
+  }
+  public final static String tag_QwfMenge_Karte25Pos="QwfMenge_Karte25Pos";
+  public int sizeQwfMenge_Karte25Pos() {return getattrvaluecount("QwfMenge_Karte25Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QwfMenge_Karte25Pos getQwfMenge_Karte25Pos() {
+    int size=getattrvaluecount("QwfMenge_Karte25Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QwfMenge_Karte25Pos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QwfMenge_Karte25Pos)getattrobj("QwfMenge_Karte25Pos",0);
+    return value;
+  }
+  public void setQwfMenge_Karte25Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QwfMenge_Karte25Pos value) {
+    if(getattrvaluecount("QwfMenge_Karte25Pos")>0){
+      changeattrobj("QwfMenge_Karte25Pos",0, value);
+    }else{
+      addattrobj("QwfMenge_Karte25Pos", value);
+    }
+  }
   public final static String tag_EigentumArt="EigentumArt";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt getEigentumArt() {
     if(getattrvaluecount("EigentumArt")==0)return null;
@@ -246,6 +291,21 @@ public class Quellschacht extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVin
     if(value==null){setattrundefined("ErtragBrst");return;}
     setattrvalue("ErtragBrst", value);
   }
+  public final static String tag_ErtragBrstTextPos="ErtragBrstTextPos";
+  public int sizeErtragBrstTextPos() {return getattrvaluecount("ErtragBrstTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getErtragBrstTextPos() {
+    int size=getattrvaluecount("ErtragBrstTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("ErtragBrstTextPos",0);
+    return value;
+  }
+  public void setErtragBrstTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("ErtragBrstTextPos")>0){
+      changeattrobj("ErtragBrstTextPos",0, value);
+    }else{
+      addattrobj("ErtragBrstTextPos", value);
+    }
+  }
   public final static String tag_ErtragGrp="ErtragGrp";
   public String getErtragGrp() {
     if(getattrvaluecount("ErtragGrp")==0)return null;
@@ -256,15 +316,35 @@ public class Quellschacht extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVin
     if(value==null){setattrundefined("ErtragGrp");return;}
     setattrvalue("ErtragGrp", value);
   }
-  public final static String tag_TextArt="TextArt";
-  public Quellschacht_TextArt getTextArt() {
-    if(getattrvaluecount("TextArt")==0)return null;
-    String value=getattrvalue("TextArt");
-    return Quellschacht_TextArt.parseXmlCode(value);
+  public final static String tag_ErtragGrpTextPos="ErtragGrpTextPos";
+  public int sizeErtragGrpTextPos() {return getattrvaluecount("ErtragGrpTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getErtragGrpTextPos() {
+    int size=getattrvaluecount("ErtragGrpTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("ErtragGrpTextPos",0);
+    return value;
   }
-  public void setTextArt(Quellschacht_TextArt value) {
-    if(value==null){setattrundefined("TextArt");return;}
-    setattrvalue("TextArt", Quellschacht_TextArt.toXmlCode(value));
+  public void setErtragGrpTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("ErtragGrpTextPos")>0){
+      changeattrobj("ErtragGrpTextPos",0, value);
+    }else{
+      addattrobj("ErtragGrpTextPos", value);
+    }
+  }
+  public final static String tag_NameTextPos="NameTextPos";
+  public int sizeNameTextPos() {return getattrvaluecount("NameTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getNameTextPos() {
+    int size=getattrvaluecount("NameTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("NameTextPos",0);
+    return value;
+  }
+  public void setNameTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("NameTextPos")>0){
+      changeattrobj("NameTextPos",0, value);
+    }else{
+      addattrobj("NameTextPos", value);
+    }
   }
   public final static String tag_MutatBemerk="MutatBemerk";
   public String getMutatBemerk() {

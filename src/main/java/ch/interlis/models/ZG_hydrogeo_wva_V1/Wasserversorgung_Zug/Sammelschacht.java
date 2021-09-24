@@ -26,6 +26,21 @@ public class Sammelschacht extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserv
     if(value==null){setattrundefined("TechData");return;}
     setattrvalue("TechData", value);
   }
+  public final static String tag_TechDataTextPos="TechDataTextPos";
+  public int sizeTechDataTextPos() {return getattrvaluecount("TechDataTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getTechDataTextPos() {
+    int size=getattrvaluecount("TechDataTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("TechDataTextPos",0);
+    return value;
+  }
+  public void setTechDataTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("TechDataTextPos")>0){
+      changeattrobj("TechDataTextPos",0, value);
+    }else{
+      addattrobj("TechDataTextPos", value);
+    }
+  }
   public final static String tag_Grundlage="Grundlage";
   public String getGrundlage() {
     ch.interlis.iom.IomObject value=getattrobj("Grundlage",0);

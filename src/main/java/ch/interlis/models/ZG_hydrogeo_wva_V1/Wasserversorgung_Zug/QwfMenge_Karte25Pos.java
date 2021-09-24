@@ -2,7 +2,10 @@ package ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug;
 public class QwfMenge_Karte25Pos extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos
 {
   public final static String tag= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QwfMenge_Karte25Pos";
-  public QwfMenge_Karte25Pos(String oid) {
+  public QwfMenge_Karte25Pos() {
+    super();
+  }
+  protected QwfMenge_Karte25Pos(String oid) {
     super(oid);
   }
   public String getobjecttag() {

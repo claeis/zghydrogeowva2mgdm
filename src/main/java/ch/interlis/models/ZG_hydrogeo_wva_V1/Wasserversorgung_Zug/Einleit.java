@@ -43,6 +43,36 @@ public class Einleit extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("ObjNrAfu");return;}
     setattrvalue("ObjNrAfu", value);
   }
+  public final static String tag_EinlNrAfu_Intranet2Pos="EinlNrAfu_Intranet2Pos";
+  public int sizeEinlNrAfu_Intranet2Pos() {return getattrvaluecount("EinlNrAfu_Intranet2Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getEinlNrAfu_Intranet2Pos() {
+    int size=getattrvaluecount("EinlNrAfu_Intranet2Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("EinlNrAfu_Intranet2Pos",0);
+    return value;
+  }
+  public void setEinlNrAfu_Intranet2Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("EinlNrAfu_Intranet2Pos")>0){
+      changeattrobj("EinlNrAfu_Intranet2Pos",0, value);
+    }else{
+      addattrobj("EinlNrAfu_Intranet2Pos", value);
+    }
+  }
+  public final static String tag_EinlNrAfu_Intranet5Pos="EinlNrAfu_Intranet5Pos";
+  public int sizeEinlNrAfu_Intranet5Pos() {return getattrvaluecount("EinlNrAfu_Intranet5Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getEinlNrAfu_Intranet5Pos() {
+    int size=getattrvaluecount("EinlNrAfu_Intranet5Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("EinlNrAfu_Intranet5Pos",0);
+    return value;
+  }
+  public void setEinlNrAfu_Intranet5Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("EinlNrAfu_Intranet5Pos")>0){
+      changeattrobj("EinlNrAfu_Intranet5Pos",0, value);
+    }else{
+      addattrobj("EinlNrAfu_Intranet5Pos", value);
+    }
+  }
   public final static String tag_BetriebArt="BetriebArt";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebArt() {
     if(getattrvaluecount("BetriebArt")==0)return null;

@@ -63,6 +63,21 @@ public class WeitereAnlage extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVi
     if(value==null){setattrundefined("SymbolTyp");return;}
     setattrvalue("SymbolTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.KaliberTyp.toXmlCode(value));
   }
+  public final static String tag_NameTextPos="NameTextPos";
+  public int sizeNameTextPos() {return getattrvaluecount("NameTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getNameTextPos() {
+    int size=getattrvaluecount("NameTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("NameTextPos",0);
+    return value;
+  }
+  public void setNameTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("NameTextPos")>0){
+      changeattrobj("NameTextPos",0, value);
+    }else{
+      addattrobj("NameTextPos", value);
+    }
+  }
   public final static String tag_Leitungsart="Leitungsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.LeitungsArt getLeitungsart() {
     if(getattrvaluecount("Leitungsart")==0)return null;

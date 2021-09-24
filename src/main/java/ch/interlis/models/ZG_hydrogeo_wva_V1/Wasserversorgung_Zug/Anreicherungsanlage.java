@@ -99,6 +99,36 @@ public class Anreicherungsanlage extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("ObjNrAfu");return;}
     setattrvalue("ObjNrAfu", value);
   }
+  public final static String tag_AnrNrAfu_Intranet2Pos="AnrNrAfu_Intranet2Pos";
+  public int sizeAnrNrAfu_Intranet2Pos() {return getattrvaluecount("AnrNrAfu_Intranet2Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getAnrNrAfu_Intranet2Pos() {
+    int size=getattrvaluecount("AnrNrAfu_Intranet2Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("AnrNrAfu_Intranet2Pos",0);
+    return value;
+  }
+  public void setAnrNrAfu_Intranet2Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("AnrNrAfu_Intranet2Pos")>0){
+      changeattrobj("AnrNrAfu_Intranet2Pos",0, value);
+    }else{
+      addattrobj("AnrNrAfu_Intranet2Pos", value);
+    }
+  }
+  public final static String tag_AnrNrAfu_Intranet5Pos="AnrNrAfu_Intranet5Pos";
+  public int sizeAnrNrAfu_Intranet5Pos() {return getattrvaluecount("AnrNrAfu_Intranet5Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getAnrNrAfu_Intranet5Pos() {
+    int size=getattrvaluecount("AnrNrAfu_Intranet5Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("AnrNrAfu_Intranet5Pos",0);
+    return value;
+  }
+  public void setAnrNrAfu_Intranet5Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("AnrNrAfu_Intranet5Pos")>0){
+      changeattrobj("AnrNrAfu_Intranet5Pos",0, value);
+    }else{
+      addattrobj("AnrNrAfu_Intranet5Pos", value);
+    }
+  }
   public final static String tag_Bewilligungsdatum="Bewilligungsdatum";
   public String getBewilligungsdatum() {
     if(getattrvaluecount("Bewilligungsdatum")==0)return null;

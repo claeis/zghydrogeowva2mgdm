@@ -1,5 +1,5 @@
 /* ###################################################################################
-  
+
    KANTONALE ERWEITERUNG ZG -- Geodatenmodell nach Bundesrecht -- 
 
    Inventar Trinkwasserversorgung in Notlagen (ID 66.1)
@@ -21,7 +21,7 @@
    29.11.2019 ITV Consult (ang)
      - Version 1 basierend auf MGDM TWVinNotlagen_V1.ili und den
        bisherigen kantonalen INTERLIS-1-Modellen ZG_Wasserversorgungsatlas_1_0 (V1.0)
-     und ZG_HydrogeologischeObjekte_2_3 (V2.3)  
+       und ZG_HydrogeologischeObjekte_2_3 (V2.3)  
 
    ################################################################################### */
  
@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-06-18"  =
+VERSION "2021-07-15"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -260,13 +260,6 @@ VERSION "2021-06-18"  =
                   Kaliber_5,	!! <Kaliber 5, d5>
                   Kaliber_6);	!! <Kaliber 6, d6>
 
-    TextTyp = (NameText,
-               TechData,
-               TechData1,
-               TechData2,
-               TechData3,
-               TechData4);
-
     PlanTyp = (M_1_1000,   !! <1:1000, d1>
                M_1_2000,   !! <1:2000, d2>              
                M_1_5000,   !! <1:5000, d3>
@@ -322,32 +315,30 @@ VERSION "2021-06-18"  =
     OID AS INTERLIS.UUIDOID;  !! Erweiterung des MGDM-TOPIC um OID-Deklaration
     DEPENDS ON ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche,ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen,ZG_PlanerischerGewaesserschutz_V1_1.TransferMetadaten;
 
-!! Mehrfach verwendete Klassen
-    CLASS IntranetPos =
-      TextTyp : MANDATORY TextTyp;
-      IntranetPos : MANDATORY (Pos2, Pos5);
+!! Mehrfach verwendete Strukturen für Kartendarstellungen
+    STRUCTURE TextPos = 
       Pos : MANDATORY GeometryCHLV95_V1.Coord2;
       Farbe : MANDATORY Farbe;
       Ori : 0.000 .. 399.999 [Grads];
       Hali : HALIGNMENT;
       Vali : VALIGNMENT;
       Size : SizeTyp;
-    END IntranetPos;
+    END TextPos;
 
-    CLASS TextPos =
-      TextTyp : MANDATORY TextTyp;
+    STRUCTURE IntranetPos =
       Pos : MANDATORY GeometryCHLV95_V1.Coord2;
       Ori : 0.000 .. 399.999 [Grads];
       Hali : HALIGNMENT;
       Vali : VALIGNMENT;
       Size : SizeTyp;
       Plantyp : PlanTyp;
-    END TextPos;
+    END IntranetPos;
 
-    CLASS QwfMenge_Karte25Pos EXTENDS IntranetPos =
+    STRUCTURE QwfMenge_Karte25Pos EXTENDS IntranetPos =
       PlatzhalterBeschriftung : TEXT*1;
     END QwfMenge_Karte25Pos;
 
+!! Mehrfach verwendete Klassen
     CLASS AnschriftNummer =
       Pos : MANDATORY GeometryCHLV95_V1.Coord2;
       Nummer : MANDATORY TEXT*12;
@@ -362,7 +353,7 @@ VERSION "2021-06-18"  =
     END Hilfslinie;
 
     CLASS Datei =
-      Name : MANDATORY TEXT*254;
+      Name : TEXT*254;
       Dateiname : MANDATORY TEXT*254;
     END Datei;
 
@@ -449,6 +440,9 @@ VERSION "2021-06-18"  =
       Typ : MANDATORY QWFSchachtTyp;
       QWFassungsArt : QWFassungsArt;
       ObjNrAfu : TEXT*15;
+      QwfNrAfu_Intranet2Pos : IntranetPos;
+      QwfNrAfu_Intranet5Pos : IntranetPos;
+      QwfMenge_Karte25Pos : QwfMenge_Karte25Pos;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
       Betriebsart : BetriebsArt;      
@@ -470,8 +464,10 @@ VERSION "2021-06-18"  =
       HoeheTerrain : 0.00 .. 3000.00;
       HoeheAuslauf : 0.00 .. 3000.00;
       ErtragBrst : TEXT*50;
+      ErtragBrstTextPos : TextPos;
       ErtragGrp : TEXT*50;
-      TextArt : (QueSchaErtragBrst, QueSchaErtragGrp, Name, Techdata);
+      ErtragGrpTextPos : TextPos;
+      NameTextPos : TextPos;
       MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
       SymbolGeo: GeometryCHLV95_V1.Coord2;
@@ -494,7 +490,8 @@ VERSION "2021-06-18"  =
 
     CLASS Sammelschacht EXTENDS Quellschacht =
       Leitungsart : MANDATORY LeitungsArt;
-      TechData : TEXT*50;  
+      TechData : TEXT*50;
+      TechDataTextPos : TextPos;
     END Sammelschacht;
 
     CLASS Grundwasserfassung (ABSTRACT, EXTENDED) =
@@ -506,8 +503,9 @@ VERSION "2021-06-18"  =
       Notversorgung : Notversorgung;
       Oeffentliches_Interesse : MANDATORY TWVinNotlagen_LV95_V1.JaNeinUnbestimmt;
       Foerdermethode : MANDATORY (Pumpe, Heber, artesisch, unbestimmt);
-      TextTyp : TextTyp;
       ObjNrAfu : TEXT*50;
+      GwfNrAfu_Intranet2Pos : IntranetPos;
+	  GwfNrAfu_Intranet5Pos : IntranetPos;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
       BetriebArt: BetriebsArt;
@@ -536,10 +534,15 @@ VERSION "2021-06-18"  =
       DetailplanMstab: DetailplanMstab;
       DetailplanHerkunft : ErfVorlHerkunft;
       DetailplanNr : TEXT*100;
+      NameTextPos : TextPos;
       Techdata1 : TEXT*50;
+      Techdata1TextPos : TextPos;
       Techdata2 : TEXT*50;
+      Techdata2TextPos : TextPos;
       Techdata3 : TEXT*50;
+      Techdata3TextPos : TextPos;
       Techdata4 : TEXT*50;
+      Techdata4TextPos : TextPos;
       MaxDarst : Darstellung; 
       ErfGenauigkeit: ErfGenauigkeit;
       GeometrieHerkunft: MANDATORY Herkunftsart;
@@ -555,6 +558,8 @@ VERSION "2021-06-18"  =
 
     CLASS OberflaechenGewFassung EXTENDS Oberflaechengewaesserfassung =
       ObjNrAfu : TEXT*15;
+      OwfNrAfu_Intranet2Pos : IntranetPos;
+      OwfNrAfu_Intranet5Pos : IntranetPos;
       EigentumArt : EigentumArt;
       PrivatNutzer : TEXT*254;
       Betriebsart : BetriebsArt;      
@@ -590,6 +595,7 @@ VERSION "2021-06-18"  =
       GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
+      ObflGewFsgTiefeText : MANDATORY TextPos;
     END OberflaechenGewFassung;
 
     CLASS Foerderanlage (EXTENDED) =            !! Pumpwerk, Hydraulischer Widder, Reinwasser-Pumpwerk (hat zus. Assoziationen)
@@ -600,11 +606,17 @@ VERSION "2021-06-18"  =
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
       TotFoerdermenge : 0 .. 99999;
+      NameTextPos : TextPos;
       Techdata : TEXT*50;
+      TechdataTextPos : TextPos;
       Techdata1 : TEXT*50;
+      Techdata1TextPos : TextPos;
       Techdata2 : TEXT*50;
+      Techdata2TextPos : TextPos;
       Techdata3 : TEXT*50;
+      Techdata3TextPos : TextPos;
       Techdata4 : TEXT*50;
+      Techdata4TextPos : TextPos;
       Notversorgung : Notversorgung;
       Kanton : Kanton;
       GdeNrBFS : 0 .. 9999;
@@ -633,13 +645,14 @@ VERSION "2021-06-18"  =
     END OberflGewRohwaPW;
 
     CLASS Reservoir (EXTENDED) =
-      TextTyp : TextTyp;
       SymbolGeo: GeometryCHLV95_V1.Coord2;
       SymbolRot: 0.000 .. 399.999 [Grads];
       Farbe : Farbe;
       SymbolTyp : MANDATORY ResSymbTyp;
       Gesamtinhalt : 0 .. 99999;
+      NameTextPos : TextPos;
       Techdata : TEXT*50;
+      TechdataTextPos : TextPos;
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
       Notversorgung : Notversorgung;
@@ -657,6 +670,7 @@ VERSION "2021-06-18"  =
       SymbolRot: 0.000 .. 399.999 [Grads];
       Farbe : Farbe;
       SymbolTyp : KaliberTyp;
+      NameTextPos : TextPos;
       Leitungsart : LeitungsArt;
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
@@ -681,7 +695,7 @@ VERSION "2021-06-18"  =
 
     CLASS Aufbereitungswerk EXTENDS WeitereAnlage =
        FilterLeist : TEXT*50;
-       TextArt : MANDATORY (AufbWkrName, AufbWkrFilterleist);
+       FilterLeistTextPos : TextPos;
     END Aufbereitungswerk;
 
     CLASS TWTurbine EXTENDS WeitereAnlage =
@@ -700,6 +714,7 @@ VERSION "2021-06-18"  =
       Typ : MANDATORY LeitungsArt;         !! OberflGewFsgLeitung = Versorgungsleitung; RueckgabeLeitung = Rueckgabeleitung
       SymbolGeo: CHLine;
       LeitText : TEXT*50;
+      LeitTextPos: TextPos;
       Farbe : Farbe;
       Betriebsart : BetriebsArt;      
       Nutzungsart : Nutzungsart;
@@ -731,6 +746,8 @@ VERSION "2021-06-18"  =
       Zweck : TEXT*500;
       GeometriePunkt : GeometryCHLV95_V1.Coord2;
       ObjNrAfu : TEXT*15;              !! Ergänzungen ZG
+      AnrNrAfu_Intranet2Pos : IntranetPos;
+	  AnrNrAfu_Intranet5Pos : IntranetPos;
       Bewilligungsdatum : INTERLIS.XMLDate;
       Betriebsart : BetriebsArt;      
       Nachfuehrungsstand : INTERLIS.XMLDate;
@@ -835,6 +852,8 @@ VERSION "2021-06-18"  =
       Art: VersickerungArt;
       Name: TEXT*50;
       ObjNrAfu: TEXT*15;
+      VerNrAfu_Intranet2Pos : IntranetPos;
+	  VerNrAfu_Intranet5Pos : IntranetPos;
       BetriebsArt: BetriebsArt;
       Qualitaet: (belastet,      !! <belastet, d1> 
                   unbelastet);  !! <unbelastet, d2> 
@@ -865,6 +884,8 @@ VERSION "2021-06-18"  =
       Typ: MANDATORY BautenGWTyp;
       Name: TEXT*50;
       ObjNrAfu: TEXT*15;
+      BgwNrAfu_Intranet2Pos : IntranetPos;
+	  BgwNrAfu_Intranet5Pos : IntranetPos;
       Nachfuehrungsstand: INTERLIS.XMLDate;
       Bemerkungen: TEXT*254;
       AuskunftsStelle: TEXT*100;
@@ -889,6 +910,8 @@ VERSION "2021-06-18"  =
       Lage: MANDATORY GeometryCHLV95_V1.Coord2;
       Name: TEXT*50;
       ObjNrAfu: TEXT*15;
+      EinlNrAfu_Intranet2Pos : IntranetPos;
+	  EinlNrAfu_Intranet5Pos : IntranetPos;
       BetriebArt: BetriebsArt;
       Nachfuehrungsstand: INTERLIS.XMLDate;
       Bemerkungen: TEXT*254;
@@ -961,11 +984,6 @@ VERSION "2021-06-18"  =
       KontaktPerson -- {0..1} Adresse;
     END QwFsgEndpunktKontaktPerson;
 
-    ASSOCIATION QuellScha_SaSchaText =
-      Quell_Sammelschacht -- {1..*} Quellschacht;
-      TextPos -- {0..*} TextPos;
-    END QuellScha_SaSchaText;
-
     ASSOCIATION QuellSchaSaSchaMutatPerson =
       Quell_Sammelschacht -- {0..*} Quellschacht;
       MutatPerson -- {0..1} MutatPerson;
@@ -1021,11 +1039,6 @@ VERSION "2021-06-18"  =
       MutatPerson -- {0..1} MutatPerson;
     END EntbruMutatPerson;
 
-    ASSOCIATION EntbruText =
-      Entnahmebrunnen -- {1..*} Entnahmebrunnen;
-      IntranetPos -- {0..*} IntranetPos;
-    END EntbruText;
-
     ASSOCIATION EntbruFassEigentuemer =
       Entnahmebrunnen -- {0..*} Entnahmebrunnen;
       FassungsEigentuemer -- {0..1} Adresse;
@@ -1065,11 +1078,6 @@ VERSION "2021-06-18"  =
       OberflGewRohwaPW -- {0..*} OberflGewRohwaPW;
       KontaktPerson -- {0..1} Adresse;
     END OberflGewRohwaPWKontaktPerson;
-
-    ASSOCIATION OberflGewFassungTiefeText =
-      OberflGewFassung -- {0..1} OberflaechenGewFassung;
-      TextPos -- {0..*} TextPos;
-    END OberflGewFassungTiefeText;
 
     ASSOCIATION ObFasWasservsg =
       OberflGewFassung -- {0..*} OberflaechenGewFassung;
@@ -1121,11 +1129,6 @@ VERSION "2021-06-18"  =
       MutatPerson -- {0..1} MutatPerson;
     END FoerderanlageMutatPerson;
 
-    ASSOCIATION FoerderanlageText =
-      Foerderanlage -- {0..*} Foerderanlage;
-      TextPos -- {0..*} TextPos;
-    END FoerderanlageText;
-
     ASSOCIATION FoerderanlageWasservsg =
       Foerderanlage -- {0..*} Foerderanlage;
       Wasserversorgung -- {0..*} Wasserversorgung;
@@ -1160,11 +1163,6 @@ VERSION "2021-06-18"  =
       Reservoir -- {0..*} Reservoir;
       MutatPerson -- {0..1} MutatPerson;
     END ResMutatPerson;
-
-    ASSOCIATION ResText =
-      Reservoir -- {1..*} Reservoir;
-      TextPos -- {0..*} TextPos;
-    END ResText;
 
     ASSOCIATION ResWasservsg =
       Reservoir -- {0..*} Reservoir;
@@ -1201,11 +1199,6 @@ VERSION "2021-06-18"  =
       Wasserversorgung -- {1..*} Wasserversorgung;
     END WeitereAnlageWasservsg;
 
-    ASSOCIATION WeitereAnlageText =
-      WeitereAnlage -- {0..1} WeitereAnlage;
-      TextPos -- {0..1} TextPos;
-    END WeitereAnlageText;
-
     ASSOCIATION AufbWrkRes =
       Aufbereitungswerk -- {0..*} Aufbereitungswerk;
       Reservoir -- {0..*} Reservoir;
@@ -1231,11 +1224,6 @@ VERSION "2021-06-18"  =
       MutatPerson -- {0..1} MutatPerson;
     END LeitMutatPerson;
 
-    ASSOCIATION LeitText =
-      Leitung -- {0..1} Leitung;
-      TextPos -- {0..*} TextPos;
-    END LeitText;
-
     ASSOCIATION LeitWasservsg =
       Leitung -- {0..*} Leitung;
       Wasserversorgung -- {0..*} Wasserversorgung;
@@ -1260,11 +1248,6 @@ VERSION "2021-06-18"  =
       Anreicherungsanlage -- {0..*} Anreicherungsanlage;
       MutatPerson -- {0..1} MutatPerson;
     END AnreicherungsanlageMutatPerson;
-
-    ASSOCIATION AnrNrAfu =
-      Anreicherungsanlage -- {1..*} Anreicherungsanlage;
-      IntranetPos -- {0..*} IntranetPos;
-    END AnrNrAfu;
 
     ASSOCIATION FassgebWasservsg =
       Fassungseinzugsgebiet -- {0..*} Fassungseinzugsgebiet;
@@ -1315,11 +1298,6 @@ VERSION "2021-06-18"  =
       SammeleinrichtungQwf -- {0..*} SammeleinrichtungQwf;
       Quellschacht -- {0..1} Quellschacht;
     END SammeleinrichtungQwfQuellschacht;
-
-    ASSOCIATION VerNrAfuIntranetPos =
-      Versickerungsanlage -- {0..*} Versickerungsanlage;
-      IntranetPos -- {1..*} IntranetPos;
-    END VerNrAfuIntranetPos;
 
     ASSOCIATION VersiBewiReg =
       Versickerungsanlage -- {0..*} Versickerungsanlage;
@@ -1386,11 +1364,6 @@ VERSION "2021-06-18"  =
       MutatPerson -- {0..1} MutatPerson;
     END BautenGWMutatPerson;
 
-    ASSOCIATION BgwNrAfuIntranet =
-      BautenGW -- {0..*} BautenGW;
-      IntranetPos -- {1..*} IntranetPos;
-    END BgwNrAfuIntranet;
-
     ASSOCIATION EinleitAnlageEigentuemer =
       Einleit1 -- {0..*} Einleit;
       AnlageEigentuemer -- {0..1} Adresse;
@@ -1420,16 +1393,6 @@ VERSION "2021-06-18"  =
       Einleit -- {0..*} Einleit;
       MutatPerson -- {0..1} MutatPerson;
     END EinleitMutatPerson;
-
-    ASSOCIATION EinleitNrAfuIntranet =
-      Einleit -- {0..*} Einleit;
-      IntranetPos -- {1..*} IntranetPos;
-    END EinleitNrAfuIntranet;
-
-    ASSOCIATION QwfMenge_Karte25 =
-      Quellschacht -- {0..*} Quellschacht;
-      QwfMenge_Karte25Pos -- {1..*} QwfMenge_Karte25Pos;
-    END QwfMenge_Karte25;
 
     ASSOCIATION Pumpe_PumpenAnlage =
       PumpenAnlage -- {1} Pumpenanlage;

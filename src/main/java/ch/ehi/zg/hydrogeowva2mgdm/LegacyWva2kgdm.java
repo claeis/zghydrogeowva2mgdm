@@ -98,19 +98,27 @@ public class LegacyWva2kgdm  {
                 mappedObj.setVali(srcObj.getVAli());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrFilterLeistText) {
-                
-            }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText) {
-/*                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText)obj;
-                String uuid=LegacyUtil.newUUID();
-                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos(uuid);
-                mappedObj.setTextTyp(TextTyp.NameText);
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrFilterLeistText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrFilterLeistText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
                 mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
                 mappedObj.setOri(srcObj.getOri());
                 mappedObj.setHali(srcObj.getHAli());
                 mappedObj.setVali(srcObj.getVAli());
                 mappedObj.setSize(mapSizeType(srcObj.getSize()));
-                mappedObj.setWeitereAnlage(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
-                addMappedObj(mappedObj,srcObj); */
+                Aufbereitungswerk aufbereitungswerk=(Aufbereitungswerk)mappedObjs.get(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
+                aufbereitungswerk.setFilterLeistTextPos(mappedObj);
+            }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Aufbereitungswerk aufbereitungswerk=(Aufbereitungswerk)mappedObjs.get(aufbereitungswerk2oid.get(srcObj.getAufbereitungswerk()));
+                aufbereitungswerk.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrWasservsg) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.AufbWkrWasservsg)obj;
@@ -128,8 +136,6 @@ public class LegacyWva2kgdm  {
                 mappedObj.setSymbolRot(srcObj.getSymbolRot());
                 mappedObj.setGeometrie(LegacyUtil.mapCoord(srcObj.getRealY(),srcObj.getRealX()));
                 mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
-                //mappedObj.setTyp(mapAufbWkrTyp(srcObj.getTyp()));
-                mappedObj.setTextArt(Aufbereitungswerk_TextArt.AufbWkrFilterleist);
                 mappedObj.setName(srcObj.getName());
                 mappedObj.setBetriebsart(mapBetriebsArt(srcObj.getBetriebsart()));
                 mappedObj.setNutzungsart(mapNutzungsart(srcObj.getNutzungsart()));
@@ -188,8 +194,38 @@ public class LegacyWva2kgdm  {
                 druckreduktion2oid.put(srcObj.getobjectoid(), mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Entnahmebrunnen entnahmebrunnen=(Entnahmebrunnen)mappedObjs.get(entnahmebrunnen2oid.get(srcObj.getEntnahmebrunnen()));
+                entnahmebrunnen.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruTechData1Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruTechData1Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruTechData1Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Entnahmebrunnen entnahmebrunnen=(Entnahmebrunnen)mappedObjs.get(entnahmebrunnen2oid.get(srcObj.getEntnahmebrunnen()));
+                entnahmebrunnen.setTechdata1TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruTechData2Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruTechData2Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.EntbruTechData2Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Entnahmebrunnen entnahmebrunnen=(Entnahmebrunnen)mappedObjs.get(entnahmebrunnen2oid.get(srcObj.getEntnahmebrunnen()));
+                entnahmebrunnen.setTechdata2TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Entnahmebrunnen) {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Entnahmebrunnen srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Entnahmebrunnen)obj;
@@ -422,8 +458,38 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.NotLeitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.NotLeitung(LegacyUtil.stripUUID(srcObj.getGUID()));
                 // TODO
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGFsgLeitungText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGFsgLeitungText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGFsgLeitungText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Leitung leitung=(Leitung)mappedObjs.get(oberflgewfsgleitung2oid.get(srcObj.getOberflGewFsgLeitung()));
+                leitung.setLeitTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGRohwaPWNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGRohwaPWNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGRohwaPWNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                OberflGewRohwaPW oberflgewrohwapw=(OberflGewRohwaPW)mappedObjs.get(oberflgewrohwapw2oid.get(srcObj.getOberflGewRohwaPW()));
+                oberflgewrohwapw.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGRohwaPWTechDataText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGRohwaPWTechDataText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGRohwaPWTechDataText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                OberflGewRohwaPW oberflgewrohwapw=(OberflGewRohwaPW)mappedObjs.get(oberflgewrohwapw2oid.get(srcObj.getOberflGewRohwaPW()));
+                oberflgewrohwapw.setTechdataTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFassung) {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFassung srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OberflGewFassung)obj;
@@ -495,11 +561,64 @@ public class LegacyWva2kgdm  {
                     addCreatedObj(foerderanlageAufbereitungswerk);
                 }
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ObflGewFsgTiefeText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ObflGewFsgTiefeText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ObflGewFsgTiefeText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                OberflaechenGewFassung oberflgewfassung=(OberflaechenGewFassung)mappedObjs.get(oberflgewfassung2oid.get(srcObj.getOberflGewFsg()));
+                oberflgewfassung.setObflGewFsgTiefeText(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWFoeMenge) {
+                
+                // TODO ???????????
+                
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                foerderanlage.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData1Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData1Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData1Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                foerderanlage.setTechdata1TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData2Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData2Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData2Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                foerderanlage.setTechdata2TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData3Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData3Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWTechData3Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                foerderanlage.setTechdata3TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWWasservsg) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWWasservsg)obj;
@@ -544,7 +663,27 @@ public class LegacyWva2kgdm  {
                 pumpwerk2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.QueSchaErtragBrstText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.QueSchaErtragBrstText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.QueSchaErtragBrstText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Quellschacht quellschacht=(Quellschacht)mappedObjs.get(quellschacht2oid.get(srcObj.getQuellschacht()));
+                quellschacht.setErtragBrstTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.QueSchaErtragGrpText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.QueSchaErtragGrpText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.QueSchaErtragGrpText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Quellschacht quellschacht=(Quellschacht)mappedObjs.get(quellschacht2oid.get(srcObj.getQuellschacht()));
+                quellschacht.setErtragGrpTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Quellschacht) {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Quellschacht srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Quellschacht)obj;
@@ -605,8 +744,32 @@ public class LegacyWva2kgdm  {
                 quellschacht2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWFoeMenge) {
+                
+                // TODO ??????????
+                
+                
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData1Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData1Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData1Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(reinwasserpw2oid.get(srcObj.getReinwasserPW()));
+                foerderanlage.setTechdata1TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData2Text) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData2Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData2Text)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(reinwasserpw2oid.get(srcObj.getReinwasserPW()));
+                foerderanlage.setTechdata2TextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWWasservsg) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWWasservsg)obj;
@@ -650,7 +813,27 @@ public class LegacyWva2kgdm  {
                 foerderanlageAufbereitungswerk.setFoerderanlage(mappedObj.getobjectoid());
                 addCreatedObj(foerderanlageAufbereitungswerk);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Reservoir reservoir=(Reservoir)mappedObjs.get(reservoir2oid.get(srcObj.getReservoir()));
+                reservoir.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResTechDataText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResTechDataText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResTechDataText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Reservoir reservoir=(Reservoir)mappedObjs.get(reservoir2oid.get(srcObj.getReservoir()));
+                reservoir.setTechdataTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResWasservsg) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ResWasservsg)obj;
@@ -735,6 +918,16 @@ public class LegacyWva2kgdm  {
                 rwzisterne2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Sammelschacht sammelschacht=(Sammelschacht)mappedObjs.get(sammelschacht2oid.get(srcObj.getSammelschacht()));
+                sammelschacht.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaWasservsg) {
                 // Hydro und WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.SaSchaWasservsg)obj;
@@ -846,12 +1039,32 @@ public class LegacyWva2kgdm  {
                 mappedObj.setWasserversorgung(wasserversorgung2oid.get(srcObj.getWasserversorgung()));
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbnineNameText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbnineNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.TWTurbnineNameText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                TWTurbine twturbine=(TWTurbine)mappedObjs.get(twturbine2oid.get(srcObj.getTWTurbine()));
+                twturbine.setNameTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Uebergabestelle) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Uebergabestelle srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Uebergabestelle)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Uebergabestelle mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Uebergabestelle(LegacyUtil.stripUUID(srcObj.getGUID()));
-                // TODO
+                // 20210924 keine Daten vorhanden
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText) {
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText)obj;
+                ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
+                mappedObj.setPos(LegacyUtil.mapCoord(srcObj.getPos()));
+                mappedObj.setFarbe(mapFarbe(srcObj.getFarbe()));
+                mappedObj.setOri(srcObj.getOri());
+                mappedObj.setHali(srcObj.getHAli());
+                mappedObj.setVali(srcObj.getVAli());
+                mappedObj.setSize(mapSizeType(srcObj.getSize()));
+                Leitung leitung=(Leitung)mappedObjs.get(leitungsnetzwv2oid.get(srcObj.getLeitungsnetzWV()));
+                leitung.setLeitTextPos(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitWasservsg) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitWasservsg srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitWasservsg)obj;

@@ -18,6 +18,36 @@ public class OberflaechenGewFassung extends ch.interlis.models.ZG_hydrogeo_wva_V
     if(value==null){setattrundefined("ObjNrAfu");return;}
     setattrvalue("ObjNrAfu", value);
   }
+  public final static String tag_OwfNrAfu_Intranet2Pos="OwfNrAfu_Intranet2Pos";
+  public int sizeOwfNrAfu_Intranet2Pos() {return getattrvaluecount("OwfNrAfu_Intranet2Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getOwfNrAfu_Intranet2Pos() {
+    int size=getattrvaluecount("OwfNrAfu_Intranet2Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("OwfNrAfu_Intranet2Pos",0);
+    return value;
+  }
+  public void setOwfNrAfu_Intranet2Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("OwfNrAfu_Intranet2Pos")>0){
+      changeattrobj("OwfNrAfu_Intranet2Pos",0, value);
+    }else{
+      addattrobj("OwfNrAfu_Intranet2Pos", value);
+    }
+  }
+  public final static String tag_OwfNrAfu_Intranet5Pos="OwfNrAfu_Intranet5Pos";
+  public int sizeOwfNrAfu_Intranet5Pos() {return getattrvaluecount("OwfNrAfu_Intranet5Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getOwfNrAfu_Intranet5Pos() {
+    int size=getattrvaluecount("OwfNrAfu_Intranet5Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("OwfNrAfu_Intranet5Pos",0);
+    return value;
+  }
+  public void setOwfNrAfu_Intranet5Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("OwfNrAfu_Intranet5Pos")>0){
+      changeattrobj("OwfNrAfu_Intranet5Pos",0, value);
+    }else{
+      addattrobj("OwfNrAfu_Intranet5Pos", value);
+    }
+  }
   public final static String tag_EigentumArt="EigentumArt";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt getEigentumArt() {
     if(getattrvaluecount("EigentumArt")==0)return null;
@@ -374,6 +404,21 @@ public class OberflaechenGewFassung extends ch.interlis.models.ZG_hydrogeo_wva_V
       changeattrobj("Verwendungszweck",0, value);
     }else{
       addattrobj("Verwendungszweck", value);
+    }
+  }
+  public final static String tag_ObflGewFsgTiefeText="ObflGewFsgTiefeText";
+  public int sizeObflGewFsgTiefeText() {return getattrvaluecount("ObflGewFsgTiefeText");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getObflGewFsgTiefeText() {
+    int size=getattrvaluecount("ObflGewFsgTiefeText");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("ObflGewFsgTiefeText",0);
+    return value;
+  }
+  public void setObflGewFsgTiefeText(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("ObflGewFsgTiefeText")>0){
+      changeattrobj("ObflGewFsgTiefeText",0, value);
+    }else{
+      addattrobj("ObflGewFsgTiefeText", value);
     }
   }
   public final static String tag_FassungsEigentuemer="FassungsEigentuemer";

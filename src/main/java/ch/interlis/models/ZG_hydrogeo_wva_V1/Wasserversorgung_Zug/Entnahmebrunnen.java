@@ -52,16 +52,6 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
   public void setFoerdermethode(Entnahmebrunnen_Foerdermethode value) {
     setattrvalue("Foerdermethode", Entnahmebrunnen_Foerdermethode.toXmlCode(value));
   }
-  public final static String tag_TextTyp="TextTyp";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp getTextTyp() {
-    if(getattrvaluecount("TextTyp")==0)return null;
-    String value=getattrvalue("TextTyp");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.parseXmlCode(value);
-  }
-  public void setTextTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp value) {
-    if(value==null){setattrundefined("TextTyp");return;}
-    setattrvalue("TextTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.toXmlCode(value));
-  }
   public final static String tag_ObjNrAfu="ObjNrAfu";
   public String getObjNrAfu() {
     if(getattrvaluecount("ObjNrAfu")==0)return null;
@@ -71,6 +61,36 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
   public void setObjNrAfu(String value) {
     if(value==null){setattrundefined("ObjNrAfu");return;}
     setattrvalue("ObjNrAfu", value);
+  }
+  public final static String tag_GwfNrAfu_Intranet2Pos="GwfNrAfu_Intranet2Pos";
+  public int sizeGwfNrAfu_Intranet2Pos() {return getattrvaluecount("GwfNrAfu_Intranet2Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getGwfNrAfu_Intranet2Pos() {
+    int size=getattrvaluecount("GwfNrAfu_Intranet2Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("GwfNrAfu_Intranet2Pos",0);
+    return value;
+  }
+  public void setGwfNrAfu_Intranet2Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("GwfNrAfu_Intranet2Pos")>0){
+      changeattrobj("GwfNrAfu_Intranet2Pos",0, value);
+    }else{
+      addattrobj("GwfNrAfu_Intranet2Pos", value);
+    }
+  }
+  public final static String tag_GwfNrAfu_Intranet5Pos="GwfNrAfu_Intranet5Pos";
+  public int sizeGwfNrAfu_Intranet5Pos() {return getattrvaluecount("GwfNrAfu_Intranet5Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getGwfNrAfu_Intranet5Pos() {
+    int size=getattrvaluecount("GwfNrAfu_Intranet5Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("GwfNrAfu_Intranet5Pos",0);
+    return value;
+  }
+  public void setGwfNrAfu_Intranet5Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("GwfNrAfu_Intranet5Pos")>0){
+      changeattrobj("GwfNrAfu_Intranet5Pos",0, value);
+    }else{
+      addattrobj("GwfNrAfu_Intranet5Pos", value);
+    }
   }
   public final static String tag_EigentumArt="EigentumArt";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.EigentumArt getEigentumArt() {
@@ -357,6 +377,21 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
     if(value==null){setattrundefined("DetailplanNr");return;}
     setattrvalue("DetailplanNr", value);
   }
+  public final static String tag_NameTextPos="NameTextPos";
+  public int sizeNameTextPos() {return getattrvaluecount("NameTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getNameTextPos() {
+    int size=getattrvaluecount("NameTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("NameTextPos",0);
+    return value;
+  }
+  public void setNameTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("NameTextPos")>0){
+      changeattrobj("NameTextPos",0, value);
+    }else{
+      addattrobj("NameTextPos", value);
+    }
+  }
   public final static String tag_Techdata1="Techdata1";
   public String getTechdata1() {
     if(getattrvaluecount("Techdata1")==0)return null;
@@ -366,6 +401,21 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
   public void setTechdata1(String value) {
     if(value==null){setattrundefined("Techdata1");return;}
     setattrvalue("Techdata1", value);
+  }
+  public final static String tag_Techdata1TextPos="Techdata1TextPos";
+  public int sizeTechdata1TextPos() {return getattrvaluecount("Techdata1TextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getTechdata1TextPos() {
+    int size=getattrvaluecount("Techdata1TextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("Techdata1TextPos",0);
+    return value;
+  }
+  public void setTechdata1TextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("Techdata1TextPos")>0){
+      changeattrobj("Techdata1TextPos",0, value);
+    }else{
+      addattrobj("Techdata1TextPos", value);
+    }
   }
   public final static String tag_Techdata2="Techdata2";
   public String getTechdata2() {
@@ -377,6 +427,21 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
     if(value==null){setattrundefined("Techdata2");return;}
     setattrvalue("Techdata2", value);
   }
+  public final static String tag_Techdata2TextPos="Techdata2TextPos";
+  public int sizeTechdata2TextPos() {return getattrvaluecount("Techdata2TextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getTechdata2TextPos() {
+    int size=getattrvaluecount("Techdata2TextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("Techdata2TextPos",0);
+    return value;
+  }
+  public void setTechdata2TextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("Techdata2TextPos")>0){
+      changeattrobj("Techdata2TextPos",0, value);
+    }else{
+      addattrobj("Techdata2TextPos", value);
+    }
+  }
   public final static String tag_Techdata3="Techdata3";
   public String getTechdata3() {
     if(getattrvaluecount("Techdata3")==0)return null;
@@ -387,6 +452,21 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
     if(value==null){setattrundefined("Techdata3");return;}
     setattrvalue("Techdata3", value);
   }
+  public final static String tag_Techdata3TextPos="Techdata3TextPos";
+  public int sizeTechdata3TextPos() {return getattrvaluecount("Techdata3TextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getTechdata3TextPos() {
+    int size=getattrvaluecount("Techdata3TextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("Techdata3TextPos",0);
+    return value;
+  }
+  public void setTechdata3TextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("Techdata3TextPos")>0){
+      changeattrobj("Techdata3TextPos",0, value);
+    }else{
+      addattrobj("Techdata3TextPos", value);
+    }
+  }
   public final static String tag_Techdata4="Techdata4";
   public String getTechdata4() {
     if(getattrvaluecount("Techdata4")==0)return null;
@@ -396,6 +476,21 @@ public class Entnahmebrunnen extends ch.interlis.models.ZG_hydrogeo_wva_V1.Wasse
   public void setTechdata4(String value) {
     if(value==null){setattrundefined("Techdata4");return;}
     setattrvalue("Techdata4", value);
+  }
+  public final static String tag_Techdata4TextPos="Techdata4TextPos";
+  public int sizeTechdata4TextPos() {return getattrvaluecount("Techdata4TextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getTechdata4TextPos() {
+    int size=getattrvaluecount("Techdata4TextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("Techdata4TextPos",0);
+    return value;
+  }
+  public void setTechdata4TextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("Techdata4TextPos")>0){
+      changeattrobj("Techdata4TextPos",0, value);
+    }else{
+      addattrobj("Techdata4TextPos", value);
+    }
   }
   public final static String tag_MaxDarst="MaxDarst";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Darstellung getMaxDarst() {

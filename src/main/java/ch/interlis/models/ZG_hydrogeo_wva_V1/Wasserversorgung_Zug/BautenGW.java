@@ -66,6 +66,36 @@ public class BautenGW extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("ObjNrAfu");return;}
     setattrvalue("ObjNrAfu", value);
   }
+  public final static String tag_BgwNrAfu_Intranet2Pos="BgwNrAfu_Intranet2Pos";
+  public int sizeBgwNrAfu_Intranet2Pos() {return getattrvaluecount("BgwNrAfu_Intranet2Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getBgwNrAfu_Intranet2Pos() {
+    int size=getattrvaluecount("BgwNrAfu_Intranet2Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("BgwNrAfu_Intranet2Pos",0);
+    return value;
+  }
+  public void setBgwNrAfu_Intranet2Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("BgwNrAfu_Intranet2Pos")>0){
+      changeattrobj("BgwNrAfu_Intranet2Pos",0, value);
+    }else{
+      addattrobj("BgwNrAfu_Intranet2Pos", value);
+    }
+  }
+  public final static String tag_BgwNrAfu_Intranet5Pos="BgwNrAfu_Intranet5Pos";
+  public int sizeBgwNrAfu_Intranet5Pos() {return getattrvaluecount("BgwNrAfu_Intranet5Pos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos getBgwNrAfu_Intranet5Pos() {
+    int size=getattrvaluecount("BgwNrAfu_Intranet5Pos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos)getattrobj("BgwNrAfu_Intranet5Pos",0);
+    return value;
+  }
+  public void setBgwNrAfu_Intranet5Pos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos value) {
+    if(getattrvaluecount("BgwNrAfu_Intranet5Pos")>0){
+      changeattrobj("BgwNrAfu_Intranet5Pos",0, value);
+    }else{
+      addattrobj("BgwNrAfu_Intranet5Pos", value);
+    }
+  }
   public final static String tag_Nachfuehrungsstand="Nachfuehrungsstand";
   public String getNachfuehrungsstand() {
     if(getattrvaluecount("Nachfuehrungsstand")==0)return null;

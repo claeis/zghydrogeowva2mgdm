@@ -18,12 +18,19 @@ public class Aufbereitungswerk extends ch.interlis.models.ZG_hydrogeo_wva_V1.Was
     if(value==null){setattrundefined("FilterLeist");return;}
     setattrvalue("FilterLeist", value);
   }
-  public final static String tag_TextArt="TextArt";
-  public Aufbereitungswerk_TextArt getTextArt() {
-    String value=getattrvalue("TextArt");
-    return Aufbereitungswerk_TextArt.parseXmlCode(value);
+  public final static String tag_FilterLeistTextPos="FilterLeistTextPos";
+  public int sizeFilterLeistTextPos() {return getattrvaluecount("FilterLeistTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getFilterLeistTextPos() {
+    int size=getattrvaluecount("FilterLeistTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("FilterLeistTextPos",0);
+    return value;
   }
-  public void setTextArt(Aufbereitungswerk_TextArt value) {
-    setattrvalue("TextArt", Aufbereitungswerk_TextArt.toXmlCode(value));
+  public void setFilterLeistTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("FilterLeistTextPos")>0){
+      changeattrobj("FilterLeistTextPos",0, value);
+    }else{
+      addattrobj("FilterLeistTextPos", value);
+    }
   }
 }

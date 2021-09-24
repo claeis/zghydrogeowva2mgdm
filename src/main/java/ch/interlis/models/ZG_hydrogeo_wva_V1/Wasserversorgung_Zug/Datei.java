@@ -10,10 +10,12 @@ public class Datei extends ch.interlis.iom_j.Iom_jObject
   }
   public final static String tag_Name="Name";
   public String getName() {
+    if(getattrvaluecount("Name")==0)return null;
     String value=getattrvalue("Name");
     return value;
   }
   public void setName(String value) {
+    if(value==null){setattrundefined("Name");return;}
     setattrvalue("Name", value);
   }
   public final static String tag_Dateiname="Dateiname";

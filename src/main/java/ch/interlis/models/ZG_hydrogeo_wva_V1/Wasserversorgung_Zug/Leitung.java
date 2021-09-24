@@ -59,6 +59,21 @@ public class Leitung extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNotla
     if(value==null){setattrundefined("LeitText");return;}
     setattrvalue("LeitText", value);
   }
+  public final static String tag_LeitTextPos="LeitTextPos";
+  public int sizeLeitTextPos() {return getattrvaluecount("LeitTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getLeitTextPos() {
+    int size=getattrvaluecount("LeitTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("LeitTextPos",0);
+    return value;
+  }
+  public void setLeitTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("LeitTextPos")>0){
+      changeattrobj("LeitTextPos",0, value);
+    }else{
+      addattrobj("LeitTextPos", value);
+    }
+  }
   public final static String tag_Farbe="Farbe";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe getFarbe() {
     if(getattrvaluecount("Farbe")==0)return null;

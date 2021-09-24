@@ -2,27 +2,14 @@ package ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug;
 public class IntranetPos extends ch.interlis.iom_j.Iom_jObject
 {
   public final static String tag= "ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos";
-  public IntranetPos(String oid) {
+  public IntranetPos() {
+    super(tag,null);
+  }
+  protected IntranetPos(String oid) {
     super(tag,oid);
   }
   public String getobjecttag() {
     return tag;
-  }
-  public final static String tag_TextTyp="TextTyp";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp getTextTyp() {
-    String value=getattrvalue("TextTyp");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.parseXmlCode(value);
-  }
-  public void setTextTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp value) {
-    setattrvalue("TextTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.toXmlCode(value));
-  }
-  public final static String tag_IntranetPos="IntranetPos";
-  public IntranetPos_IntranetPos getIntranetPos() {
-    String value=getattrvalue("IntranetPos");
-    return IntranetPos_IntranetPos.parseXmlCode(value);
-  }
-  public void setIntranetPos(IntranetPos_IntranetPos value) {
-    setattrvalue("IntranetPos", IntranetPos_IntranetPos.toXmlCode(value));
   }
   public final static String tag_Pos="Pos";
   public int sizePos() {return getattrvaluecount("Pos");}
@@ -38,14 +25,6 @@ public class IntranetPos extends ch.interlis.iom_j.Iom_jObject
     }else{
       addattrobj("Pos", value);
     }
-  }
-  public final static String tag_Farbe="Farbe";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe getFarbe() {
-    String value=getattrvalue("Farbe");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.parseXmlCode(value);
-  }
-  public void setFarbe(ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe value) {
-    setattrvalue("Farbe", ch.interlis.models.ZG_hydrogeo_wva_V1.Farbe.toXmlCode(value));
   }
   public final static String tag_Ori="Ori";
   public Double getOri() {
@@ -86,5 +65,15 @@ public class IntranetPos extends ch.interlis.iom_j.Iom_jObject
   public void setSize(ch.interlis.models.ZG_hydrogeo_wva_V1.SizeTyp value) {
     if(value==null){setattrundefined("Size");return;}
     setattrvalue("Size", ch.interlis.models.ZG_hydrogeo_wva_V1.SizeTyp.toXmlCode(value));
+  }
+  public final static String tag_Plantyp="Plantyp";
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.PlanTyp getPlantyp() {
+    if(getattrvaluecount("Plantyp")==0)return null;
+    String value=getattrvalue("Plantyp");
+    return ch.interlis.models.ZG_hydrogeo_wva_V1.PlanTyp.parseXmlCode(value);
+  }
+  public void setPlantyp(ch.interlis.models.ZG_hydrogeo_wva_V1.PlanTyp value) {
+    if(value==null){setattrundefined("Plantyp");return;}
+    setattrvalue("Plantyp", ch.interlis.models.ZG_hydrogeo_wva_V1.PlanTyp.toXmlCode(value));
   }
 }

@@ -8,16 +8,6 @@ public class Reservoir extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNot
   public String getobjecttag() {
     return tag;
   }
-  public final static String tag_TextTyp="TextTyp";
-  public ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp getTextTyp() {
-    if(getattrvaluecount("TextTyp")==0)return null;
-    String value=getattrvalue("TextTyp");
-    return ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.parseXmlCode(value);
-  }
-  public void setTextTyp(ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp value) {
-    if(value==null){setattrundefined("TextTyp");return;}
-    setattrvalue("TextTyp", ch.interlis.models.ZG_hydrogeo_wva_V1.TextTyp.toXmlCode(value));
-  }
   public final static String tag_SymbolGeo="SymbolGeo";
   public int sizeSymbolGeo() {return getattrvaluecount("SymbolGeo");}
   public ch.interlis.iom.IomObject getSymbolGeo() {
@@ -71,6 +61,21 @@ public class Reservoir extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNot
     if(value==null){setattrundefined("Gesamtinhalt");return;}
     setattrvalue("Gesamtinhalt", Integer.toString(value));
   }
+  public final static String tag_NameTextPos="NameTextPos";
+  public int sizeNameTextPos() {return getattrvaluecount("NameTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getNameTextPos() {
+    int size=getattrvaluecount("NameTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("NameTextPos",0);
+    return value;
+  }
+  public void setNameTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("NameTextPos")>0){
+      changeattrobj("NameTextPos",0, value);
+    }else{
+      addattrobj("NameTextPos", value);
+    }
+  }
   public final static String tag_Techdata="Techdata";
   public String getTechdata() {
     if(getattrvaluecount("Techdata")==0)return null;
@@ -80,6 +85,21 @@ public class Reservoir extends ch.interlis.models.TWVinNotlagen_LV95_V1.TWVinNot
   public void setTechdata(String value) {
     if(value==null){setattrundefined("Techdata");return;}
     setattrvalue("Techdata", value);
+  }
+  public final static String tag_TechdataTextPos="TechdataTextPos";
+  public int sizeTechdataTextPos() {return getattrvaluecount("TechdataTextPos");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getTechdataTextPos() {
+    int size=getattrvaluecount("TechdataTextPos");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("TechdataTextPos",0);
+    return value;
+  }
+  public void setTechdataTextPos(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("TechdataTextPos")>0){
+      changeattrobj("TechdataTextPos",0, value);
+    }else{
+      addattrobj("TechdataTextPos", value);
+    }
   }
   public final static String tag_Betriebsart="Betriebsart";
   public ch.interlis.models.ZG_hydrogeo_wva_V1.BetriebsArt getBetriebsart() {
