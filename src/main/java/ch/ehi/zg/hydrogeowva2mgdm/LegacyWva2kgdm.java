@@ -72,6 +72,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Abgabestelle srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Abgabestelle)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Abgabestelle mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Abgabestelle(LegacyUtil.stripUUID(srcObj.getGUID()));
                 // TODO
+                throw new IllegalStateException("keine Abgabestelle erwartet");
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Adresse) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Adresse srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Adresse)obj;
                 String uuid=LegacyUtil.newUUID();
@@ -282,6 +283,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Hydrant srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Hydrant)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Hydrant mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Hydrant(LegacyUtil.stripUUID(srcObj.getGUID()));
                 // TODO
+                throw new IllegalStateException("kein Hydrant erwartet");
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidder) {
                 // nur WVA
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidder srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.HydWidder)obj;
@@ -457,6 +459,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.NotLeitung srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.NotLeitung)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.NotLeitung mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.NotLeitung(LegacyUtil.stripUUID(srcObj.getGUID()));
                 // TODO
+                throw new IllegalStateException("keine NotLeitung erwartet");
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGFsgLeitungText) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGFsgLeitungText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.OGFsgLeitungText)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
@@ -572,9 +575,9 @@ public class LegacyWva2kgdm  {
                 OberflaechenGewFassung oberflgewfassung=(OberflaechenGewFassung)mappedObjs.get(oberflgewfassung2oid.get(srcObj.getOberflGewFsg()));
                 oberflgewfassung.setObflGewFsgTiefeText(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWFoeMenge) {
-                
-                // TODO ???????????
-                
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWFoeMenge srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWFoeMenge)obj;
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(pumpwerk2oid.get(srcObj.getPumpwerk()));
+                addEinzelFoerdermenge(foerderanlage,srcObj.getFoerdermenge());
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.PWNameText)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
@@ -744,10 +747,9 @@ public class LegacyWva2kgdm  {
                 quellschacht2oid.put(srcObj.getobjectoid(),mappedObj.getobjectoid());
                 addMappedObj(mappedObj,srcObj);
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWFoeMenge) {
-                
-                // TODO ??????????
-                
-                
+                ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWFoeMenge srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWFoeMenge)obj;
+                Foerderanlage foerderanlage=(Foerderanlage)mappedObjs.get(reinwasserpw2oid.get(srcObj.getReinwasserPW()));
+                addEinzelFoerdermenge(foerderanlage,srcObj.getFoerdermenge());
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData1Text) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData1Text srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.ReinwaPWTechData1Text)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
@@ -1054,6 +1056,7 @@ public class LegacyWva2kgdm  {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Uebergabestelle srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.Uebergabestelle)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Uebergabestelle mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Uebergabestelle(LegacyUtil.stripUUID(srcObj.getGUID()));
                 // 20210924 keine Daten vorhanden
+                throw new IllegalStateException("keine Uebergabestelle erwartet");
             }else if(obj instanceof ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText) {
                 ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText srcObj=(ch.interlis.models.ZG_Wasserversorgungsatlas_1_0.WVAObjekte.VerLeitText)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos();
@@ -1114,6 +1117,16 @@ public class LegacyWva2kgdm  {
             mappingComplete=true;
         }
         
+    }
+    private void addEinzelFoerdermenge(Foerderanlage foerderanlage, int foerdermenge) {
+        Zahlen zahlen = foerderanlage.getEinzelFoerdermenge();
+        if(zahlen==null) {
+            zahlen=new Zahlen();
+            foerderanlage.setEinzelFoerdermenge(zahlen);
+        }
+        Zahl zahl=new Zahl();
+        zahl.setZahl(foerdermenge);
+        zahlen.addZahlen(zahl);
     }
     private void addCreatedObj(IomObject mappedObj) {
         events.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
