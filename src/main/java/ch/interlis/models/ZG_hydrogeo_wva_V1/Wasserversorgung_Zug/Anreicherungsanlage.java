@@ -287,6 +287,20 @@ public class Anreicherungsanlage extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("MutatBemerk");return;}
     setattrvalue("MutatBemerk", value);
   }
+  public final static String tag_Dateireferenz="Dateireferenz";
+  public int sizeDateireferenz() {return getattrvaluecount("Dateireferenz");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Datei[] getDateireferenz() {
+    int size=getattrvaluecount("Dateireferenz");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Datei value[]=new ch.interlis.models.ZG_hydrogeo_wva_V1.Datei[size];
+    for(int i=0;i<size;i++){
+      value[i]=(ch.interlis.models.ZG_hydrogeo_wva_V1.Datei)getattrobj("Dateireferenz",i);
+    }
+    return value;
+  }
+  public void addDateireferenz(ch.interlis.models.ZG_hydrogeo_wva_V1.Datei value) {
+    addattrobj("Dateireferenz", value);
+  }
   public final static String tag_MutatPerson="MutatPerson";
   public String getMutatPerson() {
     ch.interlis.iom.IomObject value=getattrobj("MutatPerson",0);

@@ -269,6 +269,20 @@ public class Einleit extends ch.interlis.iom_j.Iom_jObject
   public void setGUID(String value) {
     setattrvalue("GUID", value);
   }
+  public final static String tag_Dateireferenz="Dateireferenz";
+  public int sizeDateireferenz() {return getattrvaluecount("Dateireferenz");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Datei[] getDateireferenz() {
+    int size=getattrvaluecount("Dateireferenz");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Datei value[]=new ch.interlis.models.ZG_hydrogeo_wva_V1.Datei[size];
+    for(int i=0;i<size;i++){
+      value[i]=(ch.interlis.models.ZG_hydrogeo_wva_V1.Datei)getattrobj("Dateireferenz",i);
+    }
+    return value;
+  }
+  public void addDateireferenz(ch.interlis.models.ZG_hydrogeo_wva_V1.Datei value) {
+    addattrobj("Dateireferenz", value);
+  }
   public final static String tag_AnlageEigentuemer="AnlageEigentuemer";
   public String getAnlageEigentuemer() {
     ch.interlis.iom.IomObject value=getattrobj("AnlageEigentuemer",0);

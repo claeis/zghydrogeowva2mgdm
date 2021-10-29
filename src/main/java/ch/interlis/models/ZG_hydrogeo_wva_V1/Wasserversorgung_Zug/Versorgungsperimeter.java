@@ -61,6 +61,21 @@ public class Versorgungsperimeter extends ch.interlis.iom_j.Iom_jObject
     if(value==null){setattrundefined("MutatBemerk");return;}
     setattrvalue("MutatBemerk", value);
   }
+  public final static String tag_VerPerNameText="VerPerNameText";
+  public int sizeVerPerNameText() {return getattrvaluecount("VerPerNameText");}
+  public ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos getVerPerNameText() {
+    int size=getattrvaluecount("VerPerNameText");
+    if(size==0)return null;
+    ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos)getattrobj("VerPerNameText",0);
+    return value;
+  }
+  public void setVerPerNameText(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.TextPos value) {
+    if(getattrvaluecount("VerPerNameText")>0){
+      changeattrobj("VerPerNameText",0, value);
+    }else{
+      addattrobj("VerPerNameText", value);
+    }
+  }
   public final static String tag_Grundlage="Grundlage";
   public String getGrundlage() {
     ch.interlis.iom.IomObject value=getattrobj("Grundlage",0);

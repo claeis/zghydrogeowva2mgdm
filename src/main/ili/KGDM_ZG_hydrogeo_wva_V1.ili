@@ -29,7 +29,7 @@ INTERLIS 2.3;
 
 MODEL ZG_hydrogeo_wva_V1 (de)
 AT "http://models.geo.zg.ch"
-VERSION "2021-07-15"  =
+VERSION "2021-10-29"  =
 
   IMPORTS TWVinNotlagen_LV95_V1,LocalisationCH_V1,GeometryCHLV95_V1,Units,ZG_PlanerischerGewaesserschutz_V1_1;
 
@@ -302,6 +302,13 @@ VERSION "2021-07-15"  =
       Texte: BAG {1..*} OF HilfsText;
     END Texte;
 
+!! Struktur, um Dateien zu erfassen.
+    STRUCTURE Datei =
+      Name : TEXT*254;
+      Dateiname : MANDATORY TEXT*254;
+      Datum : INTERLIS.XMLDate;
+    END Datei;
+
 !! Hilfstruktur, um mehrere Zahlenwerte zu erfassen, z.B. bei Fördermengen Pumpen
     STRUCTURE Zahl =
       Zahl : 0 ..99999;
@@ -351,11 +358,6 @@ VERSION "2021-07-15"  =
       SymbolGeo : MANDATORY CHLine;
       Farbe : MANDATORY Farbe;
     END Hilfslinie;
-
-    CLASS Datei =
-      Name : TEXT*254;
-      Dateiname : MANDATORY TEXT*254;
-    END Datei;
 
     CLASS Grundlage =
       DetailplanArt : DetailplanArt;
@@ -433,7 +435,6 @@ VERSION "2021-07-15"  =
       QkatPlanNr : 0 .. 999;
       GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
-!!      Dateiname : MultiText;   Als Assoz
   END QwFsgEndpunkt;
 
     CLASS Quellschacht EXTENDS Brunnenstube =
@@ -486,6 +487,7 @@ VERSION "2021-07-15"  =
       GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
+      Dateireferenz : BAG {0..*} OF Datei;
     END Quellschacht;      
 
     CLASS Sammelschacht EXTENDS Quellschacht =
@@ -551,6 +553,7 @@ VERSION "2021-07-15"  =
       GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
+      Dateireferenz : BAG {0..*} OF Datei;
     END Entnahmebrunnen;
 
     CLASS Oberflaechengewaesserfassung(ABSTRACT, EXTENDED) =
@@ -595,7 +598,8 @@ VERSION "2021-07-15"  =
       GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
       Verwendungszweck : Texte;
-      ObflGewFsgTiefeText : MANDATORY TextPos;
+      ObflGewFsgTiefeText : TextPos;
+      Dateireferenz : BAG {0..*} OF Datei;
     END OberflaechenGewFassung;
 
     CLASS Foerderanlage (EXTENDED) =            !! Pumpwerk, Hydraulischer Widder, Reinwasser-Pumpwerk (hat zus. Assoziationen)
@@ -625,6 +629,7 @@ VERSION "2021-07-15"  =
       MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
       EinzelFoerdermenge : Zahlen;
+      Dateireferenz : BAG {0..*} OF Datei;
     END Foerderanlage;      
 
     CLASS OberflGewRohwaPW EXTENDS Foerderanlage =
@@ -662,6 +667,7 @@ VERSION "2021-07-15"  =
       MaxDarst : Darstellung; 
       MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
+      Dateireferenz : BAG {0..*} OF Datei;
     END Reservoir;
 
     CLASS WeitereAnlage (EXTENDED) =            !! Laufbrunnen, Kaliberwechsel, RWZisterne
@@ -681,6 +687,7 @@ VERSION "2021-07-15"  =
       MaxDarst : Darstellung; 
       MutatBemerk : TEXT*254;
       MutatDatum : INTERLIS.XMLDate;
+      Dateireferenz : BAG {0..*} OF Datei;
     END WeitereAnlage;
 
     CLASS Schieberschacht EXTENDS WeitereAnlage =
@@ -764,6 +771,7 @@ VERSION "2021-07-15"  =
       GeometrieHerkunft: MANDATORY Herkunftsart;
       ErfVorlBemerk : ErfVorlBemerk;
       MutatBemerk : TEXT*254;
+      Dateireferenz : BAG {0..*} OF Datei;
       UNIQUE Identifikator;
     END Anreicherungsanlage;
 
@@ -876,6 +884,7 @@ VERSION "2021-07-15"  =
       GrundstNr: TEXT*10;
       KontaktDatum: INTERLIS.XMLDate;
       GUID: TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+      Dateireferenz : BAG {0..*} OF Datei;
     END Versickerungsanlage;
 
     CLASS BautenGW =
@@ -904,6 +913,7 @@ VERSION "2021-07-15"  =
       GrundstNr: TEXT*10;
       KontaktDatum: INTERLIS.XMLDate;
       GUID: MANDATORY TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+      Dateireferenz : BAG {0..*} OF Datei;
     END BautenGW;
 
     CLASS Einleit (ABSTRACT) =
@@ -932,6 +942,7 @@ VERSION "2021-07-15"  =
       GrundstNr: TEXT*10;
       KontaktDatum: INTERLIS.XMLDate;
       GUID: MANDATORY TEXT*38;  !! UUID in der Form von: {550e8400-e29b-11d4-a716-446655440000}
+      Dateireferenz : BAG {0..*} OF Datei;
     END Einleit;
 
     CLASS Pumpenanlage =
@@ -1009,11 +1020,6 @@ VERSION "2021-07-15"  =
       Quellschacht -- {0..*} Quellschacht;
     END QueSchaSaScha;
 
-    ASSOCIATION QuellSchDatei =
-      Quellschacht -- {1} Quellschacht;
-      Datei -- {0..*} Datei;
-    END QuellSchDatei;
-
     ASSOCIATION SaSchaGrundlage =
       Sammelschacht -- {0..*} Sammelschacht;
       Grundlage -- {1} Grundlage;
@@ -1023,11 +1029,6 @@ VERSION "2021-07-15"  =
       Quellschacht -- {0..*} Quellschacht;
       Wasserversorgung -- {1..*} Wasserversorgung;
     END QuellSchaWasservsg;
-
-    ASSOCIATION EntbruDatei =
-      Entnahmebrunnen -- {1} Entnahmebrunnen;
-      Datei -- {0..*} Datei;
-    END EntbruDatei;
  
    ASSOCIATION EntbruBewiReg =
       Entnahmebrunnen -- {0..*} Entnahmebrunnen;
@@ -1089,11 +1090,6 @@ VERSION "2021-07-15"  =
       BewiReg -- {1..*} BewiReg;
     END ObFasBewiReg;
 
-    ASSOCIATION ObFasDatei =
-      OberflGewFassung -- {1} OberflaechenGewFassung;
-      Datei -- {0..*} Datei;
-    END ObFasDatei;
-
     ASSOCIATION ObFasMutatPerson =
       OberflGewFassung -- {0..*} OberflaechenGewFassung;
       MutatPerson -- {0..1} MutatPerson;
@@ -1113,11 +1109,6 @@ VERSION "2021-07-15"  =
       EOberflaechenGewFassung2 -- {0..*} OberflaechenGewFassung;
       KontaktPerson -- {0..1} Adresse;
     END OberflGewFassungKontaktPerson;
-
-    ASSOCIATION FoerderanlageDatei =
-      Foerderanlage -- {1} Foerderanlage;
-      Datei -- {0..*} Datei;
-    END FoerderanlageDatei;
 
     ASSOCIATION FoerderanlageGrundlage =
       Foerderanlage -- {0..*} Foerderanlage;
@@ -1149,12 +1140,7 @@ VERSION "2021-07-15"  =
       Reservoir -- {0..*} Reservoir;
     END QueSchaRes;
 
-    ASSOCIATION ResDatei =
-      Reservoir -- {1} Reservoir;
-      Datei -- {0..*} Datei;
-    END ResDatei;
-
-    ASSOCIATION ResGrundlage =
+	ASSOCIATION ResGrundlage =
       Reservoir -- {0..*} Reservoir;
       Grundlage -- {0..1} Grundlage;
     END ResGrundlage;
@@ -1178,11 +1164,6 @@ VERSION "2021-07-15"  =
       Quellschacht -- {0..1} Quellschacht;
       WeitereAnlage -- {0..*} WeitereAnlage;
     END QueSchaLaufbrunnen;
-
-    ASSOCIATION WeitereAnlageDatei =
-      WeitereAnlage -- {0..1} WeitereAnlage;
-      Datei -- {0..*} Datei;
-    END WeitereAnlageDatei;
 
     ASSOCIATION WeitereAnlageGrundlage =
       WeitereAnlage -- {0..*} WeitereAnlage;
@@ -1234,11 +1215,6 @@ VERSION "2021-07-15"  =
       Grundlage -- {1} Grundlage;
     END LeitGrundlage;
 
-    ASSOCIATION AnranlDatei =
-      Anreicherungsanlage -- {1} Anreicherungsanlage;
-      Datei -- {0..*} Datei;
-    END AnranlDatei;
-
     ASSOCIATION AnranlWasservsg =
       Anreicherungsanlage -- {1..*} Anreicherungsanlage;
       Wasserversorgung -- {1..*} Wasserversorgung;
@@ -1284,6 +1260,11 @@ VERSION "2021-07-15"  =
       MutatPerson -- {0..1} MutatPerson;
     END RueBruMutatPerson;
 
+    ASSOCIATION RuebruWasservsg =
+      Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
+      Wasserversorgung -- {1..*} Wasserversorgung;
+    END RuebruWasservsg;
+
     ASSOCIATION SammeleinrichtungEntBru =
       Sammeleinrichtung -- {0..*} Sammeleinrichtung;
       Entnahmebrunnen -- {0..*} Entnahmebrunnen;
@@ -1324,11 +1305,6 @@ VERSION "2021-07-15"  =
       MutatPerson -- {0..1} MutatPerson;
     END VersickerungsanlageMutatPerson;
 
-    ASSOCIATION VersiDatei =
-      Versickerungsanlage -- {1} Versickerungsanlage;
-      Datei -- {0..*} Datei;
-    END VersiDatei;
-
     ASSOCIATION VersiWasservsg =
       Versickerungsanlage -- {0..*} Versickerungsanlage;
       Wasserversorgung -- {1..*} Wasserversorgung;
@@ -1343,11 +1319,6 @@ VERSION "2021-07-15"  =
       BautenGW -- {0..*} BautenGW;
       BewiReg -- {1..*} BewiReg;
     END BautenGWBewiReg;
-
-    ASSOCIATION BautenGWDatei =
-      BautenGW -- {1} BautenGW;
-      Datei -- {0..*} Datei;
-    END BautenGWDatei;
 
     ASSOCIATION BautenGWGrundEigentuemer =
       BautenGW2 -- {0..*} BautenGW;
@@ -1373,11 +1344,6 @@ VERSION "2021-07-15"  =
       Einleit -- {0..*} Einleit;
       BewiReg -- {1..*} BewiReg;
     END EinleitBewiReg;
-
-    ASSOCIATION EinleitDatei =
-      Einleit -- {1} Einleit;
-      Datei -- {0..*} Datei;
-    END EinleitDatei;
 
     ASSOCIATION EinleitGrundEigentuemer =
       Einleit2 -- {0..*} Einleit;
@@ -1410,30 +1376,45 @@ VERSION "2021-07-15"  =
     END PumpenAnlage_OberflGewRohwaPW;
 
 !! Assoziationen zu Tabellen in Planerischem Gewässerschutz
-    ASSOCIATION EntbruGSBAoTw_ZsBeZu =
+    ASSOCIATION EntbruGSBAoTw =
       Entbru -- {0..*} Entnahmebrunnen;
-      GSBAoTw_ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
-    END EntbruGSBAoTw_ZsBeZu;
+      GSBAoTw (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END EntbruGSBAoTw;
+
+    ASSOCIATION EntbruZsBeZu =
+      Entbru -- {0..*} Entnahmebrunnen;
+      ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END EntbruZsBeZu;
 
     ASSOCIATION EntbruGWSZone =
       Entbru -- {0..*} Entnahmebrunnen;
       GWSZone (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
     END EntbruGWSZone;
 
-    ASSOCIATION ObFasGSBAoTw_ZsBeZu =
+    ASSOCIATION ObFasGSBAoTw =
       ObFas -- {0..*} OberflaechenGewFassung;
-      GSBAoTw_ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
-    END ObFasGSBAoTw_ZsBeZu;
+      GSBAoTw (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END ObFasGSBAoTw;
+
+    ASSOCIATION ObFasZsBeZu =
+      ObFas -- {0..*} OberflaechenGewFassung;
+      ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END ObFasZsBeZu;
 
     ASSOCIATION ObFasGWSZone =
       ObFas -- {0..*} OberflaechenGewFassung;
       GWSZone (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GWSZonen.GWSZone;
     END ObFasGWSZone;
 
-    ASSOCIATION QuellSchGSBAoTw_ZsBeZu =
+    ASSOCIATION QuellSchGSBAoTw =
       QuellSch -- {0..*} Quellschacht;
-      GSBAoTw_ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
-    END QuellSchGSBAoTw_ZsBeZu;
+      GSBAoTw (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END QuellSchGSBAoTw;
+
+    ASSOCIATION QuellSchZsBeZu =
+      QuellSch -- {0..*} Quellschacht;
+      ZsBeZu (EXTERNAL) -- {0..*} ZG_PlanerischerGewaesserschutz_V1_1.GSBereiche.GSBereich;
+    END QuellSchZsBeZu;
 
     ASSOCIATION QuellSchGWSZone =
       QuellSch -- {0..*} Quellschacht;
@@ -1459,16 +1440,8 @@ VERSION "2021-07-15"  =
       MaxDarst : Darstellung; 
       MutatDatum : INTERLIS.XMLDate;
       MutatBemerk: TEXT*254;
+      VerPerNameText: TextPos;
     END Versorgungsperimeter;   
-
-    CLASS VerPerNameText =
-      Geometrie : MANDATORY GeometryCHLV95_V1.Coord2;
-      Farbe: Farbe;
-      Ori : 0.000 .. 399.999 [Grads];
-      Hali : HALIGNMENT;
-      Vali : VALIGNMENT;
-      Size : SizeTyp;
-    END VerPerNameText;
 
     CLASS Uebergabestelle =
       SymbolGeo: MANDATORY GeometryCHLV95_V1.Coord2;
@@ -1555,11 +1528,6 @@ VERSION "2021-07-15"  =
       Versorgungsperimeter -- {0..*} Versorgungsperimeter;
       MutatPerson -- {0..1} MutatPerson;
     END VersorgungsperimeterMutatPerson;
-
-    ASSOCIATION VersorgungsperimeterVerPerNameText =
-      Versorgungsperimeter -- {1} Versorgungsperimeter;
-      VerPerNameText -- {0..*} VerPerNameText;
-    END VersorgungsperimeterVerPerNameText;
 
     ASSOCIATION UebergabestelleVonVersPeri =
       Uebergabestelle -- {0..*} Uebergabestelle;
