@@ -435,6 +435,7 @@ VERSION "2021-10-29"  =
       QkatPlanNr : 0 .. 999;
       GrundstNr : TEXT*10;
       KontaktDatum : INTERLIS.XMLDate;
+      Dateireferenz : BAG {0..*} OF Datei;
   END QwFsgEndpunkt;
 
     CLASS Quellschacht EXTENDS Brunnenstube =
@@ -816,6 +817,7 @@ VERSION "2021-10-29"  =
       QkatPlanNr: 0..999;
       GrundstNr:  TEXT*10;
       KontaktDatum: INTERLIS.XMLDate;
+      Dateireferenz : BAG {0..*} OF Datei;
       UNIQUE Identifikator;
     END Rueckgabebrunnen;
 
@@ -1130,11 +1132,6 @@ VERSION "2021-10-29"  =
       Foerderanlage -- {0..*} Foerderanlage;
     END QueSchaFoerderanlage;
 
-    ASSOCIATION ReinwasserPWOberflGewRohwaPW =
-      ReinwasserPW -- {0..*} Foerderanlage;
-      OberflGewRohwaPW -- {0..*} OberflGewRohwaPW;
-    END ReinwasserPWOberflGewRohwaPW;
-
     ASSOCIATION QueSchaRes =
       Quellschacht -- {0..*} Quellschacht;
       Reservoir -- {0..*} Reservoir;
@@ -1239,11 +1236,6 @@ VERSION "2021-10-29"  =
       RueBru -- {0..*} Rueckgabebrunnen;
       BewiReg -- {1..*} BewiReg;
     END RueBruBewiReg;
-
-    ASSOCIATION RuebruEntBru =
-      Rueckgabebrunnen -- {0..*} Rueckgabebrunnen;
-      Entnahmebrunnen -- {0..*} Entnahmebrunnen;
-    END RuebruEntBru;
 
     ASSOCIATION RueBruGrundEigentuemer =
       Rueckgabebrunnen2 -- {0..*} Rueckgabebrunnen;
