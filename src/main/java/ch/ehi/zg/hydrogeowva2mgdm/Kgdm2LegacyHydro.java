@@ -43,6 +43,7 @@ import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruDatei;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruGSBAoTw;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruGWSZone;
+import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruVerZweck;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruWasservsg;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntbruZsBeZu;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.EntnahmebrunnenTyp;
@@ -58,6 +59,7 @@ import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasBewiReg;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasGSBAoTw;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasGWSZone;
+import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasVerZweck;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasWasservsg;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.ObFasZsBeZu;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflaeGewFassungTyp;
@@ -68,6 +70,7 @@ import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchDatei;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchGSBAoTw;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchGWSZone;
+import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchVerZweck;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchWasservsg;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellSchZsBeZu;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.QuellenTyp;
@@ -93,8 +96,11 @@ import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.VersickerungArt;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.VersickerungTyp;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Versickerungsanlage_Qualitaet;
+import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.Verwendungszweck;
 import ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.WasserQualitaet;
 import ch.interlis.models.ZG_hydrogeo_wva_V1.Datei;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.HilfsText;
+import ch.interlis.models.ZG_hydrogeo_wva_V1.Texte;
 
 public class Kgdm2LegacyHydro {
 
@@ -367,6 +373,7 @@ public class Kgdm2LegacyHydro {
                     addTextPos(GwfNrAfu_Intranet2Pos.tag,GwfNrAfu_Intranet2Pos.tag_Entnahmebrunnen,mappedObj.getobjectoid(),srcObj.getGwfNrAfu_Intranet2Pos());
                     addTextPos(GwfNrAfu_Intranet5Pos.tag,GwfNrAfu_Intranet5Pos.tag_Entnahmebrunnen,mappedObj.getobjectoid(),srcObj.getGwfNrAfu_Intranet5Pos());
                     addDatei(EntbruDatei.tag,EntbruDatei.tag_Entnahmebrunnen,mappedObj.getobjectoid(),srcObj.getDateireferenz());
+                    addTexte(EntbruVerZweck.tag,EntbruVerZweck.tag_Entnahmebrunnen,mappedObj.getobjectoid(),srcObj.getVerwendungszweck());
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.FassgebWasservsg) {
                     bufferedAssocObj.add(iomObj);
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Fassungseinzugsgebiet) {
@@ -516,6 +523,7 @@ public class Kgdm2LegacyHydro {
                     // nur WVA srcObj.getObflGewFsgTiefeText();
                     addTextPos(OwfNrAfu_Intranet2Pos.tag,OwfNrAfu_Intranet2Pos.tag_OberflaechenGewFassung,mappedObj.getobjectoid(),srcObj.getOwfNrAfu_Intranet2Pos());
                     addTextPos(OwfNrAfu_Intranet5Pos.tag,OwfNrAfu_Intranet5Pos.tag_OberflaechenGewFassung,mappedObj.getobjectoid(),srcObj.getOwfNrAfu_Intranet5Pos());
+                    addTexte(ObFasVerZweck.tag,ObFasVerZweck.tag_Verwendungszweck,mappedObj.getobjectoid(),srcObj.getVerwendungszweck());
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW) { // instanceof Foerderanlage
                     ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW srcObj=(ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.OberflGewRohwaPW)iomObj;
                     ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewRohwaPW mappedObj=new ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.OberflGewRohwaPW(newTid());
@@ -666,6 +674,7 @@ public class Kgdm2LegacyHydro {
                     addTextPos(QwfNrAfu_Intranet5Pos.tag,QwfNrAfu_Intranet5Pos.tag_Quellschacht,mappedObj.getobjectoid(),srcObj.getQwfNrAfu_Intranet5Pos());
                     addTextPos(QwfMenge_Karte25Pos.tag,QwfMenge_Karte25Pos.tag_Quellschacht,mappedObj.getobjectoid(),srcObj.getQwfMenge_Karte25Pos());
                     addDatei(QuellSchDatei.tag,QuellSchDatei.tag_Quellschacht,mappedObj.getobjectoid(),srcObj.getDateireferenz());
+                    addTexte(QuellSchVerZweck.tag,QuellSchVerZweck.tag_Verwendungszweck,mappedObj.getobjectoid(),srcObj.getVerwendungszweck());
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchaWasservsg) {
                     bufferedAssocObj.add(iomObj);
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.QuellSchGSBAoTw) {
@@ -982,6 +991,32 @@ public class Kgdm2LegacyHydro {
             mappingComplete=true;
         }
         return;
+    }
+
+    private void addTexte(String tag, String tagRef, String masteroid, Texte srcObjs) {
+        if(srcObjs==null || srcObjs.sizeTexte()==0) {
+            return;
+        }
+        for(HilfsText srcObj:srcObjs.getTexte()) {
+            String text = srcObj.getText();
+            if(text!=null) {
+                Verwendungszweck zweck=new Verwendungszweck(newTid());
+                zweck.setZweck(text);
+                addMappedObj(zweck, srcObj);
+                IomObject mappedObj=new Iom_jObject(tag,newTid());
+                if(masteroid!=null) {
+                    IomObject ref=new Iom_jObject("REF",null);
+                    ref.setobjectrefoid(masteroid);
+                    mappedObj.addattrobj(tagRef, ref);
+                }
+                {
+                    IomObject ref=new Iom_jObject("REF",null);
+                    ref.setobjectrefoid(zweck.getobjectoid());
+                    mappedObj.addattrobj(EntbruVerZweck.tag_Verwendungszweck, ref);
+                }
+                addMappedObj(mappedObj, srcObj);
+            }
+        }
     }
 
     private void addDatei(String tag, String tagRef, String masteroid, Datei[] srcObjs) {
