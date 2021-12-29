@@ -84,6 +84,8 @@ public class Main {
             }else if(arg.equals("--modeldir")){
                 argi++;
                 settings.setValue(Converter.SETTING_ILIDIRS, args[argi]);
+            }else if(arg.equals("--disableValidation")) {
+                settings.setValue(Converter.SETTING_DISABLE_VALIDATION, Boolean.TRUE.toString());
             }else if(arg.equals("--log")) {
                 argi++;
                 settings.setValue(Converter.SETTING_LOGFILE, args[argi]);
@@ -108,6 +110,7 @@ public class Main {
                     System.err.println("--gui                 start GUI.");
                     System.err.println("--log file            text file, that receives validation results.");
                     System.err.println("--modeldir "+Converter.SETTING_DEFAULT_ILIDIRS+" list of directories/repositories with ili-files.");
+                    System.err.println("--disableValidation   disable validation of data.");
                     System.err.println("--proxy host          proxy server to access model repositories.");
                     System.err.println("--proxyPort port      proxy port to access model repositories.");
                     System.err.println("--trace               enable trace messages.");

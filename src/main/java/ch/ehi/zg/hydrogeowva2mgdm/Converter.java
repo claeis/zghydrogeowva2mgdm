@@ -21,15 +21,20 @@ import ch.interlis.iox.EndBasketEvent;
 import ch.interlis.iox.EndTransferEvent;
 import ch.interlis.iox.IoxEvent;
 import ch.interlis.iox.IoxException;
+import ch.interlis.iox.IoxLogging;
 import ch.interlis.iox.IoxWriter;
 import ch.interlis.iox.ObjectEvent;
 import ch.interlis.iox.StartBasketEvent;
 import ch.interlis.iox.StartTransferEvent;
 import ch.interlis.iox_j.DefaultIoxFactoryCollection;
+import ch.interlis.iox_j.PipelinePool;
 import ch.interlis.iox_j.logging.FileLogger;
+import ch.interlis.iox_j.logging.LogEventFactory;
 import ch.interlis.iox_j.logging.StdLogger;
 import ch.interlis.iox_j.statistics.IoxStatistics;
 import ch.interlis.iox_j.utility.IoxUtility;
+import ch.interlis.iox_j.validator.ValidationConfig;
+import ch.interlis.iox_j.validator.Validator;
 import ch.interlis.models.CHADMINCODES_V1;
 import ch.interlis.models.GEOMETRYCHLV95_V1;
 import ch.interlis.models.GRUNDWASSERAUSTRITTE_LV95_V1;
@@ -63,6 +68,9 @@ public class Converter {
     /** Name of the log file that receives the conversion results.
      */
     public static final String SETTING_LOGFILE = "ch.ehi.zg.hydrogeowva2mgdm.log";
+    /** True if the program should not validate input and output data.
+     */
+    public static final String SETTING_DISABLE_VALIDATION = "ch.ehi.zg.hydrogeowva2mgdm.disableValidation";
     /** Placeholder, that will be replaced by the folder of the current to be converted transfer file. 
      * @see #SETTING_ILIDIRS
      */
@@ -181,11 +189,11 @@ public class Converter {
                 
                 
                 if(function==FC_ITFHYDRO2KGDM) {
-                    itfHydro2kgdm(kgdm0File, hydroFile, kgdmFile, settings, td_ili1);
+                    itfHydro2kgdm(kgdm0File, hydroFile, kgdmFile, settings, td_ili1,td_ili2);
                 }else if(function==FC_ITFWVA2KGDM) {
-                    itfWva2kgdm(wvaFile, kgdmFile, settings, td_ili1);
+                    itfWva2kgdm(wvaFile, kgdmFile, settings, td_ili1,td_ili2);
                 }else if(function==FC_KGDM2ITF){
-                    kgdm2itf(kgdmFile, hydroFile,settings, td_ili1);
+                    kgdm2itf(kgdmFile, hydroFile,settings, td_ili1,td_ili2);
                 }else if(function==FC_KGDM2MGDM){
                     kgdm2mgdm(kgdmFile, mgdmTwvFile,mgdmGwaFile,settings, td_ili2);
                 }else {
@@ -227,6 +235,9 @@ public class Converter {
         IoxStatistics mgdmGwaStat=null;
         XtfWriterBase mgdmTwvWriter=null;
         XtfWriterBase mgdmGwaWriter=null;
+        Validator twvWriterValidator=null;
+        Validator gwaWriterValidator=null;
+        Validator ioxReaderValidator=null;
         try{
             readerStat=new IoxStatistics(td,settings);
             mgdmTwvStat=new IoxStatistics(td,settings);
@@ -237,6 +248,18 @@ public class Converter {
             factories.registerFactory(ZG_HYDROGEO_WVA_V1.getIoxFactory());
             ioxReader.setFactory(factories);
             readerStat.setFilename(kgdmFile.getPath());
+            PipelinePool pipelinePool=new PipelinePool();
+            IoxLogging errHandler=new ch.interlis.iox_j.logging.Log2EhiLogger();
+            {
+                LogEventFactory errWriterFactory=new LogEventFactory();
+                errWriterFactory.setDataSource(kgdmFile.getPath());
+                ValidationConfig writerValidationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxReaderValidator=new Validator(td,writerValidationConfig,errHandler,errWriterFactory,pipelinePool,validatorSettings);
+                }
+            }
+            
             Kgdm2MgdmGwa gwaFilter=new Kgdm2MgdmGwa(settings);
             Kgdm2MgdmTwv twvFilter=new Kgdm2MgdmTwv(td,settings);
             
@@ -247,6 +270,15 @@ public class Converter {
                     UNITS.getXtfModel(),
                     });
             mgdmTwvStat.setFilename(mgdmTwvFile.getPath());
+            {
+                LogEventFactory errWriterFactory=new LogEventFactory();
+                errWriterFactory.setDataSource(mgdmTwvFile.getPath());
+                ValidationConfig writerValidationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    twvWriterValidator=new Validator(td,writerValidationConfig,errHandler,errWriterFactory,pipelinePool,validatorSettings);
+                }
+            }
             
             mgdmGwaWriter = new XtfWriterBase( mgdmGwaFile,  getIoxMapping(),"2.3");
             mgdmGwaWriter.setModels(new XtfModel[]{
@@ -255,6 +287,15 @@ public class Converter {
                     UNITS.getXtfModel(),
                     });
             mgdmGwaStat.setFilename(mgdmGwaFile.getPath());
+            {
+                LogEventFactory errWriterFactory=new LogEventFactory();
+                errWriterFactory.setDataSource(mgdmGwaFile.getPath());
+                ValidationConfig writerValidationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    gwaWriterValidator=new Validator(td,writerValidationConfig,errHandler,errWriterFactory,pipelinePool,validatorSettings);
+                }
+            }
             
             IoxEvent kgdmEvent=null;
             IoxEvent twvEvent=null;
@@ -262,28 +303,33 @@ public class Converter {
             try{
                 do{
                     kgdmEvent=ioxReader.read();
+                    if(ioxReaderValidator!=null)ioxReaderValidator.validate(kgdmEvent);
                     readerStat.add(kgdmEvent);
                     {
                         twvEvent=IoxUtility.cloneIoxEvent(kgdmEvent);
                         twvEvent=twvFilter.filter(twvEvent);
                     }
-                    writeIoxEvent(twvEvent,mgdmTwvWriter,mgdmTwvStat);
+                    writeIoxEvent(twvEvent,mgdmTwvWriter,mgdmTwvStat,twvWriterValidator);
                     gwaFilter.addInput(kgdmEvent);
                     gwaEvent=gwaFilter.getMappedEvent();
                     while(gwaEvent!=null) {
-                        writeIoxEvent(gwaEvent, mgdmGwaWriter, mgdmGwaStat);
+                        writeIoxEvent(gwaEvent, mgdmGwaWriter, mgdmGwaStat,gwaWriterValidator);
                         gwaEvent=gwaFilter.getMappedEvent();
                     }
                 }while(!(kgdmEvent instanceof EndTransferEvent));
                 gwaEvent=gwaFilter.getMappedEvent();
                 while(gwaEvent!=null) {
-                    writeIoxEvent(gwaEvent, mgdmGwaWriter, mgdmGwaStat);
+                    writeIoxEvent(gwaEvent, mgdmGwaWriter, mgdmGwaStat,gwaWriterValidator);
                     gwaEvent=gwaFilter.getMappedEvent();
                 }
                 readerStat.write2logger();
                 mgdmTwvStat.write2logger();
                 mgdmGwaStat.write2logger();
             }finally{
+                if(ioxReaderValidator!=null){
+                    ioxReaderValidator.close();
+                    ioxReaderValidator=null;
+                }
                 if(ioxReader!=null){
                     try {
                         ioxReader.close();
@@ -294,6 +340,10 @@ public class Converter {
                 }
             }
         }finally{
+            if(twvWriterValidator!=null){
+                twvWriterValidator.close();
+                twvWriterValidator=null;
+            }
             if(mgdmTwvWriter!=null){
                 try {
                     mgdmTwvWriter.close();
@@ -301,6 +351,10 @@ public class Converter {
                     EhiLogger.logError(e);
                 }
                 mgdmTwvWriter=null;
+            }
+            if(gwaWriterValidator!=null){
+                gwaWriterValidator.close();
+                gwaWriterValidator=null;
             }
             if(mgdmGwaWriter!=null){
                 try {
@@ -313,15 +367,39 @@ public class Converter {
         }
         
     }
-    private void kgdm2itf(File kgdmFile, File hydroFile, Settings settings, TransferDescription td) 
+    private void kgdm2itf(File kgdmFile, File hydroFile, Settings settings, TransferDescription td_ili1, TransferDescription td_ili2) 
     throws IoxException
     {
         IoxStatistics readerStat=null;
         IoxStatistics hydroStat=null;
         ItfWriter2 hydroWriter=null;
+        Validator ioxWriterValidator=null;
+        Validator ioxReaderValidator=null;
         try{
-            readerStat=new IoxStatistics(td,settings);
-            hydroStat=new IoxStatistics(td,settings);
+            readerStat=new IoxStatistics(td_ili2,settings);
+            hydroStat=new IoxStatistics(td_ili1,settings);
+            PipelinePool pipelinePool=new PipelinePool();
+            IoxLogging errHandler=new ch.interlis.iox_j.logging.Log2EhiLogger();
+            {
+                LogEventFactory errWriterFactory=new LogEventFactory();
+                errWriterFactory.setDataSource(kgdmFile.getPath());
+                ValidationConfig writerValidationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxReaderValidator=new Validator(td_ili2,writerValidationConfig,errHandler,errWriterFactory,pipelinePool,validatorSettings);
+                }
+            }
+            {
+                LogEventFactory errFactory=new LogEventFactory();
+                errFactory.setDataSource(hydroFile.getPath());
+                ValidationConfig validationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                validatorSettings.setValue(ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_OIDPERTABLE, ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_OIDPERTABLE_DO);
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxWriterValidator=new Validator(td_ili1,validationConfig,errHandler,errFactory,pipelinePool,validatorSettings);
+                }
+                
+            }
             // setup data reader
             XtfReader ioxReader=new XtfReader(kgdmFile);
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
@@ -330,7 +408,7 @@ public class Converter {
             readerStat.setFilename(kgdmFile.getPath());
             Kgdm2LegacyHydro gwaFilter=new Kgdm2LegacyHydro(settings);
             
-            hydroWriter = new ItfWriter2( hydroFile, td);
+            hydroWriter = new ItfWriter2( hydroFile, td_ili1);
             hydroStat.setFilename(hydroFile.getPath());
             
             
@@ -339,22 +417,27 @@ public class Converter {
             try{
                 do{
                     kgdmEvent=ioxReader.read();
+                    if(ioxReaderValidator!=null)ioxReaderValidator.validate(kgdmEvent);
                     readerStat.add(kgdmEvent);
                     gwaFilter.addInput(kgdmEvent);
                     hydroEvent=gwaFilter.getMappedEvent();
                     while(hydroEvent!=null) {
-                        writeIoxEvent(hydroEvent, hydroWriter, hydroStat);
+                        writeIoxEvent(hydroEvent, hydroWriter, hydroStat,ioxWriterValidator);
                         hydroEvent=gwaFilter.getMappedEvent();
                     }
                 }while(!(kgdmEvent instanceof EndTransferEvent));
                 hydroEvent=gwaFilter.getMappedEvent();
                 while(hydroEvent!=null) {
-                    writeIoxEvent(hydroEvent, hydroWriter, hydroStat);
+                    writeIoxEvent(hydroEvent, hydroWriter, hydroStat,ioxWriterValidator);
                     hydroEvent=gwaFilter.getMappedEvent();
                 }
                 readerStat.write2logger();
                 hydroStat.write2logger();
             }finally{
+                if(ioxReaderValidator!=null) {
+                    ioxReaderValidator.close();
+                    ioxReaderValidator=null;
+                }
                 if(ioxReader!=null){
                     try {
                         ioxReader.close();
@@ -365,6 +448,10 @@ public class Converter {
                 }
             }
         }finally{
+            if(ioxWriterValidator!=null) {
+                ioxWriterValidator.close();
+                ioxWriterValidator=null;
+            }
             if(hydroWriter!=null){
                 try {
                     hydroWriter.close();
@@ -376,13 +463,15 @@ public class Converter {
         }
         
     }
-    private void itfHydro2kgdm(File kgdm0File, File hydroFile, File kgdmFile, Settings settings,TransferDescription td) throws IoxException {
-        IoxStatistics readerStat=null;
+    private void itfHydro2kgdm(File kgdm0File, File hydroFile, File kgdmFile, Settings settings,TransferDescription td_ili1, TransferDescription td_ili2) throws IoxException {
+        IoxStatistics reader1Stat=null;
+        IoxStatistics reader2Stat=null;
         IoxStatistics writerStat=null;
         XtfWriterBase kgdmWriter=null;
         try{
-            readerStat=new IoxStatistics(td,settings);
-            writerStat=new IoxStatistics(td,settings);
+            reader1Stat=new IoxStatistics(td_ili1,settings);
+            reader2Stat=new IoxStatistics(td_ili2,settings);
+            writerStat=new IoxStatistics(td_ili2,settings);
             LegacyHydro2kgdm mapper=new LegacyHydro2kgdm();
 
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
@@ -403,36 +492,61 @@ public class Converter {
                     INTERNATIONALCODES_V1.getXtfModel(),
                     CHADMINCODES_V1.getXtfModel()
                     });
+            PipelinePool pipelinePool=new PipelinePool();
+            IoxLogging errHandler=new ch.interlis.iox_j.logging.Log2EhiLogger();
+            Validator ioxWriterValidator=null;
+            {
+                LogEventFactory errWriterFactory=new LogEventFactory();
+                errWriterFactory.setDataSource(kgdmFile.getPath());
+                ValidationConfig writerValidationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxWriterValidator=new Validator(td_ili2,writerValidationConfig,errHandler,errWriterFactory,pipelinePool,validatorSettings);
+                }
+            }
             IoxEvent event=null;
             event=new ch.interlis.iox_j.StartTransferEvent(settings.getValue(SETTING_APPNAME));
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug,"b1");
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             if(kgdm0File!=null) {
                 // setup data reader
                 XtfReader ioxReader=new XtfReader(kgdm0File);
-                ioxReader.setModel(td);
+                ioxReader.setModel(td_ili2);
                 ioxReader.setFactory(factories);
-                readerStat.setFilename(kgdm0File.getPath());
+                reader2Stat.setFilename(kgdm0File.getPath());
+                LogEventFactory errFactory=new LogEventFactory();
+                errFactory.setDataSource(kgdm0File.getPath());
+                ValidationConfig validationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                Validator ioxReaderValidator=null;
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxReaderValidator=new Validator(td_ili2,validationConfig,errHandler,errFactory,pipelinePool,validatorSettings);
+                }
                 try{
                     do{
                         event=ioxReader.read();
-                        readerStat.add(event);
+                        reader2Stat.add(event);
+                        if(ioxReaderValidator!=null)ioxReaderValidator.validate(event);
                         mapper.addInput(event);
                         if(event instanceof ObjectEvent) {
                             IomObject mappedObj=mapper.getMappedObject();
                             while(mappedObj!=null) {
-                                writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
+                                writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat,ioxWriterValidator);
                                 mappedObj=mapper.getMappedObject();
                             }
                         }
                     }while(!(event instanceof EndTransferEvent));
                     IomObject mappedObj=mapper.getMappedObject();
                     while(mappedObj!=null) {
-                        writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
+                        writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat,ioxWriterValidator);
                         mappedObj=mapper.getMappedObject();
                     }
                 }finally{
+                    if(ioxReaderValidator!=null){
+                        ioxReaderValidator.close();
+                        ioxReaderValidator=null;
+                    }
                     if(ioxReader!=null){
                         try {
                             ioxReader.close();
@@ -443,50 +557,68 @@ public class Converter {
                     }
                 }
             }
-            // setup data reader
-            ItfReader2 ioxReader=new ItfReader2(hydroFile,true);
-            ioxReader.setModel(td);
-            ioxReader.setFactory(factories);
-            readerStat.setFilename(hydroFile.getPath());
-            try{
-                do{
-                    event=ioxReader.read();
-                    readerStat.add(event);
-                    mapper.addInput(event);
-                    if(event instanceof ObjectEvent) {
-                        IomObject mappedObj=mapper.getMappedObject();
-                        while(mappedObj!=null) {
-                            writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
-                            mappedObj=mapper.getMappedObject();
-                        }
-                    }
-                }while(!(event instanceof EndTransferEvent));
-                IomObject mappedObj=mapper.getMappedObject();
-                while(mappedObj!=null) {
-                    writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
-                    mappedObj=mapper.getMappedObject();
+            {
+                // setup data reader
+                ItfReader2 ioxReader=new ItfReader2(hydroFile,true);
+                ioxReader.setModel(td_ili1);
+                ioxReader.setFactory(factories);
+                ioxReader.setIoxDataPool(pipelinePool);
+                reader1Stat.setFilename(hydroFile.getPath());
+                LogEventFactory errFactory=new LogEventFactory();
+                errFactory.setDataSource(hydroFile.getPath());
+                ValidationConfig validationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                validatorSettings.setValue(ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_OIDPERTABLE, ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_OIDPERTABLE_DO);
+                Validator ioxReaderValidator=null;
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxReaderValidator=new Validator(td_ili1,validationConfig,errHandler,errFactory,pipelinePool,validatorSettings);
                 }
-            }finally{
-                if(ioxReader!=null){
-                    try {
-                        ioxReader.close();
-                    } catch (IoxException e) {
-                        EhiLogger.logError(e);
+                try{
+                    do{
+                        event=ioxReader.read();
+                        reader1Stat.add(event);
+                        if(ioxReaderValidator!=null)ioxReaderValidator.validate(event);
+                        mapper.addInput(event);
+                        if(event instanceof ObjectEvent) {
+                            IomObject mappedObj=mapper.getMappedObject();
+                            while(mappedObj!=null) {
+                                writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat,ioxWriterValidator);
+                                mappedObj=mapper.getMappedObject();
+                            }
+                        }
+                    }while(!(event instanceof EndTransferEvent));
+                    IomObject mappedObj=mapper.getMappedObject();
+                    while(mappedObj!=null) {
+                        writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat,ioxWriterValidator);
+                        mappedObj=mapper.getMappedObject();
                     }
-                    ioxReader=null;
+                }finally{
+                    if(ioxReaderValidator!=null){
+                        ioxReaderValidator.close();
+                        ioxReaderValidator=null;
+                    }
+                    if(ioxReader!=null){
+                        try {
+                            ioxReader.close();
+                        } catch (IoxException e) {
+                            EhiLogger.logError(e);
+                        }
+                        ioxReader=null;
+                    }
                 }
             }
             event=new ch.interlis.iox_j.EndBasketEvent();
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.TransferMetadaten,"b2");
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             // TODO TransferMetadaten
             event=new ch.interlis.iox_j.EndBasketEvent();
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
 
             event=new ch.interlis.iox_j.EndTransferEvent();
-            writeIoxEvent(event, kgdmWriter, writerStat);
-            readerStat.write2logger();
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
+            reader1Stat.write2logger();
+            reader2Stat.write2logger();
             writerStat.write2logger();
         }finally{
             if(kgdmWriter!=null){
@@ -499,20 +631,43 @@ public class Converter {
             }
         }
     }
-    private void itfWva2kgdm(File wvaFile, File kgdmFile, Settings settings,TransferDescription td) throws IoxException {
+    private void itfWva2kgdm(File wvaFile, File kgdmFile, Settings settings,TransferDescription td_ili1, TransferDescription td_ili2) throws IoxException {
         IoxStatistics readerStat=null;
         IoxStatistics writerStat=null;
         XtfWriterBase kgdmWriter=null;
+        Validator ioxWriterValidator=null;
         try{
-            readerStat=new IoxStatistics(td,settings);
-            writerStat=new IoxStatistics(td,settings);
+            readerStat=new IoxStatistics(td_ili1,settings);
+            writerStat=new IoxStatistics(td_ili2,settings);
+            PipelinePool pipelinePool=new PipelinePool();
+            IoxLogging errHandler=new ch.interlis.iox_j.logging.Log2EhiLogger();
+            {
+                LogEventFactory errWriterFactory=new LogEventFactory();
+                errWriterFactory.setDataSource(kgdmFile.getPath());
+                ValidationConfig writerValidationConfig=new ValidationConfig();
+                Settings validatorSettings=new Settings();
+                if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                    ioxWriterValidator=new Validator(td_ili2,writerValidationConfig,errHandler,errWriterFactory,pipelinePool,validatorSettings);
+                }
+            }
             // setup data reader
             ItfReader2 ioxReader=new ItfReader2(wvaFile,true);
-            ioxReader.setModel(td);
+            ioxReader.setModel(td_ili1);
             DefaultIoxFactoryCollection factories=new DefaultIoxFactoryCollection();
             factories.registerFactory(ZG_WASSERVERSORGUNGSATLAS_1_0.getIoxFactory());
             ioxReader.setFactory(factories);
             readerStat.setFilename(wvaFile.getPath());
+            ioxReader.setIoxDataPool(pipelinePool);
+            LogEventFactory errFactory=new LogEventFactory();
+            errFactory.setDataSource(wvaFile.getPath());
+            ValidationConfig validationConfig=new ValidationConfig();
+            Settings validatorSettings=new Settings();
+            validatorSettings.setValue(ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_OIDPERTABLE, ch.interlis.iox_j.validator.Validator.CONFIG_DO_ITF_OIDPERTABLE_DO);
+            Validator ioxReaderValidator=null;
+            if(!Boolean.TRUE.toString().equals(settings.getValue(SETTING_DISABLE_VALIDATION))) {
+                ioxReaderValidator=new Validator(td_ili1,validationConfig,errHandler,errFactory,pipelinePool,validatorSettings);
+            }
+            
             LegacyWva2kgdm mapper=new LegacyWva2kgdm();
 
             kgdmWriter = new XtfWriterBase( kgdmFile,  getIoxMapping(),"2.3");
@@ -530,28 +685,33 @@ public class Converter {
                     });
             IoxEvent event=null;
             event=new ch.interlis.iox_j.StartTransferEvent(settings.getValue(SETTING_APPNAME));
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.Wasserversorgung_Zug,"b1");
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             try{
                 do{
                     event=ioxReader.read();
                     readerStat.add(event);
+                    if(ioxReaderValidator!=null)ioxReaderValidator.validate(event);
                     mapper.addInput(event);
                     if(event instanceof ObjectEvent) {
                         IomObject mappedObj=mapper.getMappedObject();
                         while(mappedObj!=null) {
-                            writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
+                            writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat,ioxWriterValidator);
                             mappedObj=mapper.getMappedObject();
                         }
                     }
                 }while(!(event instanceof EndTransferEvent));
                 IomObject mappedObj=mapper.getMappedObject();
                 while(mappedObj!=null) {
-                    writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat);
+                    writeIoxEvent(new ch.interlis.iox_j.ObjectEvent(mappedObj), kgdmWriter, writerStat,ioxWriterValidator);
                     mappedObj=mapper.getMappedObject();
                 }
             }finally{
+                if(ioxReaderValidator!=null){
+                    ioxReaderValidator.close();
+                    ioxReaderValidator=null;
+                }
                 if(ioxReader!=null){
                     try {
                         ioxReader.close();
@@ -562,18 +722,22 @@ public class Converter {
                 }
             }
             event=new ch.interlis.iox_j.EndBasketEvent();
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             event=new ch.interlis.iox_j.StartBasketEvent(ZG_HYDROGEO_WVA_V1.TransferMetadaten,"b2");
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             // TODO TransferMetadaten
             event=new ch.interlis.iox_j.EndBasketEvent();
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
 
             event=new ch.interlis.iox_j.EndTransferEvent();
-            writeIoxEvent(event, kgdmWriter, writerStat);
+            writeIoxEvent(event, kgdmWriter, writerStat,ioxWriterValidator);
             readerStat.write2logger();
             writerStat.write2logger();
         }finally{
+            if(ioxWriterValidator!=null) {
+                ioxWriterValidator.close();
+                ioxWriterValidator=null;
+            }
             if(kgdmWriter!=null){
                 try {
                     kgdmWriter.close();
@@ -584,13 +748,20 @@ public class Converter {
             }
         }
     }
-    private void writeIoxEvent(IoxEvent event, IoxWriter ioxWriter, IoxStatistics stat) throws IoxException {
+    private void writeIoxEvent(IoxEvent event, IoxWriter ioxWriter, IoxStatistics stat,Validator validator) throws IoxException {
         if(event!=null) {
             stat.add(event);
+            if(validator!=null) {
+                validator.validate(event);
+            }
             if(ioxWriter!=null) {
                 ioxWriter.write(event);
             }
         }
+    }
+    @Deprecated
+    private void writeIoxEvent(IoxEvent event, IoxWriter ioxWriter, IoxStatistics stat) throws IoxException {
+        writeIoxEvent(event, ioxWriter, stat, null);
     }
     public static ViewableProperties getIoxMapping()
     {
