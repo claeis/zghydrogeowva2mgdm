@@ -5,7 +5,7 @@ apply plugin: "maven"
 sourceCompatibility = "1.8" 
 targetCompatibility = "1.8"
 
-version '1.0.0'+System.getProperty('release','-SNAPSHOT')
+version '1.1.0'+System.getProperty('release','-SNAPSHOT')
 
 configurations {
     deployerJars
@@ -84,6 +84,13 @@ task bindist(type: Zip){
         //}
         //from jars
 	}
+	into('ilimodels'){
+		from files(fileTree("src/main/ili").include("*.ili"))
+	}
+	into('docs'){
+		from files("README.md","docs/CHANGELOG.txt")
+	}
+	
 	// version = '1.0.6'
 }
 
