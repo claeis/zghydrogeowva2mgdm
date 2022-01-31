@@ -52,6 +52,8 @@ import ch.interlis.models.ZG_HYDROGEO_WVA_V1;
 
 public class Converter {
 
+    public static final String MSG_CONVERSION_DONE = "...conversion done";
+    public static final String MSG_CONVERSION_FAILED = "...conversion failed";
     /** Path with folders of Interlis model files. Multiple entries are separated by semicolon (';'). 
      * Might contain "http:" URLs which should contain model repositories. 
      * Might include placeholders ITF_DIR or JAR_DIR. 
@@ -202,14 +204,14 @@ public class Converter {
                 
                 // check for errors
                 if(logStderr.hasSeenErrors()){
-                    EhiLogger.logState("...conversion failed");
+                    EhiLogger.logState(MSG_CONVERSION_FAILED);
                 }else{
-                    EhiLogger.logState("...conversion done");
+                    EhiLogger.logState(MSG_CONVERSION_DONE);
                     ret=true;
                 }
             }catch(Throwable ex){
                 EhiLogger.logError(ex);
-                EhiLogger.logState("...conversion failed");
+                EhiLogger.logState(MSG_CONVERSION_FAILED);
             }finally {
                 
             }
