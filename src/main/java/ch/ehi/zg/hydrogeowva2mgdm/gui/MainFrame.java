@@ -777,7 +777,7 @@ public class MainFrame extends JFrame {
 					SwingWorker worker = new SwingWorker() {
 						public Object construct() {
 							try {
-								boolean ret=new Converter().convert(Converter.FC_ITFHYDRO2KGDM,getWvaFile(),getHydroFile(),getKgdm0File(),getKgdmFile(),getMgdmTwvFile(),getMgdmGwaFile(), getSettings());
+								boolean ret=new Converter().convert(function,getWvaFile(),getHydroFile(),getKgdm0File(),getKgdmFile(),getMgdmTwvFile(),getMgdmGwaFile(), getSettings());
                                 getLogUi().setCaretPosition(getLogUi().getDocument().getLength());
 								Toolkit.getDefaultToolkit().beep();
                                 JOptionPane.showMessageDialog(MainFrame.this, ret?Converter.MSG_CONVERSION_DONE:Converter.MSG_CONVERSION_FAILED);                                   
@@ -803,7 +803,13 @@ public class MainFrame extends JFrame {
                     fileDialog.setCurrentDirectory(new File(getWorkingDirectory()));
                     fileDialog.setDialogTitle(rsrc.getString("MainFrame.kgdmFileChooserTitle"));
                     fileDialog.setFileFilter(createXtfFilter());
-					if (fileDialog.showOpenDialog(MainFrame.this) == FileChooser.APPROVE_OPTION) {
+                    int rc;
+                    if(function==Converter.FC_ITFHYDRO2KGDM || function==Converter.FC_ITFWVA2KGDM) {
+                        rc=fileDialog.showSaveDialog(MainFrame.this);
+                    }else{
+                        rc=fileDialog.showOpenDialog(MainFrame.this);
+                    }
+                    if (rc == FileChooser.APPROVE_OPTION) {
 						setWorkingDirectory(fileDialog.getCurrentDirectory().getAbsolutePath());
                         String selectedFile=fileDialog.getSelectedFile().getAbsolutePath();
 						setKgdmFile(selectedFile);
@@ -843,7 +849,7 @@ public class MainFrame extends JFrame {
                     fileDialog.setCurrentDirectory(new File(getWorkingDirectory()));
                     fileDialog.setDialogTitle(rsrc.getString("MainFrame.mgdmTwvFileChooserTitle"));
                     fileDialog.setFileFilter(createXtfFilter());
-                    if (fileDialog.showOpenDialog(MainFrame.this) == FileChooser.APPROVE_OPTION) {
+                    if (fileDialog.showSaveDialog(MainFrame.this) == FileChooser.APPROVE_OPTION) {
                         setWorkingDirectory(fileDialog.getCurrentDirectory().getAbsolutePath());
                         String selectedFile=fileDialog.getSelectedFile().getAbsolutePath();
                         setMgdmTwvFile(selectedFile);
@@ -863,7 +869,7 @@ public class MainFrame extends JFrame {
                     fileDialog.setCurrentDirectory(new File(getWorkingDirectory()));
                     fileDialog.setDialogTitle(rsrc.getString("MainFrame.mgdmGwaFileChooserTitle"));
                     fileDialog.setFileFilter(createXtfFilter());
-                    if (fileDialog.showOpenDialog(MainFrame.this) == FileChooser.APPROVE_OPTION) {
+                    if (fileDialog.showSaveDialog(MainFrame.this) == FileChooser.APPROVE_OPTION) {
                         setWorkingDirectory(fileDialog.getCurrentDirectory().getAbsolutePath());
                         String selectedFile=fileDialog.getSelectedFile().getAbsolutePath();
                         setMgdmGwaFile(selectedFile);
@@ -903,7 +909,13 @@ public class MainFrame extends JFrame {
                     fileDialog.setCurrentDirectory(new File(getWorkingDirectory()));
                     fileDialog.setDialogTitle(rsrc.getString("MainFrame.hydroFileChooserTitle"));
                     fileDialog.setFileFilter(createItfFilter());
-                    if (fileDialog.showOpenDialog(MainFrame.this) == FileChooser.APPROVE_OPTION) {
+                    int rc;
+                    if(function==Converter.FC_ITFHYDRO2KGDM) {
+                        rc=fileDialog.showOpenDialog(MainFrame.this);
+                    }else{
+                        rc=fileDialog.showSaveDialog(MainFrame.this);
+                    }
+                    if (rc == FileChooser.APPROVE_OPTION) {
                         setWorkingDirectory(fileDialog.getCurrentDirectory().getAbsolutePath());
                         String selectedFile=fileDialog.getSelectedFile().getAbsolutePath();
                         setHydroFile(selectedFile);
@@ -958,30 +970,30 @@ public class MainFrame extends JFrame {
         if(kind==Converter.FC_ITFHYDRO2KGDM) {
             kgdmFileUi.setEditable(true);
             kgdm0FileUi.setEditable(true);
-            mgdmTwvFileUi.setEditable(false);
-            mgdmGwaFileUi.setEditable(false);
-            wvaFileUi.setEditable(false);
+            mgdmTwvFileUi.setEditable(false);mgdmTwvFileUi.setText(null);
+            mgdmGwaFileUi.setEditable(false);mgdmGwaFileUi.setText(null);
+            wvaFileUi.setEditable(false);wvaFileUi.setText(null);
             hydroFileUi.setEditable(true);
         }else if(kind==Converter.FC_ITFWVA2KGDM) {
             kgdmFileUi.setEditable(true);
-            kgdm0FileUi.setEditable(false);
-            mgdmTwvFileUi.setEditable(false);
-            mgdmGwaFileUi.setEditable(false);
+            kgdm0FileUi.setEditable(false);kgdm0FileUi.setText(null);
+            mgdmTwvFileUi.setEditable(false);mgdmTwvFileUi.setText(null);
+            mgdmGwaFileUi.setEditable(false);mgdmGwaFileUi.setText(null);
             wvaFileUi.setEditable(true);
-            hydroFileUi.setEditable(false);
+            hydroFileUi.setEditable(false);hydroFileUi.setText(null);
         }else if(kind==Converter.FC_KGDM2MGDM) {
             kgdmFileUi.setEditable(true);
-            kgdm0FileUi.setEditable(false);
+            kgdm0FileUi.setEditable(false);kgdm0FileUi.setText(null);
             mgdmTwvFileUi.setEditable(true);
             mgdmGwaFileUi.setEditable(true);
-            wvaFileUi.setEditable(false);
-            hydroFileUi.setEditable(false);
+            wvaFileUi.setEditable(false);wvaFileUi.setText(null);
+            hydroFileUi.setEditable(false);hydroFileUi.setText(null);
         }else if(kind==Converter.FC_KGDM2ITF) {
             kgdmFileUi.setEditable(true);
-            kgdm0FileUi.setEditable(false);
-            mgdmTwvFileUi.setEditable(false);
-            mgdmGwaFileUi.setEditable(false);
-            wvaFileUi.setEditable(false);
+            kgdm0FileUi.setEditable(false);kgdm0FileUi.setText(null);
+            mgdmTwvFileUi.setEditable(false);mgdmTwvFileUi.setText(null);
+            mgdmGwaFileUi.setEditable(false);mgdmGwaFileUi.setText(null);
+            wvaFileUi.setEditable(false);wvaFileUi.setText(null);
             hydroFileUi.setEditable(true);
         }else {
             throw new IllegalStateException("kind "+kind);
