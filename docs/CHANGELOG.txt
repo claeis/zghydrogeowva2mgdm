@@ -1,6 +1,12 @@
 LATEST VERSION
 -----------------------------
 
+zghydrogeowva2mgdm 1.2.1 (2022-02-16)
+-----------------------------
+- GUI: function was not passed to converter
+- GUI: clear disabled file fields
+- GUI: use Open or Save dialog depending on function
+
 zghydrogeowva2mgdm 1.2.0 (2022-01-31)
 -----------------------------
 - added GUI
