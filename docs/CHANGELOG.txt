@@ -1,6 +1,11 @@
 LATEST VERSION
 -----------------------------
 
+zghydrogeowva2mgdm 1.2.2 (2022-03-10)
+-----------------------------
+- some BautenGWFlaeche get lost
+- iox-ili-1.21.10-SNAPSHOT-d3f191b05bc456dd73b6b578c27ce4ba77b4abd4
+
 zghydrogeowva2mgdm 1.2.1 (2022-02-16)
 -----------------------------
 - GUI: function was not passed to converter

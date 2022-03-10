@@ -356,13 +356,19 @@ public class LegacyHydro2kgdm  {
                 anlage.addDateireferenz(mappedObj);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWFlaeche){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWFlaeche srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BautenGWFlaeche)obj;
-                BautenGW bautenGW=(BautenGW)mappedObjs.get(bautengw2oid.get(srcObj.getBautenGW()));
-                SurfaceStructure surfaceStruct=new SurfaceStructure();
-                surfaceStruct.setSurface(mapSurface(srcObj.getGeometrie()));
-                if(bautenGW.sizeLage_Flaeche()==0){
-                   bautenGW.setLage_Flaeche(new MultiSurface()); 
+                String refBautenGW=srcObj.getBautenGW();
+                if(refBautenGW==null) {
+                    EhiLogger.logError("BautenGWFlaeche "+srcObj.getobjectoid()+" ohne Referenz BautenGW");
+                }else {
+                    //EhiLogger.debug("BautenGWFlaeche "+srcObj.getobjectoid()); //+" Referenz "+refBautenGW);
+                    BautenGW bautenGW=(BautenGW)mappedObjs.get(bautengw2oid.get(refBautenGW));
+                    SurfaceStructure surfaceStruct=new SurfaceStructure();
+                    surfaceStruct.setSurface(mapSurface(srcObj.getGeometrie()));
+                    if(bautenGW.sizeLage_Flaeche()==0){
+                       bautenGW.setLage_Flaeche(new MultiSurface()); 
+                    }
+                    bautenGW.getLage_Flaeche().addSurfaces(surfaceStruct);
                 }
-                bautenGW.getLage_Flaeche().addSurfaces(surfaceStruct);
             }else if(obj instanceof ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BgwNrAfu_Intranet2Pos){
                 ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BgwNrAfu_Intranet2Pos srcObj=(ch.interlis.models.ZG_HydrogeologischeObjekte_2_3.HydrogeologischeObjekte.BgwNrAfu_Intranet2Pos)obj;
                 ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos mappedObj=new ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.IntranetPos();
