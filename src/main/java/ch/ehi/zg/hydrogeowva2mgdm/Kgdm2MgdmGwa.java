@@ -68,7 +68,9 @@ public class Kgdm2MgdmGwa {
                     mappedObj.setMax_Versickerung(srcObj.getMax_Versickerung());
                     mappedObj.setBezugsgewaesser(srcObj.getBezugsgewaesser());
                     mappedObj.setZweck(srcObj.getZweck());
-                    mappedObj.setGeometriePunkt(srcObj.getGeometriePunkt());
+                    if(srcObj.sizeGeometriePunkt()>0) {
+                        mappedObj.setGeometriePunkt(srcObj.getGeometriePunkt());
+                    }
                     pendingEvents.add(new ch.interlis.iox_j.ObjectEvent(mappedObj));
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.AnschriftNummer) {
                 }else if(iomObj instanceof ch.interlis.models.ZG_hydrogeo_wva_V1.Wasserversorgung_Zug.Aufbereitungswerk) {

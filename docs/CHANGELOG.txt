@@ -1,6 +1,10 @@
 LATEST VERSION
 -----------------------------
 
+zghydrogeowva2mgdm 1.2.3 (2022-04-08)
+-----------------------------
+- fixed Kgdm2MgdmGwa Error: illegal argument obj (=null)
+
 zghydrogeowva2mgdm 1.2.2 (2022-03-10)
 -----------------------------
 - some BautenGWFlaeche get lost
